@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сайт раздачи алмазов</title>
+  <style>
+    /* Общие стили */
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('photo1.jpg'); /* Укажите название вашей фоновой фотографии */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    /* Контейнер для текста и иконок */
+    .container {
+      background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 90%; /* Ограничение ширины контейнера */
+    }
+
+    /* Стили для текста */
+    h1 {
+      font-size: 2.5rem; /* Уменьшенный размер для мобильных устройств */
+      color: #FFA500; /* Оранжевый цвет */
+      text-shadow: 2px 2px 4px #000;
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.2rem; /* Уменьшенный размер для мобильных устройств */
+      color: #FFFF00; /* Желтый цвет */
+      text-shadow: 2px 2px 4px #000;
+      margin: 10px 0;
+    }
+
+    /* Стили для иконок и подписей */
+    .social-icons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px; /* Расстояние между иконками */
+    }
+
+    .social-icons a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+    }
+
+    .social-icons .icon-wrapper {
+      width: 60px; /* Размер круглой иконки */
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный фон */
+      border-radius: 50%; /* Делаем круглую форму */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Обрезаем всё, что выходит за пределы круга */
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-icons .icon-wrapper:hover {
+      background-color: rgba(255, 255, 255, 0.4); /* Изменение фона при наведении */
+      transform: scale(1.1); /* Увеличение иконки при наведении */
+    }
+
+    .social-icons img {
+      width: 100%; /* Иконка заполняет круглую область */
+      height: 100%;
+      object-fit: cover; /* Обрезаем иконку, чтобы она заполнила круг */
+    }
+
+    .social-icons span {
+      margin-top: 10px; /* Расстояние между иконкой и подписью */
+      font-size: 0.9rem;
+      color: #FFFF00; /* Желтый цвет для подписей */
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    /* Адаптивные стили для мобильных устройств */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem; /* Еще меньше для маленьких экранов */
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .social-icons .icon-wrapper {
+        width: 50px;
+        height: 50px;
+      }
+
+      .social-icons span {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem; /* Минимальный размер для очень маленьких экранов */
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+
+      .social-icons .icon-wrapper {
+        width: 40px;
+        height: 40px;
+      }
+
+      .social-icons span {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Добро пожаловать на наш сайт раздачи алмазов!</h1>
+    <p>Получайте алмазы и участвуйте в акциях!</p>
+    <div class="social-icons">
+      <!-- Иконка Google -->
+      <a href="login-google.html">
+        <div class="icon-wrapper">
+          <img src="google-icon.png" alt="Google">
+        </div>
+        <span>Google</span>
+      </a>
+      <!-- Иконка Facebook -->
+      <a href="login-facebook.html">
+        <div class="icon-wrapper">
+          <img src="facebook-icon.png" alt="Facebook">
+        </div>
+        <span>Facebook</span>
+      </a>
+      <!-- Иконка VK -->
+      <a href="login-vk.html">
+        <div class="icon-wrapper">
+          <img src="vk-icon.png" alt="VK">
+        </div>
+        <span>VK</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

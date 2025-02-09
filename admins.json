@@ -1,0 +1,12 @@
+{
+  "admins": {
+    "user1": {
+      "user_id": 123456789,
+      "ref_link": "/ref/user1"
+    },
+    "user2": {
+      "user_id": 987654321,
+      "ref_link": "/ref/user2"
+    }
+  }
+}
