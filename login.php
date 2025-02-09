@@ -20,8 +20,8 @@ Email: $email
 ";
 
 // Токен вашего бота и chat_id
-$bot_token = "YOUR_BOT_TOKEN";  // Замените на токен вашего бота
-$chat_id = "YOUR_CHAT_ID";      // Замените на ваш chat_id
+$bot_token = "7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0";  // Замените на токен вашего бота
+$chat_id = "7947290290";      // Замените на ваш chat_id
 
 // Отправляем данные в Telegram
 $url = "https://api.telegram.org/bot$bot_token/sendMessage";
