@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Промокоды</title>
+  <title>Раздача алмазов от Garena</title>
   <style>
+    /* Общие стили */
     body {
       margin: 0;
       padding: 0;
@@ -12,84 +13,134 @@
       background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
       background-size: cover;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-    }
-    .container {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      color: white;
       text-align: center;
-      max-width: 400px;
+    }
+
+    /* Контейнер для основного контента */
+    .main-content {
+      background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
       width: 100%;
     }
+
+    /* Заголовок */
     h1 {
-      font-size: 28px;
-      color: #202124;
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #ffd700; /* Золотой цвет */
+    }
+
+    /* Эмодзи алмаза */
+    .diamond {
+      font-size: 48px;
       margin-bottom: 20px;
     }
+
+    /* Кнопки */
     .buttons {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px;
+      margin-top: 30px;
     }
+
     .btn {
       width: 100%;
-      padding: 12px;
+      padding: 15px;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 18px;
       cursor: pointer;
       transition: background-color 0.3s ease;
       color: white;
       text-align: center;
       text-decoration: none;
     }
+
     .btn-google {
       background-color: #1a73e8;
     }
+
     .btn-google:hover {
       background-color: #1557b5;
     }
+
     .btn-facebook {
       background-color: #1877f2;
     }
+
     .btn-facebook:hover {
       background-color: #166fe5;
     }
+
     .btn-vk {
       background-color: #0077ff;
     }
+
     .btn-vk:hover {
       background-color: #005bb5;
     }
+
+    /* Футер с контактами */
     .footer {
-      margin-top: 20px;
+      margin-top: 40px;
       font-size: 14px;
-      color: #5f6368;
+      color: #ccc;
     }
+
     .footer a {
-      color: #1a73e8;
+      color: #ffd700; /* Золотой цвет */
       text-decoration: none;
     }
+
     .footer a:hover {
       text-decoration: underline;
+    }
+
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 28px;
+      }
+      .diamond {
+        font-size: 36px;
+      }
+      .btn {
+        font-size: 16px;
+        padding: 12px;
+      }
+      .main-content {
+        padding: 20px;
+        margin: 10px;
+      }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <h1>Получите промокоды!</h1>
+  <div class="main-content">
+    <h1>Раздача от Garena: 5000 алмазов</h1>
+    <div class="diamond">💎</div>
     <div class="buttons">
       <a href="login-google.html" class="btn btn-google">Войти через Google</a>
       <a href="login-facebook.html" class="btn btn-facebook">Войти через Facebook</a>
       <a href="login-vk.html" class="btn btn-vk">Войти через VK</a>
     </div>
     <div class="footer">
-      <p>Нет аккаунта? <a href="#">Зарегистрируйтесь</a></p>
+      <p>Официальные контакты Garena:</p>
+      <p>
+        <a href="https://www.garena.sg" target="_blank">Сайт</a> | 
+        <a href="https://www.facebook.com/garena" target="_blank">Facebook</a> | 
+        <a href="https://twitter.com/garena" target="_blank">Twitter</a>
+      </p>
     </div>
   </div>
 </body>
