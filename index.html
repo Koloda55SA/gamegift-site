@@ -254,10 +254,10 @@
       if (hasSpun) return;
 
       const randomDegree = Math.floor(Math.random() * 360) + 1080; // Минимум 3 полных оборота
-      prizes.style.transform = `rotate(${randomDegree}deg)`;
+      prizes.style.transform = `rotate(${randomDegree}deg)`; // Поворот на случайный угол
 
       setTimeout(() => {
-        const prize = Math.floor((randomDegree % 360) / 60);
+        const prize = Math.floor((randomDegree % 360) / 60); // Определение приза
         const prizeValues = [100, 500, 1000, 2000, 5000, 10000];
         const winAmount = prizeValues[prize];
 
