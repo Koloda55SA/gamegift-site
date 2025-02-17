@@ -189,10 +189,15 @@
         }
         .progress-bar-fill {
             height: 20px;
-            background-color: #ffd700;
+            background-color: #4CAF50; /* Зеленый цвет */
             width: 0;
             border-radius: 10px;
             transition: width 0.5s ease;
+        }
+        .progress-text {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #ffd700;
         }
     </style>
 </head>
@@ -219,6 +224,7 @@
             <div class="progress-bar">
                 <div class="progress-bar-fill" id="progressBarFill"></div>
             </div>
+            <div class="progress-text" id="progressText">Заполните шкалу, чтобы получить свои алмазы</div>
         </div>
 
         <div class="congrats-message" id="congratsMessage">
@@ -327,6 +333,7 @@
             const whatsappUrl = `https://api.whatsapp.com/send?text=${text}`;
             window.open(whatsappUrl, '_blank');
             markTaskCompleted('task2');
+            increaseProgress();
         }
 
         function shareViaTelegram() {
@@ -334,6 +341,7 @@
             const telegramUrl = `https://t.me/share/url?url=${text}`;
             window.open(telegramUrl, '_blank');
             markTaskCompleted('task2');
+            increaseProgress();
         }
 
         function markTaskCompleted(id) {
