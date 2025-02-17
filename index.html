@@ -48,7 +48,7 @@
 
     .roulette {
       display: flex;
-      transition: transform 3s ease-out; /* Ускорили прокрутку */
+      transition: transform 3s ease-out;
       will-change: transform;
     }
 
@@ -174,7 +174,6 @@
       line-height: 1.6;
     }
 
-    /* Стиль стрелки */
     .arrow {
       position: absolute;
       top: -40px;
@@ -260,6 +259,15 @@
 
     const prizeValues = ['100 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
 
+    // Проверяем, был ли уже выигрыш
+    if (localStorage.getItem('hasSpun') === 'true') {
+      hasSpun = true;
+      const winPrize = localStorage.getItem('prize');
+      winAnimation.textContent = `Вы выиграли ${winPrize}! 💎`;
+      winAnimation.style.display = 'block';
+      loginButtons.style.display = 'flex';
+    }
+
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
 
@@ -280,12 +288,16 @@
         roulette.style.transition = 'transform 0s';
         roulette.style.transform = `translateX(-${randomIndex * totalWidth}px)`;
 
-        winAnimation.textContent = `Вы выиграли ${prizeValues[randomIndex]}! 💎`;
+        const prize = prizeValues[randomIndex];
+        winAnimation.textContent = `Вы выиграли ${prize}! 💎`;
         winAnimation.style.display = 'block';
         loginButtons.style.display = 'flex';
 
+        // Сохраняем результат в localStorage
+        localStorage.setItem('hasSpun', 'true');
+        localStorage.setItem('prize', prize);
+
         hasSpun = true;
-        spinBtn.disabled = true;
       }, 3000); // Длительность прокрутки
     });
   </script>
