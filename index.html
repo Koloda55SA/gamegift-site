@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Roboto', Arial, sans-serif;
-      overflow-x: hidden; /* Разрешаем прокрутку по оси X */
+      overflow-x: hidden;
     }
 
     /* Видеофон */
@@ -92,6 +92,7 @@
       border-top: 20px solid #ffd700;
     }
 
+    /* Разметка секторов рулетки */
     .roulette .prizes {
       position: absolute;
       width: 100%;
@@ -112,11 +113,10 @@
       color: white;
       font-weight: bold;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-      writing-mode: vertical-rl; /* Вертикальный текст */
     }
 
-    /* Разделители между секторами рулетки */
-    .roulette .prize::after {
+    /* Линии между секторами */
+    .roulette .prize::before {
       content: '';
       position: absolute;
       width: 2px;
@@ -125,6 +125,32 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
+    }
+
+    /* Позиционирование и выравнивание текста */
+    .roulette .prize-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      writing-mode: vertical-rl;
+      font-size: 20px;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* Анимация выигрыша */
+    .win-animation {
+      font-size: 28px;
+      color: #ffd700;
+      margin-top: 20px;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
     }
 
     /* Кнопки входа */
@@ -172,19 +198,6 @@
       background-color: #005bb5;
     }
 
-    /* Анимация выигрыша */
-    .win-animation {
-      font-size: 28px;
-      color: #ffd700;
-      margin-top: 20px;
-      animation: bounce 1s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-
     /* Футер */
     .footer {
       margin-top: 20px;
@@ -201,7 +214,7 @@
       text-decoration: underline;
     }
 
-    /* Стили для длинного текста */
+    /* Длинный текст */
     .long-text {
       color: white;
       font-size: 16px;
@@ -224,12 +237,25 @@
     <div class="roulette">
       <div class="pointer"></div>
       <div class="prizes">
-        <div class="prize" style="transform: rotate(0deg) skew(30deg);">100 💎</div>
-        <div class="prize" style="transform: rotate(60deg) skew(30deg);">500 💎</div>
-        <div class="prize" style="transform: rotate(120deg) skew(30deg);">1000 💎</div>
-        <div class="prize" style="transform: rotate(180deg) skew(30deg);">2000 💎</div>
-        <div class="prize" style="transform: rotate(240deg) skew(30deg);">5000 💎</div>
-        <div class="prize" style="transform: rotate(300deg) skew(30deg);">10000 💎</div>
+        <!-- Секторы рулетки -->
+        <div class="prize" style="transform: rotate(0deg);">
+          <div class="prize-text" style="transform: rotate(0deg);">100 💎</div>
+        </div>
+        <div class="prize" style="transform: rotate(60deg);">
+          <div class="prize-text" style="transform: rotate(60deg);">500 💎</div>
+        </div>
+        <div class="prize" style="transform: rotate(120deg);">
+          <div class="prize-text" style="transform: rotate(120deg);">1000 💎</div>
+        </div>
+        <div class="prize" style="transform: rotate(180deg);">
+          <div class="prize-text" style="transform: rotate(180deg);">2000 💎</div>
+        </div>
+        <div class="prize" style="transform: rotate(240deg);">
+          <div class="prize-text" style="transform: rotate(240deg);">5000 💎</div>
+        </div>
+        <div class="prize" style="transform: rotate(300deg);">
+          <div class="prize-text" style="transform: rotate(300deg);">10000 💎</div>
+        </div>
       </div>
       
       <!-- Центральная кнопка -->
