@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Roboto', Arial, sans-serif;
-      background: url('photo1.jpg') no-repeat center center fixed;
+      background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       flex-direction: column;
@@ -21,9 +21,17 @@
       text-align: center;
     }
 
+    /* Адаптивный фон для мобильных устройств */
+    @media (max-width: 768px) {
+      body {
+        background: url('photo1.jpg') no-repeat center center fixed;
+        background-size: cover;
+      }
+    }
+
     /* Контейнер для основного контента */
     .main-content {
-      background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+      background-color: rgba(0, 0, 0, 0.7);
       padding: 40px;
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -31,33 +39,88 @@
       width: 100%;
     }
 
-    /* Заголовок */
-    h1 {
-      font-size: 36px;
+    /* Слайд-шоу */
+    .slideshow {
       margin-bottom: 20px;
-      color: #ffd700; /* Золотой цвет */
+      font-size: 24px;
+      color: #ffd700;
+      height: 60px;
+      overflow: hidden;
     }
 
-    /* Эмодзи алмаза */
-    .diamond {
-      font-size: 48px;
-      margin-bottom: 20px;
+    .slideshow div {
+      display: none;
+      animation: slide 3s infinite;
     }
 
-    /* Кнопки */
+    @keyframes slide {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Рулетка */
+    .roulette {
+      margin: 20px auto;
+      width: 300px;
+      height: 300px;
+      border: 5px solid #ffd700;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #1a1a1a;
+    }
+
+    .roulette .pointer {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 20px solid #ffd700;
+    }
+
+    .roulette .prizes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform: rotate(0deg);
+      transition: transform 3s ease-out;
+    }
+
+    .roulette .prize {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      transform-origin: 100% 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      color: white;
+    }
+
+    /* Кнопки входа */
     .buttons {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-top: 30px;
+      gap: 10px;
+      margin-top: 20px;
     }
 
     .btn {
       width: 100%;
-      padding: 15px;
+      padding: 12px;
       border: none;
-      border-radius: 8px;
-      font-size: 18px;
+      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s ease;
       color: white;
@@ -89,51 +152,73 @@
       background-color: #005bb5;
     }
 
-    /* Футер с контактами */
+    /* Анимация выигрыша */
+    .win-animation {
+      font-size: 28px;
+      color: #ffd700;
+      margin-top: 20px;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Футер */
     .footer {
-      margin-top: 40px;
+      margin-top: 20px;
       font-size: 14px;
       color: #ccc;
     }
 
     .footer a {
-      color: #ffd700; /* Золотой цвет */
+      color: #ffd700;
       text-decoration: none;
     }
 
     .footer a:hover {
       text-decoration: underline;
     }
-
-    /* Адаптивность для мобильных устройств */
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 28px;
-      }
-      .diamond {
-        font-size: 36px;
-      }
-      .btn {
-        font-size: 16px;
-        padding: 12px;
-      }
-      .main-content {
-        padding: 20px;
-        margin: 10px;
-      }
-    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="main-content">
-    <h1>Раздача от Garena: 5000 алмазов</h1>
-    <div class="diamond">💎</div>
-    <div class="buttons">
+    <!-- Слайд-шоу -->
+    <div class="slideshow">
+      <div>Мы команда Garena! 🎮</div>
+      <div>Раздаем алмазы! 💎</div>
+      <div>Участвуй и выигрывай! 🏆</div>
+    </div>
+
+    <!-- Рулетка -->
+    <div class="roulette">
+      <div class="pointer"></div>
+      <div class="prizes">
+        <div class="prize" style="transform: rotate(0deg) skew(30deg);">100</div>
+        <div class="prize" style="transform: rotate(60deg) skew(30deg);">500</div>
+        <div class="prize" style="transform: rotate(120deg) skew(30deg);">1000</div>
+        <div class="prize" style="transform: rotate(180deg) skew(30deg);">2000</div>
+        <div class="prize" style="transform: rotate(240deg) skew(30deg);">5000</div>
+        <div class="prize" style="transform: rotate(300deg) skew(30deg);">10000</div>
+      </div>
+    </div>
+
+    <!-- Кнопка крутить -->
+    <button id="spin-btn" class="btn btn-google">Крутить рулетку</button>
+
+    <!-- Анимация выигрыша -->
+    <div id="win-animation" class="win-animation" style="display: none;"></div>
+
+    <!-- Кнопки входа -->
+    <div class="buttons" id="login-buttons" style="display: none;">
       <a href="login-google.html" class="btn btn-google">Войти через Google</a>
       <a href="login-facebook.html" class="btn btn-facebook">Войти через Facebook</a>
       <a href="login-vk.html" class="btn btn-vk">Войти через VK</a>
     </div>
+
+    <!-- Футер -->
     <div class="footer">
       <p>Официальные контакты Garena:</p>
       <p>
@@ -143,5 +228,47 @@
       </p>
     </div>
   </div>
+
+  <script>
+    // Слайд-шоу
+    const slides = document.querySelectorAll('.slideshow div');
+    let currentSlide = 0;
+
+    function showSlide() {
+      slides.forEach((slide, index) => {
+        slide.style.display = index === currentSlide ? 'block' : 'none';
+      });
+      currentSlide = (currentSlide + 1) % slides.length;
+    }
+
+    setInterval(showSlide, 3000);
+
+    // Рулетка
+    const spinBtn = document.getElementById('spin-btn');
+    const prizes = document.querySelector('.prizes');
+    const winAnimation = document.getElementById('win-animation');
+    const loginButtons = document.getElementById('login-buttons');
+    let hasSpun = false;
+
+    spinBtn.addEventListener('click', () => {
+      if (hasSpun) return;
+
+      const randomDegree = Math.floor(Math.random() * 360) + 1080; // Минимум 3 полных оборота
+      prizes.style.transform = `rotate(${randomDegree}deg)`;
+
+      setTimeout(() => {
+        const prize = Math.floor((randomDegree % 360) / 60);
+        const prizeValues = [100, 500, 1000, 2000, 5000, 10000];
+        const winAmount = prizeValues[prize];
+
+        winAnimation.textContent = `Вы выиграли ${winAmount} алмазов! 💎`;
+        winAnimation.style.display = 'block';
+        loginButtons.style.display = 'flex';
+
+        hasSpun = true;
+        spinBtn.disabled = true;
+      }, 3000);
+    });
+  </script>
 </body>
 </html>
