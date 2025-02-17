@@ -27,15 +27,14 @@
     .main-content {
       position: relative;
       z-index: 1;
-      padding: 40px;
+      padding: 20px;
       background-color: rgba(0, 0, 0, 0.8);
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
       max-width: 800px;
-      width: 100%;
+      width: 90%;
       text-align: center;
-      margin: 0 auto;
-      margin-top: 50px;
+      margin: 20px auto;
       overflow: hidden;
     }
 
@@ -52,12 +51,12 @@
 
     .roulette {
       display: flex;
-      transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1); /* Ускоренная анимация */
       will-change: transform;
     }
 
     .prize {
-      width: 150px;
+      min-width: 150px;
       height: 100px;
       background-color: #ffd700;
       display: flex;
@@ -213,7 +212,7 @@
         width: 100%;
       }
       .prize {
-        width: 120px;
+        min-width: 120px;
         height: 80px;
         font-size: 16px;
       }
@@ -312,7 +311,7 @@
       const totalWidth = prizeWidth + prizeMargin;
       
       // Анимация прокрутки
-      roulette.style.transition = 'transform 3s cubic-bezier(0.25, 0.1, 0.25, 1)';
+      roulette.style.transition = 'transform 2s cubic-bezier(0.25, 0.1, 0.25, 1)';
       roulette.style.transform = `translateX(-${randomIndex * totalWidth}px)`;
 
       setTimeout(() => {
@@ -322,7 +321,7 @@
 
         hasSpun = true;
         spinBtn.disabled = true;
-      }, 3000); // Длительность прокрутки
+      }, 2000); // Длительность прокрутки (2 секунды)
     });
   </script>
 
