@@ -210,6 +210,7 @@
     @media (max-width: 768px) {
       .roulette-container {
         width: 100%;
+        height: 100px; /* Изменён размер рулетки для мобильных */
       }
       .prize {
         min-width: 120px;
@@ -242,7 +243,7 @@
         <div class="prize">5000 💎</div>
         <div class="prize">10000 💎</div>
       </div>
-      <div class="arrow"></div> <!-- Стрелка -->
+      <div class="arrow"></div>
     </div>
     <div class="center-button" id="spin-btn">Крутить</div>
 
@@ -306,10 +307,10 @@
       const randomIndex = Math.floor(Math.random() * prizeCount);
 
       // Расчёт случайной прокрутки
-      const prizeWidth = 150; 
+      const prizeWidth = 150;
       const prizeMargin = 20;
       const totalWidth = prizeWidth + prizeMargin;
-      
+
       // Анимация прокрутки
       roulette.style.transition = 'transform 2s cubic-bezier(0.25, 0.1, 0.25, 1)';
       roulette.style.transform = `translateX(-${randomIndex * totalWidth}px)`;
