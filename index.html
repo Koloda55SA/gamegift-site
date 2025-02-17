@@ -242,13 +242,14 @@
     <h1>Раздача алмазов от Garena</h1>
     <div class="roulette-container" id="roulette-container">
       <div class="roulette" id="roulette">
-        <div class="prize" id="prize-1">100 💎</div>
-        <div class="prize" id="prize-2">200 💎</div>
-        <div class="prize" id="prize-3">500 💎</div>
-        <div class="prize" id="prize-4">1000 💎</div>
-        <div class="prize" id="prize-5">2000 💎</div>
-        <div class="prize" id="prize-6">5000 💎</div>
-        <div class="prize" id="prize-7">10000 💎</div>
+        <div class="prize" id="prize-100">100 💎</div>
+        <div class="prize" id="prize-200">200 💎</div>
+        <div class="prize" id="prize-300">300 💎</div>
+        <div class="prize" id="prize-500">500 💎</div>
+        <div class="prize" id="prize-1000">1000 💎</div>
+        <div class="prize" id="prize-2000">2000 💎</div>
+        <div class="prize" id="prize-5000">5000 💎</div>
+        <div class="prize" id="prize-10000">10000 💎</div>
       </div>
       <div class="arrow" id="arrow"></div>
     </div>
@@ -297,16 +298,9 @@
     const roulette = document.getElementById('roulette');
     const arrow = document.getElementById('arrow');
     const prizeCount = document.querySelectorAll('.prize').length;
+    const prizeValues = ['100 💎', '200 💎', '300 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
+
     let hasSpun = false;
-
-    const prizeValues = ['100 💎', '200 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
-
-    // Клонируем призы для бесконечной прокрутки
-    const prizes = document.querySelectorAll('.prize');
-    prizes.forEach(prize => {
-      const clone = prize.cloneNode(true);
-      roulette.appendChild(clone);
-    });
 
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
