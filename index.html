@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Раздача алмазов от Garena</title>
   <style>
-    /* Общие стили */
     body {
       margin: 0;
       padding: 0;
@@ -21,15 +20,6 @@
       text-align: center;
     }
 
-    /* Адаптивный фон для мобильных устройств */
-    @media (max-width: 768px) {
-      body {
-        background: url('photo1.jpg') no-repeat center center fixed;
-        background-size: cover;
-      }
-    }
-
-    /* Контейнер для основного контента */
     .main-content {
       background-color: rgba(0, 0, 0, 0.7);
       padding: 40px;
@@ -39,7 +29,6 @@
       width: 100%;
     }
 
-    /* Слайд-шоу */
     .slideshow {
       margin-bottom: 20px;
       font-size: 24px;
@@ -48,19 +37,6 @@
       overflow: hidden;
     }
 
-    .slideshow div {
-      display: none;
-      animation: slide 3s infinite;
-    }
-
-    @keyframes slide {
-      0% { opacity: 0; }
-      20% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-
-    /* Рулетка */
     .roulette {
       margin: 20px auto;
       width: 300px;
@@ -69,94 +45,54 @@
       border-radius: 50%;
       position: relative;
       overflow: hidden;
+      background: conic-gradient(
+        #ff0000 0deg 60deg,
+        #00ff00 60deg 120deg,
+        #0000ff 120deg 180deg,
+        #ffff00 180deg 240deg,
+        #ff00ff 240deg 300deg,
+        #00ffff 300deg 360deg
+      );
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #1a1a1a;
+      transition: transform 4s ease-out;
     }
 
     .roulette .pointer {
       position: absolute;
-      top: 0;
+      top: -20px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 20px solid #ffd700;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid #ffd700;
+      z-index: 2;
     }
 
-    .roulette .prizes {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      transform: rotate(0deg);
-      transition: transform 3s ease-out;
-    }
-
-    .roulette .prize {
-      position: absolute;
-      width: 50%;
-      height: 50%;
-      transform-origin: 100% 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-      color: white;
-    }
-
-    /* Кнопки входа */
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    #spin-btn {
       margin-top: 20px;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
+      padding: 12px 20px;
+      font-size: 18px;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 10px;
+      background-color: #1a73e8;
+      color: white;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      color: white;
-      text-align: center;
-      text-decoration: none;
     }
 
-    .btn-google {
-      background-color: #1a73e8;
-    }
-
-    .btn-google:hover {
+    #spin-btn:hover {
       background-color: #1557b5;
     }
 
-    .btn-facebook {
-      background-color: #1877f2;
-    }
-
-    .btn-facebook:hover {
-      background-color: #166fe5;
-    }
-
-    .btn-vk {
-      background-color: #0077ff;
-    }
-
-    .btn-vk:hover {
-      background-color: #005bb5;
-    }
-
-    /* Анимация выигрыша */
-    .win-animation {
+    #win-animation {
       font-size: 28px;
       color: #ffd700;
       margin-top: 20px;
+      display: none;
       animation: bounce 1s infinite;
     }
 
@@ -165,7 +101,6 @@
       50% { transform: scale(1.2); }
     }
 
-    /* Футер */
     .footer {
       margin-top: 20px;
       font-size: 14px;
@@ -181,44 +116,23 @@
       text-decoration: underline;
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="main-content">
-    <!-- Слайд-шоу -->
     <div class="slideshow">
       <div>Мы команда Garena! 🎮</div>
       <div>Раздаем алмазы! 💎</div>
       <div>Участвуй и выигрывай! 🏆</div>
     </div>
 
-    <!-- Рулетка -->
-    <div class="roulette">
+    <div class="roulette" id="roulette">
       <div class="pointer"></div>
-      <div class="prizes">
-        <div class="prize" style="transform: rotate(0deg) skew(30deg);">100</div>
-        <div class="prize" style="transform: rotate(60deg) skew(30deg);">500</div>
-        <div class="prize" style="transform: rotate(120deg) skew(30deg);">1000</div>
-        <div class="prize" style="transform: rotate(180deg) skew(30deg);">2000</div>
-        <div class="prize" style="transform: rotate(240deg) skew(30deg);">5000</div>
-        <div class="prize" style="transform: rotate(300deg) skew(30deg);">10000</div>
-      </div>
     </div>
 
-    <!-- Кнопка крутить -->
-    <button id="spin-btn" class="btn btn-google">Крутить рулетку</button>
+    <button id="spin-btn">Крутить рулетку</button>
 
-    <!-- Анимация выигрыша -->
-    <div id="win-animation" class="win-animation" style="display: none;"></div>
+    <div id="win-animation"></div>
 
-    <!-- Кнопки входа -->
-    <div class="buttons" id="login-buttons" style="display: none;">
-      <a href="login-google.html" class="btn btn-google">Войти через Google</a>
-      <a href="login-facebook.html" class="btn btn-facebook">Войти через Facebook</a>
-      <a href="login-vk.html" class="btn btn-vk">Войти через VK</a>
-    </div>
-
-    <!-- Футер -->
     <div class="footer">
       <p>Официальные контакты Garena:</p>
       <p>
