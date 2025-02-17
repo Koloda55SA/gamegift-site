@@ -230,6 +230,13 @@
   </div>
 
   <script>
+    // Проверяем, был ли уже выигрыш
+    if (localStorage.getItem('hasSpun') === 'true') {
+      document.getElementById('spin-btn').disabled = true;
+      document.getElementById('win-animation').style.display = 'block';
+      document.getElementById('login-buttons').style.display = 'flex';
+    }
+
     // Слайд-шоу
     const slides = document.querySelectorAll('.slideshow div');
     let currentSlide = 0;
@@ -267,6 +274,9 @@
 
         hasSpun = true;
         spinBtn.disabled = true;
+
+        // Сохраняем состояние выигрыша
+        localStorage.setItem('hasSpun', 'true');
       }, 3000);
     });
   </script>
