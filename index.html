@@ -39,24 +39,29 @@
     }
 
     .roulette-container {
+      position: relative;
       margin: 20px auto;
       width: 100%;
-      height: 150px;
+      height: 200px;
       overflow: hidden;
-      position: relative;
-      border: 2px solid #ffd700;
-      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background-color: rgba(255, 215, 0, 0.1);
+      border-radius: 10px;
+      border: 2px solid #ffd700;
     }
 
     .roulette {
       display: flex;
-      transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1);
-      will-change: transform;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      justify-content: space-evenly;
     }
 
     .prize {
-      min-width: 150px;
+      width: 120px;
       height: 100px;
       background-color: #ffd700;
       display: flex;
@@ -66,13 +71,7 @@
       font-weight: bold;
       color: #1a1a1a;
       border-radius: 10px;
-      margin: 0 10px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s;
-    }
-
-    .prize:hover {
-      transform: scale(1.05);
     }
 
     .center-button {
@@ -210,11 +209,11 @@
     @media (max-width: 768px) {
       .roulette-container {
         width: 100%;
-        height: 100px; /* Изменён размер рулетки для мобильных */
+        height: 100px;
       }
       .prize {
-        min-width: 120px;
-        height: 80px;
+        width: 80px;
+        height: 70px;
         font-size: 16px;
       }
       .center-button {
@@ -308,26 +307,23 @@
       // Выбор случайного сектора
       const randomIndex = Math.floor(Math.random() * prizeCount);
 
-      // Расчёт случайной прокрутки
-      const prizeWidth = 150;
+      // Позиционируем стрелку на выигравший приз
+      const prizeWidth = 120;
       const prizeMargin = 20;
       const totalWidth = prizeWidth + prizeMargin;
 
-      // Анимация прокрутки
-      roulette.style.transition = 'transform 2s cubic-bezier(0.25, 0.1, 0.25, 1)';
-      roulette.style.transform = `translateX(-${randomIndex * totalWidth}px)`;
+      const winningPosition = (randomIndex * totalWidth) + (prizeWidth / 2) - 10;
+      arrow.style.left = `${winningPosition}px`;
 
-      setTimeout(() => {
-        winAnimation.textContent = `Вы выиграли ${prizeValues[randomIndex]}! 💎`;
-        winAnimation.style.display = 'block';
-        loginButtons.style.display = 'flex';
+      // Показываем выигрыш
+      winAnimation.textContent = `Вы выиграли ${prizeValues[randomIndex]}! 💎`;
+      winAnimation.style.display = 'block';
 
-        // Позиционируем стрелку на выигравший приз
-        arrow.style.left = `${(randomIndex * totalWidth) + (prizeWidth / 2) - 10}px`;
+      // Показать кнопки для входа
+      loginButtons.style.display = 'flex';
 
-        hasSpun = true;
-        spinBtn.disabled = true;
-      }, 2000); // Длительность прокрутки (2 секунды)
+      hasSpun = true;
+      spinBtn.disabled = true;
     });
   </script>
 
