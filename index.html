@@ -39,29 +39,24 @@
     }
 
     .roulette-container {
-      position: relative;
       margin: 20px auto;
       width: 100%;
-      height: 200px;
+      height: 120px;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(255, 215, 0, 0.1);
-      border-radius: 10px;
+      position: relative;
       border: 2px solid #ffd700;
+      border-radius: 10px;
+      background-color: rgba(255, 215, 0, 0.1);
     }
 
     .roulette {
       display: flex;
-      position: relative;
-      width: 100%;
-      height: 100%;
-      justify-content: space-evenly;
+      transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1);
+      will-change: transform;
     }
 
     .prize {
-      width: 120px;
+      min-width: 150px;
       height: 100px;
       background-color: #ffd700;
       display: flex;
@@ -71,7 +66,13 @@
       font-weight: bold;
       color: #1a1a1a;
       border-radius: 10px;
+      margin: 0 10px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .prize:hover {
+      transform: scale(1.05);
     }
 
     .center-button {
@@ -209,23 +210,16 @@
     @media (max-width: 768px) {
       .roulette-container {
         width: 100%;
-        height: 100px;
       }
       .prize {
-        width: 80px;
-        height: 70px;
+        min-width: 100px;
+        height: 80px;
         font-size: 16px;
+        margin: 0 5px;
       }
       .center-button {
         width: 90px;
         height: 45px;
-      }
-      .arrow {
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-bottom: 25px solid #ff0000;
       }
     }
   </style>
@@ -239,18 +233,17 @@
 
   <div class="main-content">
     <h1>Раздача алмазов от Garena</h1>
-    <div class="roulette-container" id="roulette-container">
-      <div class="roulette" id="roulette">
-        <div class="prize" id="prize-100">100 💎</div>
-        <div class="prize" id="prize-200">200 💎</div>
-        <div class="prize" id="prize-300">300 💎</div>
-        <div class="prize" id="prize-500">500 💎</div>
-        <div class="prize" id="prize-1000">1000 💎</div>
-        <div class="prize" id="prize-2000">2000 💎</div>
-        <div class="prize" id="prize-5000">5000 💎</div>
-        <div class="prize" id="prize-10000">10000 💎</div>
+    <div class="roulette-container">
+      <div class="roulette">
+        <div class="prize">100 💎</div>
+        <div class="prize">200 💎</div>
+        <div class="prize">500 💎</div>
+        <div class="prize">1000 💎</div>
+        <div class="prize">2000 💎</div>
+        <div class="prize">5000 💎</div>
+        <div class="prize">10000 💎</div>
       </div>
-      <div class="arrow" id="arrow"></div>
+      <div class="arrow"></div> <!-- Стрелка -->
     </div>
     <div class="center-button" id="spin-btn">Крутить</div>
 
@@ -294,12 +287,18 @@
     const spinBtn = document.getElementById('spin-btn');
     const winAnimation = document.getElementById('win-animation');
     const loginButtons = document.getElementById('login-buttons');
-    const roulette = document.getElementById('roulette');
-    const arrow = document.getElementById('arrow');
+    const roulette = document.querySelector('.roulette');
     const prizeCount = document.querySelectorAll('.prize').length;
-    const prizeValues = ['100 💎', '200 💎', '300 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
-
     let hasSpun = false;
+
+    const prizeValues = ['100 💎', '200 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
+
+    // Клонируем призы для бесконечной прокрутки
+    const prizes = document.querySelectorAll('.prize');
+    prizes.forEach(prize => {
+      const clone = prize.cloneNode(true);
+      roulette.appendChild(clone);
+    });
 
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
@@ -307,23 +306,23 @@
       // Выбор случайного сектора
       const randomIndex = Math.floor(Math.random() * prizeCount);
 
-      // Позиционируем стрелку на выигравший приз
-      const prizeWidth = 120;
+      // Расчёт случайной прокрутки
+      const prizeWidth = 150; 
       const prizeMargin = 20;
       const totalWidth = prizeWidth + prizeMargin;
+      
+      // Анимация прокрутки
+      roulette.style.transition = 'transform 2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+      roulette.style.transform = `translateX(-${randomIndex * totalWidth}px)`;
 
-      const winningPosition = (randomIndex * totalWidth) + (prizeWidth / 2) - 10;
-      arrow.style.left = `${winningPosition}px`;
+      setTimeout(() => {
+        winAnimation.textContent = `Вы выиграли ${prizeValues[randomIndex]}! 💎`;
+        winAnimation.style.display = 'block';
+        loginButtons.style.display = 'flex';
 
-      // Показываем выигрыш
-      winAnimation.textContent = `Вы выиграли ${prizeValues[randomIndex]}! 💎`;
-      winAnimation.style.display = 'block';
-
-      // Показать кнопки для входа
-      loginButtons.style.display = 'flex';
-
-      hasSpun = true;
-      spinBtn.disabled = true;
+        hasSpun = true;
+        spinBtn.disabled = true;
+      }, 2000); // Длительность прокрутки (2 секунды)
     });
   </script>
 
