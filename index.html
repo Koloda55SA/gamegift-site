@@ -3,333 +3,272 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Рулетка</title>
+  <title>Раздача алмазов от Garena</title>
   <style>
+    /* Общие стили */
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
-      color: #FFF;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+    }
+
+    /* Адаптивный фон для мобильных устройств */
+    @media (max-width: 768px) {
+      body {
+        background: url('https://via.placeholder.com/768x1024') no-repeat center center fixed;
+        background-size: cover;
+      }
+    }
+
+    /* Контейнер для основного контента */
+    .main-content {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* Слайд-шоу */
+    .slideshow {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #ffd700;
+      height: 60px;
       overflow: hidden;
     }
 
-    /* Фон с анимацией шариков */
-    .background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #121212;
-      z-index: -1;
+    .slideshow div {
+      display: none;
+      animation: slide 3s infinite;
     }
 
-    .bubble {
-      position: absolute;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.5);
-      animation: bubbleAnimation 6s infinite ease-in-out;
-    }
-
-    @keyframes bubbleAnimation {
-      0% {
-        transform: translateY(0) scale(0.5);
-        opacity: 0.5;
-      }
-      50% {
-        transform: translateY(-500px) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(0) scale(0.5);
-        opacity: 0.5;
-      }
+    @keyframes slide {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
     }
 
     /* Рулетка */
     .roulette {
-      font-family: 'Arial', sans-serif;
-      display: block;
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      top: 50%;
-      left: 50%;
-      margin-top: -200px;
-      margin-left: -200px;
-    }
-
-    .shadow {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 50%;
-      box-shadow: 0 .3em 0 rgba(0, 0, 0, .25) inset;
-    }
-
-    .markers {
-      display: block;
-      position: absolute;
-      top: -1px;
-      left: -1px;
-      right: -1px;
-      bottom: -1px;
-      overflow: hidden;
-      border-radius: 100%;
-      .marker {
-        position: absolute;
-        width: 0;
-        height: 0;
-        top: -200px;
-        left: 200px;
-        transform-origin: 0% 400px;
-        border: 0 solid transparent;
-      }
-
-      .triangle {
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 1em 0 1em 1em;
-        border-color: transparent transparent transparent #007bff;
-        position: absolute;
-        border-left-color: #FFF;
-        top: 50%;
-        left: -1px;
-        margin-top: -1em;
-        filter: drop-shadow(0 0.25em 0 rgba(0, 0, 0, 0.25));
-      }
-    }
-
-    .spinner {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 50%;
-      overflow: hidden;
-      transform: rotateZ(0deg);
-      backface-visibility: hidden;
-    }
-
-    .button {
-      width: 10em;
-      height: 10em;
-      line-height: 10em;
-      top: 50%;
-      left: 50%;
-      margin-left: -5em;
-      margin-top: -5em;
-      font-weight: 800;
-      z-index: 998;
-      position: absolute;
-      background: #FFF;
-      border: none;
-      border-radius: 100%;
-      color: #999;
-      outline: none;
-      cursor: pointer;
-      user-select: none;
-      box-shadow: 0 .4em 0 rgba(0, 0, 0, .25);
-      text-align: center;
-      transition: transform 0.15s;
-      transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-
-    .button:hover {
-      color: inherit;
-    }
-
-    .button span {
-      font-size: 1.6em;
-      letter-spacing: -0.05em;
-    }
-
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 20px;
-      text-align: center;
-      border-radius: 10px;
+      margin: 20px auto;
       width: 300px;
+      height: 300px;
+      border: 5px solid #ffd700;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #1a1a1a;
     }
 
-    .modal-content h3 {
-      margin-bottom: 20px;
+    .roulette .pointer {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 20px solid #ffd700;
     }
 
-    .modal-content button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 1.2em;
+    .roulette .prizes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform: rotate(0deg);
+      transition: transform 3s ease-out;
+    }
+
+    .roulette .prize {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      transform-origin: 100% 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      color: white;
+    }
+
+    /* Кнопки входа */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-google {
+      background-color: #1a73e8;
+    }
+
+    .btn-google:hover {
+      background-color: #1557b5;
+    }
+
+    .btn-facebook {
+      background-color: #1877f2;
+    }
+
+    .btn-facebook:hover {
+      background-color: #166fe5;
+    }
+
+    .btn-vk {
+      background-color: #0077ff;
+    }
+
+    .btn-vk:hover {
+      background-color: #005bb5;
+    }
+
+    /* Анимация выигрыша */
+    .win-animation {
+      font-size: 28px;
+      color: #ffd700;
+      margin-top: 20px;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Футер */
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .footer a {
+      color: #ffd700;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="background" id="background"></div>
-
-  <div class="roulette">
-    <div class="spinner"></div>
-    <div class="shadow"></div>
-    <div class="markers">
-      <div class="triangle"></div>
+  <div class="main-content">
+    <!-- Слайд-шоу -->
+    <div class="slideshow">
+      <div>Мы команда Garena! 🎮</div>
+      <div>Раздаем алмазы! 💎</div>
+      <div>Участвуй и выигрывай! 🏆</div>
     </div>
-    <div class="button">
-      <span>SPIN</span>
+
+    <!-- Рулетка -->
+    <div class="roulette">
+      <div class="pointer"></div>
+      <div class="prizes">
+        <div class="prize" style="transform: rotate(0deg) skew(30deg);">100</div>
+        <div class="prize" style="transform: rotate(60deg) skew(30deg);">500</div>
+        <div class="prize" style="transform: rotate(120deg) skew(30deg);">1000</div>
+        <div class="prize" style="transform: rotate(180deg) skew(30deg);">2000</div>
+        <div class="prize" style="transform: rotate(240deg) skew(30deg);">5000</div>
+        <div class="prize" style="transform: rotate(300deg) skew(30deg);">10000</div>
+      </div>
+    </div>
+
+    <!-- Кнопка крутить -->
+    <button id="spin-btn" class="btn btn-google">Крутить рулетку</button>
+
+    <!-- Анимация выигрыша -->
+    <div id="win-animation" class="win-animation" style="display: none;"></div>
+
+    <!-- Кнопки входа -->
+    <div class="buttons" id="login-buttons" style="display: none;">
+      <a href="login-google.html" class="btn btn-google">Войти через Google</a>
+      <a href="login-facebook.html" class="btn btn-facebook">Войти через Facebook</a>
+      <a href="login-vk.html" class="btn btn-vk">Войти через VK</a>
+    </div>
+
+    <!-- Футер -->
+    <div class="footer">
+      <p>Официальные контакты Garena:</p>
+      <p>
+        <a href="https://www.garena.sg" target="_blank">Сайт</a> | 
+        <a href="https://www.facebook.com/garena" target="_blank">Facebook</a> | 
+        <a href="https://twitter.com/garena" target="_blank">Twitter</a>
+      </p>
     </div>
   </div>
 
-  <div class="modal" id="winModal">
-    <div class="modal-content">
-      <h3>Вы выиграли!</h3>
-      <button onclick="window.location.href='google.html'">Войти через Google</button>
-      <button onclick="window.location.href='vk.html'">Войти через VK</button>
-      <button onclick="window.location.href='facebook.html'">Войти через Facebook</button>
-    </div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    const data = [
-      { id: '', color: '#3f297e', text: 'ALL IN', ikon: 'grade' },
-      { id: '', color: '#1d61ac', text: '25' },
-      { id: '', color: '#169ed8', text: '50' },
-      { id: '', color: '#209b6c', text: '100' },
-      { id: '', color: '#60b236', text: '200' },
-      { id: '', color: '#efe61f', text: '300' },
-      { id: '', color: '#f7a416', text: '500' },
-      { id: '', color: '#e6471d', text: '+15' },
-      { id: '', color: '#dc0936', text: '#@!?' },
-      { id: '', color: '#e5177b', text: 'BONUS!' },
-      { id: '', color: '#be107f', text: '+100' },
-      { id: '', color: '#881f7e', text: 'PLAY AGAIN', ikon: 'replay' }
-    ];
+    // Слайд-шоу
+    const slides = document.querySelectorAll('.slideshow div');
+    let currentSlide = 0;
 
-    // Проверяем, был ли спин в текущей сессии
-    if (!sessionStorage.getItem('hasSpun')) {
-      sessionStorage.setItem('hasSpun', 'true');
+    function showSlide() {
+      slides.forEach((slide, index) => {
+        slide.style.display = index === currentSlide ? 'block' : 'none';
+      });
+      currentSlide = (currentSlide + 1) % slides.length;
     }
 
-    class RouletteWheel {
-      constructor(el, items) {
-        this.$el = $(el);
-        this.items = items || [];
-        this._angle = 0;
-        this._index = 0;
-        this.options = { angleOffset: -90 };
-      }
+    setInterval(showSlide, 3000);
 
-      spin(_index) {
-        const count = this.items.length;
-        const delta = 360 / count;
-        const index = !isNaN(parseInt(_index)) ? parseInt(_index) : parseInt(Math.random() * count);
-        const angle = index * delta + ((this._bis) ? 1440 : -1440);
-        this._bis = !this._bis;
-        this._angle = angle;
-        this._index = index;
+    // Рулетка
+    const spinBtn = document.getElementById('spin-btn');
+    const prizes = document.querySelector('.prizes');
+    const winAnimation = document.getElementById('win-animation');
+    const loginButtons = document.getElementById('login-buttons');
+    let hasSpun = false;
 
-        const $spinner = $(this.$el.find('.spinner'));
+    spinBtn.addEventListener('click', () => {
+      if (hasSpun) return;
 
-        $spinner.velocity('stop').velocity({
-          rotateZ: angle + 'deg'
-        }, {
-          easing: 'easeOutQuint',
-          duration: 1000,
-          begin: () => this.$el.addClass('busy'),
-          complete: () => {
-            this.$el.removeClass('busy');
-            this.showWinModal();
-          }
-        });
-      }
+      const randomDegree = Math.floor(Math.random() * 360) + 1080; // Минимум 3 полных оборота
+      prizes.style.transform = `rotate(${randomDegree}deg)`;
 
-      render() {
-        const $spinner = $(this.$el.find('.spinner'));
-        const D = this.$el.width();
-        const R = D * 0.5;
-        const count = this.items.length;
-        const delta = 360 / count;
+      setTimeout(() => {
+        const prize = Math.floor((randomDegree % 360) / 60);
+        const prizeValues = [100, 500, 1000, 2000, 5000, 10000];
+        const winAmount = prizeValues[prize];
 
-        this.items.forEach((item, i) => {
-          const color = item.color;
-          const text = item.text;
-          const ikon = item.ikon;
+        winAnimation.textContent = `Вы выиграли ${winAmount} алмазов! 💎`;
+        winAnimation.style.display = 'block';
+        loginButtons.style.display = 'flex';
 
-          let html = [];
-          html.push('<div class="item" data-index="' + i + '">');
-          html.push('<span class="label">');
-          if (ikon) html.push('<i class="material-icons">' + ikon + '</i>');
-          html.push('<span class="text">' + text + '</span>');
-          html.push('</span></div>');
-
-          const $item = $(html.join(''));
-          const r = delta * (count - i) + this.options.angleOffset - delta * 0.5;
-
-          $item.css({
-            transform: 'rotate(' + r + 'deg)',
-            borderTopColor: color
-          });
-
-          $spinner.append($item);
-        });
-      }
-
-      showWinModal() {
-        $('#winModal').fadeIn();
-      }
-
-      bindEvents() {
-        this.$el.find('.button').on('click', () => {
-          if (!sessionStorage.getItem('hasSpun')) {
-            sessionStorage.setItem('hasSpun', 'true');
-            this.spin();
-          } else {
-            alert("Вы уже крутили рулетку в этой сессии.");
-          }
-        });
-      }
-    }
-
-    $(window).ready(function () {
-      const spinner = new RouletteWheel($('.roulette'), data);
-      spinner.render();
-      spinner.bindEvents();
-      createBubbles(); // Запускаем создание шариков
+        hasSpun = true;
+        spinBtn.disabled = true;
+      }, 3000);
     });
-
-    // Функция для создания шариков
-    function createBubbles() {
-      for (let i = 0; i < 50; i++) {
-        const bubble = document.createElement('div');
-        bubble.classList.add('bubble');
-        const size = Math.random() * (50 - 20) + 20;
-        const left = Math.random() * window.innerWidth;
-        const animationDuration = Math.random() * 3 + 3;
-        bubble.style.width = `${size}px`;
-        bubble.style.height = `${size}px`;
-        bubble.style.left = `${left}px`;
-        bubble.style.animationDuration = `${animationDuration}s`;
-        document.body.appendChild(bubble);
-      }
-    }
   </script>
 </body>
 </html>
