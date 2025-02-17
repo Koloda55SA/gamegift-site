@@ -20,6 +20,7 @@
       align-items: center;
       height: 100vh;
       overflow: hidden;
+      position: relative;
     }
 
     .container {
@@ -139,6 +140,44 @@
       font-size: 14px;
     }
 
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      color: #222;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .modal-button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .modal-button:hover {
+      background-color: #218838;
+    }
+
     @media (max-width: 600px) {
       .roulette {
         width: 250px;
@@ -195,13 +234,50 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div id="winModal" class="modal">
+    <div class="modal-content">
+      <h2>Ура! Вы выиграли!</h2>
+      <p id="winMessage"></p>
+      <button class="modal-button" onclick="closeModal()">Закрыть</button>
+    </div>
+  </div>
+
   <script>
     function spinRoulette() {
       const roulette = document.querySelector('.prizes');
       const randomDegree = Math.floor(Math.random() * 360) + 720;
       roulette.style.transition = 'transform 3s ease-out';
       roulette.style.transform = `rotate(${randomDegree}deg)`;
+
+      setTimeout(() => {
+        const prize = determinePrize(randomDegree);
+        showWinMessage(prize);
+        localStorage.setItem('winPrize', prize); // Save prize to localStorage
+      }, 3500);
     }
+
+    function determinePrize(degree) {
+      const prizes = ['💎 100', '💎 500', '💎 1000', '💎 2000', '🎫 Элитный пропуск', '🎯 Секретный приз'];
+      const index = Math.floor(((degree % 360) / 60)); // Divide the wheel into 6 segments
+      return prizes[index];
+    }
+
+    function showWinMessage(prize) {
+      document.getElementById('winMessage').innerText = `Вы выиграли: ${prize}`;
+      document.getElementById('winModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('winModal').style.display = 'none';
+    }
+
+    window.onload = function() {
+      const storedPrize = localStorage.getItem('winPrize');
+      if (storedPrize) {
+        showWinMessage(storedPrize);
+      }
+    };
   </script>
 </body>
 </html>
