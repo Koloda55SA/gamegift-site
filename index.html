@@ -58,7 +58,7 @@
       width: 100%;
       height: 100%;
       justify-content: space-evenly;
-      transition: transform 4s ease-out;
+      transition: transform 5s ease-out;
     }
 
     .prize {
@@ -288,15 +288,14 @@
     const loginButtons = document.getElementById('login-buttons');
     const roulette = document.getElementById('roulette');
     const prizes = document.querySelectorAll('.prize');
-    const prizeValues = ['100 💎', '200 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
     let hasSpun = false;
 
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
 
-      // Анимация прокрутки рулетки
-      roulette.style.transition = 'transform 4s ease-out';
-      roulette.style.transform = 'translateX(-2000px)'; // Прокрутка до 2000
+      // Анимация прокрутки рулетки (движение через все призы)
+      roulette.style.transition = 'transform 5s ease-out';
+      roulette.style.transform = 'translateX(-3000px)'; // Прокрутка через все призы, чтобы остановиться на 2000
 
       // После завершения прокрутки показываем результат
       setTimeout(() => {
@@ -306,7 +305,7 @@
 
         hasSpun = true;
         spinBtn.disabled = true;
-      }, 4000); // Длительность прокрутки
+      }, 5000); // Длительность прокрутки
     });
   </script>
 
