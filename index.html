@@ -127,11 +127,11 @@
     </div>
 
     <div id="task-1">
-      <button class="task-button waiting" id="task-btn-1" onclick="completeTask('task-1', 'https://t.me/ify_ac')">Перейти по ссылке и подписаться на Telegram канал</button>
+      <button class="task-button waiting" id="task-btn-1" onclick="startTask('task-1', 'https://ify.ac/1YsR')">Перейти по ссылке и подписаться на Telegram канал</button>
     </div>
 
     <div id="task-2">
-      <button class="task-button waiting" id="task-btn-2" onclick="completeTask('task-2', 'https://t.me/ify_ac')">Поделиться с 10 друзьями</button>
+      <button class="task-button waiting" id="task-btn-2" onclick="shareWithFriends()">Поделиться с 10 друзьями</button>
     </div>
 
     <div class="long-text">
@@ -159,20 +159,49 @@
   <script>
     let completedTasks = 0;
 
-    function completeTask(taskId, link) {
+    // Начинаем выполнение задания с задержкой
+    function startTask(taskId, link) {
       const taskButton = document.getElementById('task-btn-' + taskId.charAt(taskId.length - 1));
+      taskButton.classList.remove('waiting');
+      taskButton.classList.add('completed');
+      taskButton.innerText = 'Задание выполняется...';
+
+      // Задержка 30 секунд, после которой кнопка станет зеленой
+      setTimeout(() => {
+        taskButton.innerText = 'Задание выполнено!';
+        taskButton.classList.add('completed');
+        completedTasks++;
+
+        if (completedTasks === 2) {
+          setTimeout(() => {
+            document.getElementById('reward-section').classList.remove('hidden');
+          }, 1000); // Задержка 1 секунда перед отображением
+        }
+      }, 30000);
+
+      // Открывает ссылку в новой вкладке
+      window.open(link, '_blank');
+    }
+
+    // Функция для отправки сообщения в Telegram
+    function shareWithFriends() {
+      const message = "Привет! Заходи и выполняй задания, забери свои 2000 алмазов здесь: https://gamegift.live/";
+      const url = `https://t.me/share/url?url=${encodeURIComponent("https://your-site-link.com")}&text=${encodeURIComponent(message)}`;
+
+      // Открытие ссылки для отправки сообщения в Telegram
+      window.open(url, '_blank');
+
+      const taskButton = document.getElementById('task-btn-2');
       taskButton.classList.remove('waiting');
       taskButton.classList.add('completed');
       taskButton.innerText = 'Задание выполнено!';
       
-      window.open(link, '_blank'); // Открывает ссылку в новой вкладке
-
       completedTasks++;
-
+      
       if (completedTasks === 2) {
         setTimeout(() => {
           document.getElementById('reward-section').classList.remove('hidden');
-        }, 30000); // Задержка 30 секунд
+        }, 1000);
       }
     }
   </script>
