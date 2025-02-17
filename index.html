@@ -48,7 +48,7 @@
 
     .roulette {
       display: flex;
-      transition: transform 7s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: transform 3s ease-out; /* Ускорили прокрутку */
       will-change: transform;
     }
 
@@ -174,6 +174,22 @@
       line-height: 1.6;
     }
 
+    /* Стиль стрелки */
+    .arrow {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      color: #ffd700;
+      animation: bounce-arrow 1s infinite;
+    }
+
+    @keyframes bounce-arrow {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      50% { transform: translateX(-50%) rotate(15deg); }
+    }
+
     @media (max-width: 768px) {
       .roulette-container {
         width: 100%;
@@ -200,6 +216,7 @@
 
   <div class="main-content">
     <div class="roulette-container">
+      <div class="arrow">↑</div>
       <div class="roulette">
         <div class="prize">100 💎</div>
         <div class="prize">500 💎</div>
@@ -255,7 +272,7 @@
       const totalWidth = prizeWidth + prizeMargin;
       
       // Установим рулетку на начало
-      roulette.style.transition = 'transform 7s cubic-bezier(0.25, 0.8, 0.25, 1)';
+      roulette.style.transition = 'transform 3s ease-out'; // Ускорили прокрутку
       roulette.style.transform = `translateX(-${Math.floor(Math.random() * 10) * totalWidth}px)`;
 
       setTimeout(() => {
@@ -269,7 +286,7 @@
 
         hasSpun = true;
         spinBtn.disabled = true;
-      }, 7000); // Длительность прокрутки
+      }, 3000); // Длительность прокрутки
     });
   </script>
 
