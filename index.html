@@ -109,6 +109,19 @@
       50% { transform: scale(1.2); }
     }
 
+    .arrow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid #ff0000;
+      z-index: 2;
+    }
+
     .buttons {
       display: flex;
       flex-direction: column;
@@ -230,6 +243,7 @@
         <div class="prize">5000 💎</div>
         <div class="prize">10000 💎</div>
       </div>
+      <div class="arrow"></div> <!-- Стрелка -->
     </div>
     <div class="center-button" id="spin-btn">Крутить</div>
 
@@ -278,6 +292,13 @@
     let hasSpun = false;
 
     const prizeValues = ['100 💎', '200 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
+
+    // Клонируем призы для бесконечной прокрутки
+    const prizes = document.querySelectorAll('.prize');
+    prizes.forEach(prize => {
+      const clone = prize.cloneNode(true);
+      roulette.appendChild(clone);
+    });
 
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
