@@ -55,6 +55,31 @@
       background: #1a1a1a;
     }
 
+    /* Центральная кнопка крутить */
+    .roulette .center-button {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #ffd700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1a1a1a;
+      cursor: pointer;
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: background-color 0.3s;
+    }
+
+    .roulette .center-button:hover {
+      background-color: #ffcc00;
+    }
+
     .roulette .pointer {
       position: absolute;
       top: 0;
@@ -87,6 +112,7 @@
       color: white;
       font-weight: bold;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+      writing-mode: vertical-rl; /* Вертикальный текст */
     }
 
     /* Разделители между секторами рулетки */
@@ -205,10 +231,10 @@
         <div class="prize" style="transform: rotate(240deg) skew(30deg);">5000 💎</div>
         <div class="prize" style="transform: rotate(300deg) skew(30deg);">10000 💎</div>
       </div>
+      
+      <!-- Центральная кнопка -->
+      <div class="center-button" id="spin-btn">Крутить</div>
     </div>
-
-    <!-- Кнопка крутить -->
-    <button id="spin-btn" class="btn btn-google">Крутить рулетку</button>
 
     <!-- Анимация выигрыша -->
     <div id="win-animation" class="win-animation" style="display: none;"></div>
