@@ -83,8 +83,22 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 18px;
+      font-size: 24px;
       color: white;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Разделители между секторами рулетки */
+    .roulette .prize::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background-color: #ffd700;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     /* Кнопки входа */
@@ -184,12 +198,12 @@
     <div class="roulette">
       <div class="pointer"></div>
       <div class="prizes">
-        <div class="prize" style="transform: rotate(0deg) skew(30deg);">100</div>
-        <div class="prize" style="transform: rotate(60deg) skew(30deg);">500</div>
-        <div class="prize" style="transform: rotate(120deg) skew(30deg);">1000</div>
-        <div class="prize" style="transform: rotate(180deg) skew(30deg);">2000</div>
-        <div class="prize" style="transform: rotate(240deg) skew(30deg);">5000</div>
-        <div class="prize" style="transform: rotate(300deg) skew(30deg);">10000</div>
+        <div class="prize" style="transform: rotate(0deg) skew(30deg);">100 💎</div>
+        <div class="prize" style="transform: rotate(60deg) skew(30deg);">500 💎</div>
+        <div class="prize" style="transform: rotate(120deg) skew(30deg);">1000 💎</div>
+        <div class="prize" style="transform: rotate(180deg) skew(30deg);">2000 💎</div>
+        <div class="prize" style="transform: rotate(240deg) skew(30deg);">5000 💎</div>
+        <div class="prize" style="transform: rotate(300deg) skew(30deg);">10000 💎</div>
       </div>
     </div>
 
