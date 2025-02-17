@@ -3,29 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Бесплатные Алмазы Free Fire</title>
+  <title>Garena Free Fire Рулетка</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #000428, #004e92);
+      background: url('background.jpg') no-repeat center center/cover;
+      font-family: 'Roboto', sans-serif;
       color: #fff;
-      font-family: 'Arial', sans-serif;
+      text-align: center;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
+      justify-content: space-between;
     }
 
-    .logo {
-      width: 100px;
-      margin: 20px auto;
+    .roulette {
+      margin: 40px auto;
+      width: 320px;
+      height: 320px;
+      border: 5px solid #fff;
+      border-radius: 50%;
+      background: rgba(26, 26, 26, 0.3);
+      backdrop-filter: blur(5px);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .roulette .pointer {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 30px solid #ffd700;
+      z-index: 2;
+    }
+
+    .prizes .prize {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0 0;
+      color: #fff;
+      font-size: 22px;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .roulette-text {
+      margin-top: 20px;
+      padding: 15px;
+      color: #fff;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 16px;
     }
 
     .buttons {
-      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -33,12 +80,14 @@
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      padding: 15px;
+      padding: 15px 20px;
       margin: 15px;
       border-radius: 10px;
       color: #fff;
       font-size: 20px;
+      width: 200px;
       transition: background-color 0.3s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
     }
 
     .btn-google {
@@ -58,71 +107,63 @@
     }
 
     .icon {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       margin-right: 12px;
     }
 
-    .roulette {
-      margin: 30px auto;
-      width: 100%;
-      max-width: 350px;
-      aspect-ratio: 1/1;
-      border: 6px solid #ffd700;
-      border-radius: 50%;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(6px);
+    .spin-button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 22px;
+      border: none;
+      border-radius: 12px;
+      background-color: #28a745;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
 
-    .roulette .pointer {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 12px solid transparent;
-      border-right: 12px solid transparent;
-      border-top: 24px solid #ffd700;
+    .spin-button:hover {
+      background-color: #218838;
+    }
+
+    .footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    .prizes .prize:nth-child(odd) {
+      border-right: 2px solid #fff;
     }
 
     .prizes .prize {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0 0;
-      color: #fff;
-      font-size: 20px;
-    }
-
-    .roulette-text {
-      margin-top: 30px;
-      padding: 20px;
-      color: #fff;
-      text-align: justify;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 12px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    @media (max-width: 768px) {
-      .logo {
-        width: 80px;
-      }
+      width: 100px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotate(calc(var(--i) * 60deg)) translateY(-140px);
     }
   </style>
 </head>
 <body>
+  <div class="roulette">
+    <div class="pointer"></div>
+    <div class="prizes">
+      <div class="prize" style="--i:0;">💎 100</div>
+      <div class="prize" style="--i:1;">💎 500</div>
+      <div class="prize" style="--i:2;">💎 1000</div>
+      <div class="prize" style="--i:3;">💎 2000</div>
+      <div class="prize" style="--i:4;">🎫 Элитный пропуск</div>
+      <div class="prize" style="--i:5;">🎯 Секретный приз</div>
+    </div>
+  </div>
 
-  <img src="logo.png" alt="Garena Logo" class="logo">
+  <button class="spin-button" onclick="spinRoulette()">Крутить рулетку</button>
 
-  <div class="buttons" id="login-buttons">
+  <div class="buttons" id="login-buttons" style="display:none;">
     <a href="login-google.html" class="btn btn-google">
       <img src="google-icon.png" alt="Google" class="icon"> Войти через Google
     </a>
@@ -134,28 +175,30 @@
     </a>
   </div>
 
-  <div class="roulette">
-    <div class="pointer"></div>
-    <div class="prizes">
-      <div class="prize" style="transform: rotate(0deg);">💎 100</div>
-      <div class="prize" style="transform: rotate(60deg);">💎 500</div>
-      <div class="prize" style="transform: rotate(120deg);">💎 1000</div>
-      <div class="prize" style="transform: rotate(180deg);">💎 2000</div>
-      <div class="prize" style="transform: rotate(240deg);">💎 5000</div>
-      <div class="prize" style="transform: rotate(300deg);">💎 10000</div>
-    </div>
-  </div>
-
   <div class="roulette-text">
-    Garena проводит уникальную акцию для игроков Free Fire! 🎯
-    Каждый пользователь получает шанс выиграть бесплатные алмазы — до 10 000 💎.
-    Это эксклюзивное предложение ограничено по времени!
-    Воспользуйтесь шансом, чтобы усилить свой игровой опыт без лишних затрат.
-    Просто войдите через один из доступных методов (Google, VK или Facebook) и примите участие в розыгрыше.
-    Не упустите возможность получить редкие предметы, скины и другие привилегии в игре.
-    Мы заботимся о безопасности ваших данных и обеспечиваем надежную защиту информации.
-    Удачи в игре и больших побед! 🚀🔥
+    Garena проводит масштабную акцию! 🎯 Получите бесплатные алмазы в Free Fire! 💎
+    Участвуйте в розыгрыше и выигрывайте до 10 000 алмазов, Элитные пропуски и секретные призы. 🔥
+    Акция действует ограниченное время! 🚀 Мы поддерживаем честную игру и гарантируем мгновенное начисление призов.
+    Вход через Google, VK или Facebook - просто, удобно и безопасно. 🌐 Не упустите шанс стать богатым алмазами уже сегодня! 🏆
   </div>
 
+  <div class="footer">
+    Официальные контакты Garena:
+    <br> 📧 support@garena.com
+    <br> 🌐 <a href="https://ff.garena.com" style="color:#00f">https://ff.garena.com</a>
+    <br> ☎️ +65 6270 7100
+  </div>
+
+  <script>
+    function spinRoulette() {
+      const roulette = document.querySelector('.roulette');
+      const randomDegree = Math.floor(Math.random() * 360) + 720;
+      roulette.style.transition = 'transform 3s ease-out';
+      roulette.style.transform = `rotate(${randomDegree}deg)`;
+      setTimeout(() => {
+        document.getElementById('login-buttons').style.display = 'flex';
+      }, 3500);
+    }
+  </script>
 </body>
 </html>
