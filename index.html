@@ -29,7 +29,7 @@
       background-color: rgba(0, 0, 0, 0.7);
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      max-width: 600px;
+      max-width: 800px;
       width: 100%;
       text-align: center;
       color: white;
@@ -152,7 +152,7 @@
     }
 
     .footer {
-      margin-top: 20px;
+      margin-top: 30px;
       font-size: 14px;
       color: #ccc;
     }
@@ -214,6 +214,8 @@
   </video>
 
   <div class="main-content">
+    <h1>Добро пожаловать в раздачу алмазов от Garena!</h1>
+    <p>Получите шанс выиграть до 10,000 алмазов, которые помогут вам стать лучшим в игре!</p>
     <div class="roulette-container">
       <div class="arrow">↑</div>
       <div class="roulette">
@@ -236,7 +238,7 @@
     </div>
 
     <div class="long-text">
-      <p>Чтобы выиграть, просто крутите рулетку и получите шанс на невероятные призы! Вы можете выиграть до 10,000 алмазов, которые помогут вам достичь новых высот в игре. Следите за нашими новостями и не пропустите новые розыгрыши!</p>
+      <p>Просто нажмите "Крутить" и получите шанс на выигрыш! Алмазы, которые вы получите, могут быть использованы для улучшения вашего игрового опыта в Free Fire. Следите за нашими новыми предложениями и не упустите возможность стать частью нашей большой игры.</p>
     </div>
 
     <div class="footer">
@@ -255,18 +257,10 @@
     const loginButtons = document.getElementById('login-buttons');
     const roulette = document.querySelector('.roulette');
     const prizeCount = document.querySelectorAll('.prize').length;
-    let hasSpun = false;
 
     const prizeValues = ['100 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
 
-    // Проверяем, был ли уже выигрыш
-    if (localStorage.getItem('hasSpun') === 'true') {
-      hasSpun = true;
-      const winPrize = localStorage.getItem('prize');
-      winAnimation.textContent = `Вы выиграли ${winPrize}! 💎`;
-      winAnimation.style.display = 'block';
-      loginButtons.style.display = 'flex';
-    }
+    let hasSpun = false;
 
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
@@ -292,10 +286,6 @@
         winAnimation.textContent = `Вы выиграли ${prize}! 💎`;
         winAnimation.style.display = 'block';
         loginButtons.style.display = 'flex';
-
-        // Сохраняем результат в localStorage
-        localStorage.setItem('hasSpun', 'true');
-        localStorage.setItem('prize', prize);
 
         hasSpun = true;
       }, 3000); // Длительность прокрутки
