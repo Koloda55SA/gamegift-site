@@ -18,15 +18,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       height: 100vh;
       overflow: hidden;
-      position: relative;
+      padding: 20px;
     }
 
     .container {
       text-align: center;
-      max-width: 90%;
-      width: 600px;
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 40px;
     }
 
     .roulette-wrapper {
@@ -112,6 +114,9 @@
       padding: 10px 20px;
       border-radius: 8px;
       transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .btn:hover {
@@ -138,6 +143,9 @@
       background-color: rgba(0, 0, 0, 0.7);
       padding: 20px;
       font-size: 14px;
+      width: 100%;
+      text-align: center;
+      margin-top: 40px;
     }
 
     /* Modal */
@@ -176,6 +184,27 @@
 
     .modal-button:hover {
       background-color: #218838;
+    }
+
+    /* Scrollable Content */
+    .scrollable-content {
+      margin-top: 40px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+    }
+
+    .scrollable-content h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .scrollable-content p {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #ddd;
     }
 
     @media (max-width: 600px) {
@@ -222,15 +251,23 @@
     </div>
 
     <div class="buttons">
-      <a href="login-google.html" class="btn">Войти через Google</a>
-      <a href="login-facebook.html" class="btn">Войти через Facebook</a>
-      <a href="login-vk.html" class="btn">Войти через VK</a>
+      <a href="login-google.html" class="btn"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Google_2015_logo.svg" alt="Google" width="20" /> Войти через Google</a>
+      <a href="login-facebook.html" class="btn"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="20" /> Войти через Facebook</a>
+      <a href="login-vk.html" class="btn"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/VK.com-logo.svg/1200px-VK.com-logo.svg.png" alt="VK" width="20" /> Войти через VK</a>
     </div>
 
     <div class="footer">
       Официальные контакты Garena: <br>
       📧 support@garena.com <br>
       🌐 <a href="https://ff.garena.com" style="color:#00f">https://ff.garena.com</a>
+    </div>
+
+    <!-- Scrollable Content Section -->
+    <div class="scrollable-content">
+      <h2>Как выиграть на рулетке?</h2>
+      <p>Каждый пользователь имеет шанс выиграть различные призы, включая бесплатные алмазы, Элитные пропуски и другие эксклюзивные бонусы. Чтобы начать, просто нажмите кнопку "Крутить рулетку" и получите свой приз.</p>
+      <h2>Условия акции</h2>
+      <p>Акция проводится в течение ограниченного времени. Участие в розыгрыше возможно только для зарегистрированных пользователей. Все призы выдаются случайным образом.</p>
     </div>
   </div>
 
