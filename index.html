@@ -63,7 +63,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 18px;
+      font-size: 24px;
       font-weight: bold;
       color: #1a1a1a;
       border-radius: 10px;
@@ -209,7 +209,6 @@
         height: 45px;
       }
     }
-
   </style>
 </head>
 <body>
@@ -224,6 +223,7 @@
     <div class="roulette-container">
       <div class="roulette">
         <div class="prize">100 💎</div>
+        <div class="prize">200 💎</div>
         <div class="prize">500 💎</div>
         <div class="prize">1000 💎</div>
         <div class="prize">2000 💎</div>
@@ -277,7 +277,7 @@
     const prizeCount = document.querySelectorAll('.prize').length;
     let hasSpun = false;
 
-    const prizeValues = ['100 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
+    const prizeValues = ['100 💎', '200 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
 
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
