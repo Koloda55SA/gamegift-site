@@ -4,10 +4,183 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Раздача алмазов от Garena</title>
+  <style>
+    /* Общие стили */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+    }
 
-  <!-- Подключаем файл style.css, который включает как стили из CSS, так и скомпилированные SCSS -->
-  <link rel="stylesheet" href="style.css">
-  
+    /* Адаптивный фон для мобильных устройств */
+    @media (max-width: 768px) {
+      body {
+        background: url('https://via.placeholder.com/768x1024') no-repeat center center fixed;
+        background-size: cover;
+      }
+    }
+
+    /* Контейнер для основного контента */
+    .main-content {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* Слайд-шоу */
+    .slideshow {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #ffd700;
+      height: 60px;
+      overflow: hidden;
+    }
+
+    .slideshow div {
+      display: none;
+      animation: slide 3s infinite;
+    }
+
+    @keyframes slide {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Рулетка */
+    .roulette {
+      margin: 20px auto;
+      width: 300px;
+      height: 300px;
+      border: 5px solid #ffd700;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #1a1a1a;
+    }
+
+    .roulette .pointer {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 20px solid #ffd700;
+    }
+
+    .roulette .prizes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform: rotate(0deg);
+      transition: transform 3s ease-out;
+    }
+
+    .roulette .prize {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      transform-origin: 100% 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      color: white;
+    }
+
+    /* Кнопки входа */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-google {
+      background-color: #1a73e8;
+    }
+
+    .btn-google:hover {
+      background-color: #1557b5;
+    }
+
+    .btn-facebook {
+      background-color: #1877f2;
+    }
+
+    .btn-facebook:hover {
+      background-color: #166fe5;
+    }
+
+    .btn-vk {
+      background-color: #0077ff;
+    }
+
+    .btn-vk:hover {
+      background-color: #005bb5;
+    }
+
+    /* Анимация выигрыша */
+    .win-animation {
+      font-size: 28px;
+      color: #ffd700;
+      margin-top: 20px;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Футер */
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .footer a {
+      color: #ffd700;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -57,13 +230,6 @@
   </div>
 
   <script>
-    // Проверяем, был ли уже выигрыш
-    if (localStorage.getItem('hasSpun') === 'true') {
-      document.getElementById('spin-btn').disabled = true;
-      document.getElementById('win-animation').style.display = 'block';
-      document.getElementById('login-buttons').style.display = 'flex';
-    }
-
     // Слайд-шоу
     const slides = document.querySelectorAll('.slideshow div');
     let currentSlide = 0;
@@ -101,9 +267,6 @@
 
         hasSpun = true;
         spinBtn.disabled = true;
-
-        // Сохраняем состояние выигрыша
-        localStorage.setItem('hasSpun', 'true');
       }, 3000);
     });
   </script>
