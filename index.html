@@ -10,33 +10,34 @@
       margin: 0;
       padding: 0;
       font-family: 'Roboto', Arial, sans-serif;
-      background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: white;
-      text-align: center;
+      overflow: hidden; /* Чтобы видео не выходило за пределы экрана */
+      background-color: #000;
     }
 
-    /* Адаптивный фон для мобильных устройств */
-    @media (max-width: 768px) {
-      body {
-        background: url('https://via.placeholder.com/768x1024') no-repeat center center fixed;
-        background-size: cover;
-      }
+    /* Видеофон */
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Заполнение всего экрана */
+      z-index: -1; /* Видео должно быть позади всех элементов */
     }
 
     /* Контейнер для основного контента */
     .main-content {
-      background-color: rgba(0, 0, 0, 0.7);
+      position: relative;
+      z-index: 1; /* Контент будет поверх видео */
       padding: 40px;
+      background-color: rgba(0, 0, 0, 0.7);
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       max-width: 600px;
       width: 100%;
+      text-align: center;
+      color: white;
+      margin: 0 auto;
     }
 
     /* Слайд-шоу */
@@ -63,21 +64,23 @@
     /* Рулетка */
     .roulette {
       margin: 20px auto;
-      width: 300px;
-      height: 300px;
-      border: 5px solid #ffd700;
+      width: 350px;
+      height: 350px;
+      border: 8px solid #ffd700;
       border-radius: 50%;
       position: relative;
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #1a1a1a;
+      background: radial-gradient(circle, #444, #222);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 1s ease;
     }
 
     .roulette .pointer {
       position: absolute;
-      top: 0;
+      top: -20px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
@@ -103,53 +106,53 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 18px;
+      font-size: 22px;
+      font-weight: bold;
       color: white;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
     }
 
-    /* Кнопки входа */
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
+    .roulette .prize:nth-child(1) {
+      background: #ff6347; /* Red */
+      transform: rotate(0deg) skew(30deg);
+    }
+    .roulette .prize:nth-child(2) {
+      background: #ffcc00; /* Yellow */
+      transform: rotate(60deg) skew(30deg);
+    }
+    .roulette .prize:nth-child(3) {
+      background: #32cd32; /* Green */
+      transform: rotate(120deg) skew(30deg);
+    }
+    .roulette .prize:nth-child(4) {
+      background: #1e90ff; /* Blue */
+      transform: rotate(180deg) skew(30deg);
+    }
+    .roulette .prize:nth-child(5) {
+      background: #8a2be2; /* Purple */
+      transform: rotate(240deg) skew(30deg);
+    }
+    .roulette .prize:nth-child(6) {
+      background: #ff1493; /* Pink */
+      transform: rotate(300deg) skew(30deg);
     }
 
-    .btn {
-      width: 100%;
+    /* Кнопка для кручения */
+    #spin-btn {
+      width: 200px;
       padding: 12px;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
+      font-size: 20px;
+      background-color: #ffd700;
+      color: #222;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      color: white;
-      text-align: center;
-      text-decoration: none;
+      margin-top: 20px;
     }
 
-    .btn-google {
-      background-color: #1a73e8;
-    }
-
-    .btn-google:hover {
-      background-color: #1557b5;
-    }
-
-    .btn-facebook {
-      background-color: #1877f2;
-    }
-
-    .btn-facebook:hover {
-      background-color: #166fe5;
-    }
-
-    .btn-vk {
-      background-color: #0077ff;
-    }
-
-    .btn-vk:hover {
-      background-color: #005bb5;
+    #spin-btn:hover {
+      background-color: #d8a500;
     }
 
     /* Анимация выигрыша */
@@ -180,10 +183,33 @@
     .footer a:hover {
       text-decoration: underline;
     }
+
+    /* Для мобильных устройств */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 20px;
+      }
+
+      .roulette {
+        width: 250px;
+        height: 250px;
+      }
+
+      #spin-btn {
+        width: 100%;
+        font-size: 18px;
+      }
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Видео на фоне -->
+  <video autoplay muted loop class="video-background">
+    <source src="video.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+  </video>
+
   <div class="main-content">
     <!-- Слайд-шоу -->
     <div class="slideshow">
@@ -196,23 +222,23 @@
     <div class="roulette">
       <div class="pointer"></div>
       <div class="prizes">
-        <div class="prize" style="transform: rotate(0deg) skew(30deg);">100</div>
-        <div class="prize" style="transform: rotate(60deg) skew(30deg);">500</div>
-        <div class="prize" style="transform: rotate(120deg) skew(30deg);">1000</div>
-        <div class="prize" style="transform: rotate(180deg) skew(30deg);">2000</div>
-        <div class="prize" style="transform: rotate(240deg) skew(30deg);">5000</div>
-        <div class="prize" style="transform: rotate(300deg) skew(30deg);">10000</div>
+        <div class="prize">100</div>
+        <div class="prize">500</div>
+        <div class="prize">1000</div>
+        <div class="prize">2000</div>
+        <div class="prize">5000</div>
+        <div class="prize">10000</div>
       </div>
     </div>
 
     <!-- Кнопка крутить -->
-    <button id="spin-btn" class="btn btn-google">Крутить рулетку</button>
+    <button id="spin-btn">Крутить рулетку</button>
 
     <!-- Анимация выигрыша -->
     <div id="win-animation" class="win-animation" style="display: none;"></div>
 
     <!-- Кнопки входа -->
-    <div class="buttons" id="login-buttons" style="display: none;">
+    <div id="login-buttons" class="buttons" style="display: none;">
       <a href="login-google.html" class="btn btn-google">Войти через Google</a>
       <a href="login-facebook.html" class="btn btn-facebook">Войти через Facebook</a>
       <a href="login-vk.html" class="btn btn-vk">Войти через VK</a>
