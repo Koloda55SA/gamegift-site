@@ -104,6 +104,26 @@
       display: none;
     }
 
+    .share-options {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .share-options button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #555;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .share-options button:hover {
+      background-color: #4CAF50;
+    }
+
     @media (max-width: 768px) {
       .task-button {
         width: 100%;
@@ -127,11 +147,11 @@
     </div>
 
     <div id="task-1">
-      <button class="task-button waiting" id="task-btn-1" onclick="startTask('task-1', 'https://ify.ac/1YsR')">Перейти по ссылке и подписаться на Telegram канал</button>
+      <button class="task-button waiting" id="task-btn-1" onclick="startTask('task-1', 'https://t.me/ify_ac')">Перейти по ссылке и подписаться на Telegram канал</button>
     </div>
 
     <div id="task-2">
-      <button class="task-button waiting" id="task-btn-2" onclick="shareWithFriends()">Поделиться с 10 друзьями</button>
+      <button class="task-button waiting" id="task-btn-2" onclick="showShareOptions()">Поделиться с 10 друзьями</button>
     </div>
 
     <div class="long-text">
@@ -183,21 +203,60 @@
       window.open(link, '_blank');
     }
 
-    // Функция для отправки сообщения в Telegram
-    function shareWithFriends() {
-      const message = "Привет! Заходи и выполняй задания, забери свои 2000 алмазов здесь: https://gamegift.live/";
-      const url = `https://t.me/share/url?url=${encodeURIComponent("https://gamegift.live/")}&text=${encodeURIComponent(message)}`;
+    // Показываем всплывающее окно для выбора мессенджера
+    function showShareOptions() {
+      const shareOptions = document.createElement('div');
+      shareOptions.classList.add('share-options');
+      
+      // Кнопки для выбора мессенджера
+      const whatsappButton = document.createElement('button');
+      whatsappButton.innerText = 'Поделиться в WhatsApp';
+      whatsappButton.onclick = () => shareMessage('whatsapp');
+      
+      const telegramButton = document.createElement('button');
+      telegramButton.innerText = 'Поделиться в Telegram';
+      telegramButton.onclick = () => shareMessage('telegram');
+      
+      const vkButton = document.createElement('button');
+      vkButton.innerText = 'Поделиться в VK';
+      vkButton.onclick = () => shareMessage('vk');
+      
+      // Добавляем кнопки в DOM
+      shareOptions.appendChild(whatsappButton);
+      shareOptions.appendChild(telegramButton);
+      shareOptions.appendChild(vkButton);
+      
+      // Добавляем блок с выбором мессенджера
+      document.querySelector('.main-content').appendChild(shareOptions);
+    }
 
-      // Открытие ссылки для отправки сообщения в Telegram
+    // Функция для отправки сообщения в выбранный мессенджер
+    function shareMessage(platform) {
+      const message = "Привет! Заходи и выполняй задания, забери свои 2000 алмазов здесь: https://gamegift.live/";
+
+      let url;
+      if (platform === 'whatsapp') {
+        url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      } else if (platform === 'telegram') {
+        url = `https://t.me/share/url?url=${encodeURIComponent("https://your-site-link.com")}&text=${encodeURIComponent(message)}`;
+      } else if (platform === 'vk') {
+        url = `https://vk.com/share.php?url=${encodeURIComponent("https://your-site-link.com")}&title=${encodeURIComponent(message)}`;
+      }
+
+      // Открытие ссылки для отправки сообщения
       window.open(url, '_blank');
 
+      // Убираем блок с выбором мессенджера
+      document.querySelector('.share-options').remove();
+
+      // Обновляем состояние кнопки
       const taskButton = document.getElementById('task-btn-2');
       taskButton.classList.remove('waiting');
       taskButton.classList.add('completed');
       taskButton.innerText = 'Задание выполнено!';
       
       completedTasks++;
-      
+
       if (completedTasks === 2) {
         setTimeout(() => {
           document.getElementById('reward-section').classList.remove('hidden');
