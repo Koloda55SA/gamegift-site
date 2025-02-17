@@ -83,11 +83,7 @@
       font-weight: bold;
       color: #1a1a1a;
       cursor: pointer;
-      position: absolute;
-      z-index: 2;
-      bottom: -60px;
-      left: 50%;
-      transform: translateX(-50%);
+      margin-top: 20px; /* Добавим отступ сверху */
       transition: background-color 0.3s;
     }
 
@@ -152,7 +148,7 @@
     }
 
     .footer {
-      margin-top: 30px;
+      margin-top: 20px;
       font-size: 14px;
       color: #ccc;
     }
@@ -172,21 +168,6 @@
       margin-top: 30px;
       text-align: center;
       line-height: 1.6;
-    }
-
-    .arrow {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 50px;
-      color: black;
-      animation: bounce-arrow 1s infinite;
-    }
-
-    @keyframes bounce-arrow {
-      0%, 100% { transform: translateX(-50%) rotate(0deg); }
-      50% { transform: translateX(-50%) rotate(15deg); }
     }
 
     @media (max-width: 768px) {
@@ -214,10 +195,7 @@
   </video>
 
   <div class="main-content">
-    <h1>Добро пожаловать в раздачу алмазов от Garena!</h1>
-    <p>Получите шанс выиграть до 10,000 алмазов, которые помогут вам стать лучшим в игре!</p>
     <div class="roulette-container">
-      <div class="arrow">↑</div>
       <div class="roulette">
         <div class="prize">100 💎</div>
         <div class="prize">500 💎</div>
@@ -227,8 +205,7 @@
         <div class="prize">10000 💎</div>
       </div>
     </div>
-
-    <!-- Кнопка Крутить -->
+    <!-- Кнопка Крутить теперь находится под рулеткой -->
     <div class="center-button" id="spin-btn">Крутить</div>
 
     <div id="win-animation" class="win-animation" style="display: none;"></div>
@@ -240,7 +217,7 @@
     </div>
 
     <div class="long-text">
-      <p>Просто нажмите "Крутить" и получите шанс на выигрыш! Алмазы, которые вы получите, могут быть использованы для улучшения вашего игрового опыта в Free Fire. Следите за нашими новыми предложениями и не упустите возможность стать частью нашей большой игры.</p>
+      <p>Чтобы выиграть, просто крутите рулетку и получите шанс на невероятные призы! Вы можете выиграть до 10,000 алмазов, которые помогут вам достичь новых высот в игре. Следите за нашими новостями и не пропустите новые розыгрыши!</p>
     </div>
 
     <div class="footer">
@@ -259,10 +236,9 @@
     const loginButtons = document.getElementById('login-buttons');
     const roulette = document.querySelector('.roulette');
     const prizeCount = document.querySelectorAll('.prize').length;
+    let hasSpun = false;
 
     const prizeValues = ['100 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
-
-    let hasSpun = false;
 
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
@@ -284,12 +260,12 @@
         roulette.style.transition = 'transform 0s';
         roulette.style.transform = `translateX(-${randomIndex * totalWidth}px)`;
 
-        const prize = prizeValues[randomIndex];
-        winAnimation.textContent = `Вы выиграли ${prize}! 💎`;
+        winAnimation.textContent = `Вы выиграли ${prizeValues[randomIndex]}! 💎`;
         winAnimation.style.display = 'block';
         loginButtons.style.display = 'flex';
 
         hasSpun = true;
+        spinBtn.disabled = true;
       }, 3000); // Длительность прокрутки
     });
   </script>
