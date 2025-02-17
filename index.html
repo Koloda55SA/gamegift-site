@@ -144,44 +144,22 @@
   </div>
 
   <script>
-    // Слайд-шоу
-    const slides = document.querySelectorAll('.slideshow div');
-    let currentSlide = 0;
-
-    function showSlide() {
-      slides.forEach((slide, index) => {
-        slide.style.display = index === currentSlide ? 'block' : 'none';
-      });
-      currentSlide = (currentSlide + 1) % slides.length;
-    }
-
-    setInterval(showSlide, 3000);
-
-    // Рулетка
+    const roulette = document.getElementById('roulette');
     const spinBtn = document.getElementById('spin-btn');
-    const prizes = document.querySelector('.prizes');
     const winAnimation = document.getElementById('win-animation');
-    const loginButtons = document.getElementById('login-buttons');
-    let hasSpun = false;
+    const prizes = ['100', '500', '1000', '2000', '5000', '10000'];
 
     spinBtn.addEventListener('click', () => {
-      if (hasSpun) return;
-
-      const randomDegree = Math.floor(Math.random() * 360) + 1080; // Минимум 3 полных оборота
-      prizes.style.transform = `rotate(${randomDegree}deg)`;
+      const randomDegree = 360 * 5 + Math.floor(Math.random() * 360);
+      roulette.style.transform = `rotate(${randomDegree}deg)`;
 
       setTimeout(() => {
-        const prize = Math.floor((randomDegree % 360) / 60);
-        const prizeValues = [100, 500, 1000, 2000, 5000, 10000];
-        const winAmount = prizeValues[prize];
-
-        winAnimation.textContent = `Вы выиграли ${winAmount} алмазов! 💎`;
+        const finalDegree = randomDegree % 360;
+        const sector = Math.floor(finalDegree / 60);
+        const prize = prizes[(6 - sector) % 6];
+        winAnimation.textContent = `Вы выиграли ${prize} алмазов!`;
         winAnimation.style.display = 'block';
-        loginButtons.style.display = 'flex';
-
-        hasSpun = true;
-        spinBtn.disabled = true;
-      }, 3000);
+      }, 4500);
     });
   </script>
 </body>
