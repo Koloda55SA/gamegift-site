@@ -15,7 +15,8 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
     }
 
     .roulette {
@@ -30,11 +31,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
     .roulette .pointer {
       position: absolute;
-      top: -20px;
+      top: -25px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
@@ -51,7 +53,7 @@
       left: 50%;
       transform-origin: 0 0;
       color: #fff;
-      font-size: 22px;
+      font-size: 18px;
       text-shadow: 1px 1px 2px #000;
     }
 
@@ -63,8 +65,6 @@
       background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
       font-size: 16px;
     }
 
@@ -73,6 +73,12 @@
       justify-content: center;
       margin: 20px 0;
       flex-wrap: wrap;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .buttons.show {
+      opacity: 1;
     }
 
     .btn {
@@ -84,9 +90,9 @@
       margin: 15px;
       border-radius: 10px;
       color: #fff;
-      font-size: 20px;
+      font-size: 18px;
       width: 200px;
-      transition: background-color 0.3s;
+      transition: transform 0.3s ease, background-color 0.3s ease;
       box-shadow: 0 4px 6px rgba(0,0,0,0.5);
     }
 
@@ -104,6 +110,7 @@
 
     .btn:hover {
       opacity: 0.85;
+      transform: scale(1.05);
     }
 
     .icon {
@@ -113,29 +120,27 @@
     }
 
     .spin-button {
-      margin-top: 20px;
-      padding: 15px 30px;
+      position: absolute;
+      background-color: #28a745;
+      color: #fff;
+      padding: 20px 40px;
       font-size: 22px;
       border: none;
       border-radius: 12px;
-      background-color: #28a745;
-      color: #fff;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.3s;
+      z-index: 10;
     }
 
     .spin-button:hover {
       background-color: #218838;
+      transform: scale(1.1);
     }
 
     .footer {
       background-color: rgba(0, 0, 0, 0.7);
       padding: 20px;
       font-size: 14px;
-    }
-
-    .prizes .prize:nth-child(odd) {
-      border-right: 2px solid #fff;
     }
 
     .prizes .prize {
@@ -145,6 +150,32 @@
       justify-content: center;
       align-items: center;
       transform: rotate(calc(var(--i) * 60deg)) translateY(-140px);
+      position: absolute;
+    }
+
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+      .roulette {
+        width: 250px;
+        height: 250px;
+      }
+
+      .spin-button {
+        font-size: 18px;
+        padding: 15px 30px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 80%;
+      }
+
+      .roulette-text {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -159,11 +190,10 @@
       <div class="prize" style="--i:4;">🎫 Элитный пропуск</div>
       <div class="prize" style="--i:5;">🎯 Секретный приз</div>
     </div>
+    <button class="spin-button" onclick="spinRoulette()">Крутить рулетку</button>
   </div>
 
-  <button class="spin-button" onclick="spinRoulette()">Крутить рулетку</button>
-
-  <div class="buttons" id="login-buttons" style="display:none;">
+  <div class="buttons" id="login-buttons">
     <a href="login-google.html" class="btn btn-google">
       <img src="google-icon.png" alt="Google" class="icon"> Войти через Google
     </a>
@@ -195,9 +225,11 @@
       const randomDegree = Math.floor(Math.random() * 360) + 720;
       roulette.style.transition = 'transform 3s ease-out';
       roulette.style.transform = `rotate(${randomDegree}deg)`;
+
       setTimeout(() => {
-        document.getElementById('login-buttons').style.display = 'flex';
-      }, 3500);
+        const loginButtons = document.getElementById('login-buttons');
+        loginButtons.classList.add('show');
+      }, 3000); // Уменьшено время задержки до конца анимации
     }
   </script>
 </body>
