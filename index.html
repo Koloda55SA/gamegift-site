@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,6 +101,41 @@
         .comment .text {
             flex: 1;
         }
+        .comment-form {
+            margin-top: 20px;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .comment-form button {
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            text-align: center;
+        }
+        .footer a {
+            color: #ffd700;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -135,6 +170,17 @@
 
         <div class="comments" id="comments">
             <h4>Отзывы пользователей</h4>
+            <div class="comment-form">
+                <textarea id="commentInput" placeholder="Напишите ваш комментарий..."></textarea>
+                <button onclick="addComment()">Отправить</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Официальные контакты:</p>
+            <a href="https://www.facebook.com/garena" target="_blank">Facebook</a>
+            <a href="https://www.garena.sg" target="_blank">Веб-сайт</a>
+            <p>Адрес: 5 Tampines Central 1, Singapore 529541</p>
         </div>
     </div>
 
@@ -169,15 +215,27 @@
             }
         }
 
-        function generateComments() {
+        // Функция для загрузки случайных комментариев
+        async function loadRandomComments() {
             const commentsContainer = document.getElementById('comments');
-            const names = ['Иван', 'Мария', 'Петр', 'Алина', 'Сергей', 'Оксана', 'Дмитрий', 'Ксения', 'Артем', 'Екатерина'];
-            const avatars = [
-                'https://via.placeholder.com/50?text=U1',
-                'https://via.placeholder.com/50?text=U2',
-                'https://via.placeholder.com/50?text=U3',
-                'https://via.placeholder.com/50?text=U4'
-            ];
+            const response = await fetch('https://randomuser.me/api/?results=5');
+            const data = await response.json();
+            data.results.forEach(user => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment';
+                commentEl.innerHTML = `
+                    <img src="${user.picture.thumbnail}" alt="avatar">
+                    <div class="text">
+                        <strong>${user.name.first} ${user.name.last} (${user.location.country})</strong>: 
+                        ${generateRandomComment()}
+                    </div>
+                `;
+                commentsContainer.appendChild(commentEl);
+            });
+        }
+
+        // Функция для генерации случайного комментария
+        function generateRandomComment() {
             const comments = [
                 'Отличный сервис! Всё честно, алмазы пришли быстро!',
                 'Не ожидал, что так легко можно получить алмазы. Спасибо!',
@@ -190,19 +248,56 @@
                 'Теперь могу радовать себя и друзей подарками в игре!',
                 'Спасибо разработчикам! Всё на высшем уровне.'
             ];
+            return comments[Math.floor(Math.random() * comments.length)];
+        }
 
-            for (let i = 0; i < 5; i++) {
-                const randomName = names[Math.floor(Math.random() * names.length)];
-                const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
-                const randomComment = comments[Math.floor(Math.random() * comments.length)];
+        // Функция для добавления комментария
+        function addComment() {
+            const commentInput = document.getElementById('commentInput');
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                const commentsContainer = document.getElementById('comments');
                 const commentEl = document.createElement('div');
                 commentEl.className = 'comment';
-                commentEl.innerHTML = `<img src="${randomAvatar}" alt="avatar"><div class="text"><strong>${randomName}</strong>: ${randomComment}</div>`;
+                commentEl.innerHTML = `
+                    <img src="https://via.placeholder.com/50?text=U" alt="avatar">
+                    <div class="text">
+                        <strong>Вы</strong>: ${commentText}
+                    </div>
+                `;
                 commentsContainer.appendChild(commentEl);
+                commentInput.value = '';
+                saveComment(commentText);
             }
         }
 
-        generateComments();
+        // Функция для сохранения комментария в локальное хранилище
+        function saveComment(comment) {
+            let comments = JSON.parse(localStorage.getItem('comments')) || [];
+            comments.push(comment);
+            localStorage.setItem('comments', JSON.stringify(comments));
+        }
+
+        // Функция для загрузки сохраненных комментариев
+        function loadSavedComments() {
+            const commentsContainer = document.getElementById('comments');
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            comments.forEach(comment => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment';
+                commentEl.innerHTML = `
+                    <img src="https://via.placeholder.com/50?text=U" alt="avatar">
+                    <div class="text">
+                        <strong>Вы</strong>: ${comment}
+                    </div>
+                `;
+                commentsContainer.appendChild(commentEl);
+            });
+        }
+
+        // Загрузка случайных комментариев и сохраненных
+        loadRandomComments();
+        loadSavedComments();
     </script>
 </body>
 </html>
