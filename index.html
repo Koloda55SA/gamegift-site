@@ -1,262 +1,289 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Garena Free Fire Рулетка</title>
+  <title>Рулетка</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&display=swap" rel="stylesheet">
   <style>
-    body {
+    /* Основные стили */
+    html, body {
+      font-family: 'Dongle', sans-serif;
       margin: 0;
       padding: 0;
-      background: url('photo1.jpg') no-repeat center center/cover;
-      font-family: 'Roboto', sans-serif;
-      color: #fff;
-      text-align: center;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      height: 100%;
     }
-
-    .roulette {
-      margin: 40px auto;
-      width: 320px;
-      height: 320px;
-      border: 5px solid #fff;
-      border-radius: 50%;
-      background: rgba(26, 26, 26, 0.3);
-      backdrop-filter: blur(5px);
+    
+    .text-container {
+      z-index: 100;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+      justify-content: center;
+      align-items: center;
+      font-size: 96px;
+      color: white;
+      opacity: 0.8;
+      user-select: none;
+      text-shadow: 1px 1px rgba(0,0,0,0.1);
+    }
+    
+    :root {
+      --color-bg1: rgb(108, 0, 162);
+      --color-bg2: rgb(0, 17, 82);
+      --color1: 18, 113, 255;
+      --color2: 221, 74, 255;
+      --color3: 100, 220, 255;
+      --color4: 200, 50, 50;
+      --color5: 180, 180, 50;
+      --color-interactive: 140, 100, 255;
+      --circle-size: 80%;
+      --blending: hard-light;
+    }
+    
+    @keyframes moveInCircle {
+      0% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    
+    @keyframes moveVertical {
+      0% {
+        transform: translateY(-50%);
+      }
+      50% {
+        transform: translateY(50%);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+    
+    @keyframes moveHorizontal {
+      0% {
+        transform: translateX(-50%) translateY(-10%);
+      }
+      50% {
+        transform: translateX(50%) translateY(10%);
+      }
+      100% {
+        transform: translateX(-50%) translateY(-10%);
+      }
+    }
+    
+    /* Стиль заднего фона */
+    .gradient-bg {
+      width: 100vw;
+      height: 100vh;
       position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+      top: 0;
+      left: 0;
     }
-
-    .roulette .pointer {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-top: 30px solid #ffd700;
-      z-index: 2;
-    }
-
-    .prizes .prize {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0 0;
-      color: #fff;
-      font-size: 22px;
-      text-shadow: 1px 1px 2px #000;
-    }
-
-    .roulette-text {
-      margin-top: 20px;
-      padding: 15px;
-      color: #fff;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 16px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      padding: 15px 20px;
-      margin: 15px;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 20px;
-      width: 200px;
-      transition: background-color 0.3s;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
-    }
-
-    .btn-google {
-      background-color: #db4437;
-    }
-
-    .btn-facebook {
-      background-color: #1877f2;
-    }
-
-    .btn-vk {
-      background-color: #4c75a3;
-    }
-
-    .btn:hover {
-      opacity: 0.85;
-    }
-
-    .icon {
-      width: 30px;
-      height: 30px;
-      margin-right: 12px;
-    }
-
-    .spin-button {
-      margin-top: 20px;
-      padding: 15px 30px;
-      font-size: 22px;
-      border: none;
-      border-radius: 12px;
-      background-color: #28a745;
-      color: #fff;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .spin-button:hover {
-      background-color: #218838;
-    }
-
-    .footer {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      font-size: 14px;
-    }
-
-    .prizes .prize:nth-child(odd) {
-      border-right: 2px solid #fff;
-    }
-
-    .prizes .prize {
-      width: 100px;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transform: rotate(calc(var(--i) * 60deg)) translateY(-140px);
-    }
-
-    /* Модальное окно */
-    .modal {
-      display: none;
+    
+    .gradient-bg svg {
       position: fixed;
       top: 0;
       left: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .gradient-bg .gradients-container {
+      filter: url(#goo) blur(40px);
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
+    }
+    
+    .gradient-bg .g1 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: center center;
+      animation: moveVertical 30s ease infinite;
+      opacity: 1;
+    }
+    
+    .gradient-bg .g2 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: calc(50% - 400px);
+      animation: moveInCircle 20s reverse infinite;
+      opacity: 1;
+    }
+    
+    .gradient-bg .g3 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2 + 200px);
+      left: calc(50% - var(--circle-size) / 2 - 500px);
+      transform-origin: calc(50% + 400px);
+      animation: moveInCircle 40s linear infinite;
+      opacity: 1;
+    }
+    
+    .gradient-bg .g4 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: calc(50% - 200px);
+      animation: moveHorizontal 40s ease infinite;
+      opacity: 0.7;
+    }
+    
+    .gradient-bg .g5 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: calc(var(--circle-size) * 2);
+      height: calc(var(--circle-size) * 2);
+      top: calc(50% - var(--circle-size));
+      left: calc(50% - var(--circle-size));
+      transform-origin: calc(50% - 800px) calc(50% + 200px);
+      animation: moveInCircle 20s ease infinite;
+      opacity: 1;
+    }
+    
+    .gradient-bg .interactive {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: 100%;
+      height: 100%;
+      top: -50%;
+      left: -50%;
+      opacity: 0.7;
     }
 
-    .modal-content {
-      background: #333;
-      padding: 30px;
-      border-radius: 10px;
-      color: #fff;
+    /* Дизайн кнопок */
+    .btn {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 20px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .btn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .button-container {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
       text-align: center;
     }
 
-    .modal-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #28a745;
-      border: none;
+    /* Стиль модального окна */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
       border-radius: 10px;
-      color: #fff;
-      font-size: 18px;
-      cursor: pointer;
+      z-index: 1000;
+      text-align: center;
     }
-
-    .modal-button:hover {
-      background-color: #218838;
+    
+    .modal.show {
+      display: block;
+    }
+    
+    .modal .btn {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="roulette">
-    <div class="pointer"></div>
-    <div class="prizes">
-      <div class="prize" style="--i:0;">💎 100</div>
-      <div class="prize" style="--i:1;">💎 500</div>
-      <div class="prize" style="--i:2;">💎 1000</div>
-      <div class="prize" style="--i:3;">💎 2000</div>
-      <div class="prize" style="--i:4;">🎫 Элитный пропуск</div>
-      <div class="prize" style="--i:5;">🎯 Секретный приз</div>
+
+  <div class="gradient-bg">
+    <div class="g1"></div>
+    <div class="g2"></div>
+    <div class="g3"></div>
+    <div class="g4"></div>
+    <div class="g5"></div>
+    <div class="interactive"></div>
+  </div>
+
+  <div class="text-container">
+    <div class="wheel">
+      <!-- Ваша рулетка здесь -->
     </div>
   </div>
 
-  <button class="spin-button" onclick="spinRoulette()">Крутить рулетку</button>
+  <div class="button-container">
+    <button class="btn" onclick="spinWheel()">Крутить</button>
+  </div>
 
   <!-- Модальное окно -->
-  <div class="modal" id="winModal">
-    <div class="modal-content">
-      <h2>Ура! Вы выиграли!</h2>
-      <p>Поздравляем, вы выиграли 🎁 1000 алмазов!</p>
-      <div class="buttons">
-        <a href="login-google.html" class="btn btn-google">
-          <img src="google-icon.png" alt="Google" class="icon"> Войти через Google
-        </a>
-        <a href="login-facebook.html" class="btn btn-facebook">
-          <img src="facebook-icon.png" alt="Facebook" class="icon"> Войти через Facebook
-        </a>
-        <a href="login-vk.html" class="btn btn-vk">
-          <img src="vk-icon.png" alt="VK" class="icon"> Войти через VK
-        </a>
-      </div>
-      <button class="modal-button" onclick="closeModal()">Закрыть</button>
-    </div>
-  </div>
-
-  <div class="footer">
-    Официальные контакты Garena:
-    <br> 📧 support@garena.com
-    <br> 🌐 <a href="https://ff.garena.com" style="color:#00f">https://ff.garena.com</a>
-    <br> ☎️ +65 6270 7100
+  <div id="winModal" class="modal">
+    <p>Ура, вы выиграли!</p>
+    <button class="btn">Войти через Google</button>
+    <button class="btn">Войти через VK</button>
+    <button class="btn">Войти через Facebook</button>
   </div>
 
   <script>
-    let hasWon = localStorage.getItem('hasWon') === 'true'; // Проверяем, если пользователь уже выиграл
+    // Скрипт для рулетки и модального окна
+    let hasWon = false;
 
-    if (hasWon) {
-      document.querySelector('.spin-button').disabled = true; // Блокируем кнопку
-      showWinModal(); // Показываем окно выигрыша
+    function spinWheel() {
+      if (hasWon) return;
+
+      // Код вращения рулетки
+      // ...
+
+      // Показать выигрышное сообщение
+      hasWon = true;
+      document.getElementById('winModal').classList.add('show');
     }
 
-    function spinRoulette() {
-      if (hasWon) return; // Если уже выиграли, не даем крутить
-
-      const roulette = document.querySelector('.roulette');
-      const randomDegree = Math.floor(Math.random() * 360) + 720;
-      roulette.style.transition = 'transform 3s ease-out';
-      roulette.style.transform = `rotate(${randomDegree}deg)`;
-
-      setTimeout(() => {
-        hasWon = true;
-        localStorage.setItem('hasWon', 'true'); // Сохраняем в localStorage, чтобы не крутить снова
-        document.querySelector('.spin-button').disabled = true; // Блокируем кнопку
-        showWinModal(); // Показываем окно выигрыша
-      }, 3500);
+    // Убедитесь, что модальное окно не исчезает при перезагрузке
+    if (localStorage.getItem('hasWon')) {
+      hasWon = true;
+      document.getElementById('winModal').classList.add('show');
     }
 
-    function showWinModal() {
-      document.getElementById('winModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('winModal').style.display = 'none';
-    }
+    // Сохраняем состояние выигрыша
+    window.onbeforeunload = function() {
+      if (hasWon) {
+        localStorage.setItem('hasWon', true);
+      }
+    };
   </script>
 </body>
 </html>
