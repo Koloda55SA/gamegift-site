@@ -3,206 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameGift Live</title>
+    <title>GameGift - Заработай алмазы</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            color: white;
-            font-family: 'Arial', sans-serif;
             overflow-x: hidden;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 1px 1px 2px #000;
+            font-family: 'Arial', sans-serif;
         }
-        .background-video {
+        .video-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
             z-index: -1;
+            object-fit: cover;
         }
         .overlay {
             position: relative;
             min-height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 50px 20px;
-            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            box-sizing: border-box;
         }
-        .main-text {
+        .headline {
             font-size: 3em;
-            color: black;
-            background-color: rgba(255, 255, 255, 0.6);
-            padding: 30px;
-            margin-bottom: 40px;
-            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            color: #fff;
+            text-transform: uppercase;
         }
         .tasks {
-            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
         }
         .task-button {
-            display: block;
-            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            width: 80%;
-            background: #007BFF;
-            color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
             font-size: 1.5em;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.5s;
         }
         .task-button.completed {
-            background: green;
+            background: linear-gradient(135deg, #28a745, #218838);
         }
         .login-buttons {
             display: none;
-            margin-top: 40px;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
         }
         .login-button {
-            margin: 10px;
-            padding: 20px;
-            background: #333;
-            color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 1.5em;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            background-size: cover;
             cursor: pointer;
+            transition: transform 0.3s;
         }
-        .about {
-            margin-top: 60px;
+        .login-button:hover {
+            transform: scale(1.1);
+        }
+        .about-text {
+            margin: 50px auto;
+            max-width: 800px;
+            text-align: justify;
+            font-size: 1.1em;
             opacity: 0.5;
-            text-align: left;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
         }
-        .comments {
+        .comments-section {
             margin-top: 40px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .comment {
-            margin: 10px 0;
+            margin: 15px 0;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             display: flex;
             align-items: center;
+            gap: 10px;
         }
-        .comment img {
+        .comment-avatar {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            margin-right: 15px;
+            object-fit: cover;
         }
-        .comment .text {
+        .comment-text {
             flex: 1;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
-    <video class="background-video" autoplay muted loop>
+    <video class="video-background" autoplay muted loop>
         <source src="video.mp4" type="video/mp4">
     </video>
+
     <div class="overlay">
-        <div class="main-text">Сделай задания и выиграй 2000 алмазов!</div>
-        
+        <div class="headline">Сделай задания и выиграй 2000 алмазов!</div>
+
         <div class="tasks">
-            <button class="task-button" id="task1" onclick="completeTask('task1')">Посетить Telegram-канал</button>
+            <button class="task-button" id="task1" onclick="startTask('task1', 'https://ify.ac/1YsR')">Перейти и подписаться на канал</button>
             <button class="task-button" id="task2" onclick="shareWithFriends()">Поделиться с друзьями</button>
         </div>
 
-        <div class="login-buttons" id="loginButtons">
-            <button class="login-button" onclick="window.location.href='login-google.html'">Войти через Google</button>
-            <button class="login-button" onclick="window.location.href='login-facebook.html'">Войти через Facebook</button>
-            <button class="login-button" onclick="window.location.href='login-vk.html'">Войти через ВК</button>
+        <div class="login-buttons" id="login-buttons">
+            <button class="login-button" style="background-image: url('google.png');" onclick="window.location.href='login-google.html'"></button>
+            <button class="login-button" style="background-image: url('facebook.png');" onclick="window.location.href='login-facebook.html'"></button>
+            <button class="login-button" style="background-image: url('vk.png');" onclick="window.location.href='login-vk.html'"></button>
         </div>
 
-        <div class="about">
-            <h3>О нашем сервисе</h3>
-            <p>
-                Мы работаем уже 2 года, предоставляя игрокам возможность получать бесплатные алмазы за выполнение простых заданий. 
-                За это время более 10 000 пользователей получили свои награды. Наша платформа обеспечивает безопасность и анонимность, 
-                так как мы никогда не запрашиваем лишние данные и не передаем информацию третьим лицам. Наши партнёры – ведущие 
-                разработчики мобильных игр, которые помогают нам поддерживать проект. Просто выполните задания, поделитесь с друзьями 
-                и получите свои алмазы. 
-                Мы ценим ваше доверие и гарантируем честность в работе. Попробуйте – и вы убедитесь сами!
-            </p>
+        <div class="about-text">
+            Наша платформа работает уже более 2 лет, выдавая алмазы игрокам Free Fire за простые задания. Мы уже выдали награды более 10 000 пользователей и продолжаем развиваться, сохраняя безопасность и надежность нашего сервиса...
         </div>
 
-        <div class="comments" id="comments">
-            <h4>Отзывы пользователей</h4>
+        <div class="comments-section" id="comments"></div>
+
+        <div class="footer">
+            © 2025 GameGift. Адрес Garena, контакты, соцсети.
         </div>
     </div>
 
     <script>
-        let tasksCompleted = 0;
+        const comments = [
+            'Получил алмазы, спасибо!',
+            'Крутая тема, уже закинул друзьям!',
+            'Все работает, получил 2000 алмазов!',
+            'Не верил, но реально пришли!',
+            'Топ сайт для халявы!',
+            'Ребята, это реально работает!',
+            'Алмазы пришли через 5 минут, супер!'
+        ];
 
-        function completeTask(id) {
-            const button = document.getElementById(id);
-            button.disabled = true;
+        function loadComments() {
+            const container = document.getElementById('comments');
+            container.innerHTML = '';
+            const shuffled = comments.sort(() => 0.5 - Math.random()).slice(0, 5);
+            shuffled.forEach(text => {
+                const comment = document.createElement('div');
+                comment.className = 'comment';
+                const avatar = document.createElement('img');
+                avatar.className = 'comment-avatar';
+                avatar.src = `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 100)}.jpg`;
+                const textDiv = document.createElement('div');
+                textDiv.className = 'comment-text';
+                textDiv.textContent = text;
+                comment.appendChild(avatar);
+                comment.appendChild(textDiv);
+                container.appendChild(comment);
+            });
+        }
+
+        function startTask(id, url) {
+            window.open(url, '_blank');
             setTimeout(() => {
-                button.classList.add('completed');
-                tasksCompleted++;
+                document.getElementById(id).classList.add('completed');
                 checkTasks();
             }, 10000);
-            window.open('https://ify.ac/1YsR', '_blank');
         }
 
         function shareWithFriends() {
-            const text = encodeURIComponent('Привет! 🎉 Я уже получил свои 2000 алмазов за простые задания. Попробуй и ты! 👉 https://gamegift.live/');
-            const telegramUrl = `https://t.me/share/url?url=${text}`;
-            window.open(telegramUrl, '_blank');
+            const text = encodeURIComponent('Привет! Я нашел крутой сайт, где можно получить 2000 алмазов бесплатно! Переходи по ссылке: https://gamegift.live/');
+            const url = `https://t.me/share/url?url=https://gamegift.live/&text=${text}`;
+            window.open(url, '_blank');
             setTimeout(() => {
                 document.getElementById('task2').classList.add('completed');
-                tasksCompleted++;
                 checkTasks();
             }, 10000);
         }
 
         function checkTasks() {
-            if (tasksCompleted === 2) {
-                document.getElementById('loginButtons').style.display = 'block';
+            const tasks = document.querySelectorAll('.task-button.completed');
+            if (tasks.length === 2) {
+                document.getElementById('login-buttons').style.display = 'flex';
             }
         }
 
-        function generateComments() {
-            const commentsContainer = document.getElementById('comments');
-            const names = ['Иван', 'Мария', 'Петр', 'Алина', 'Сергей', 'Оксана', 'Дмитрий', 'Ксения', 'Артем', 'Екатерина'];
-            const avatars = [
-                'https://via.placeholder.com/50?text=U1',
-                'https://via.placeholder.com/50?text=U2',
-                'https://via.placeholder.com/50?text=U3',
-                'https://via.placeholder.com/50?text=U4'
-            ];
-            const comments = [
-                'Отличный сервис! Всё честно, алмазы пришли быстро!',
-                'Не ожидал, что так легко можно получить алмазы. Спасибо!',
-                'Рекомендую! Всё работает, проверено лично.',
-                'Сомневался, но зря. Всё супер!',
-                'Очень доволен. Теперь всегда пользуюсь этим сервисом!',
-                'Быстро, просто и бесплатно – что ещё нужно?',
-                'Поделился с друзьями – они тоже в восторге!',
-                'Понравилась система заданий. Всё понятно.',
-                'Теперь могу радовать себя и друзей подарками в игре!',
-                'Спасибо разработчикам! Всё на высшем уровне.'
-            ];
-
-            for (let i = 0; i < 5; i++) {
-                const randomName = names[Math.floor(Math.random() * names.length)];
-                const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
-                const randomComment = comments[Math.floor(Math.random() * comments.length)];
-                const commentEl = document.createElement('div');
-                commentEl.className = 'comment';
-                commentEl.innerHTML = `<img src="${randomAvatar}" alt="avatar"><div class="text"><strong>${randomName}</strong>: ${randomComment}</div>`;
-                commentsContainer.appendChild(commentEl);
-            }
-        }
-
-        generateComments();
+        window.onload = loadComments;
     </script>
 </body>
 </html>
