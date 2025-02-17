@@ -10,8 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Roboto', Arial, sans-serif;
-      overflow: hidden;
-      background-color: #000;
+      overflow-x: hidden; /* Разрешаем прокрутку по оси X */
     }
 
     /* Видеофон */
@@ -38,28 +37,7 @@
       text-align: center;
       color: white;
       margin: 0 auto;
-      margin-top: 50px; /* Чтобы контент не прилипал к верху экрана */
-    }
-
-    /* Слайд-шоу */
-    .slideshow {
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #ffd700;
-      height: 60px;
-      overflow: hidden;
-    }
-
-    .slideshow div {
-      display: none;
-      animation: slide 3s infinite;
-    }
-
-    @keyframes slide {
-      0% { opacity: 0; }
-      20% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { opacity: 0; }
+      margin-top: 50px;
     }
 
     /* Рулетка */
@@ -74,7 +52,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #1a1a1a;
+      background: #1a1a1a;
     }
 
     .roulette .pointer {
@@ -113,14 +91,11 @@
     .buttons {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-top: 30px;
+      gap: 10px;
+      margin-top: 20px;
     }
 
     .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 100%;
       padding: 12px;
       border: none;
@@ -131,7 +106,6 @@
       color: white;
       text-align: center;
       text-decoration: none;
-      gap: 10px;
     }
 
     .btn-google {
@@ -173,7 +147,7 @@
 
     /* Футер */
     .footer {
-      margin-top: 40px;
+      margin-top: 20px;
       font-size: 14px;
       color: #ccc;
     }
@@ -187,31 +161,25 @@
       text-decoration: underline;
     }
 
-    /* Инструкция под рулеткой */
-    .instruction {
-      margin-top: 30px;
+    /* Стили для длинного текста */
+    .long-text {
+      color: white;
       font-size: 16px;
-      color: #ddd;
-      max-width: 700px;
-      margin: 20px auto;
-      text-align: left;
+      margin-top: 30px;
+      text-align: center;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
+
+  <!-- Видеофон -->
   <video class="video-background" autoplay loop muted>
     <source src="video.mp4" type="video/mp4">
     Ваш браузер не поддерживает видео.
   </video>
 
   <div class="main-content">
-    <!-- Слайд-шоу -->
-    <div class="slideshow">
-      <div>Мы команда Garena! 🎮</div>
-      <div>Раздаем алмазы! 💎</div>
-      <div>Участвуй и выигрывай! 🏆</div>
-    </div>
-
     <!-- Рулетка -->
     <div class="roulette">
       <div class="pointer"></div>
@@ -233,25 +201,14 @@
 
     <!-- Кнопки входа -->
     <div class="buttons" id="login-buttons" style="display: none;">
-      <a href="login-google.html" class="btn btn-google">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google.png" alt="Google">
-        Войти через Google
-      </a>
-      <a href="login-facebook.html" class="btn btn-facebook">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
-        Войти через Facebook
-      </a>
-      <a href="login-vk.html" class="btn btn-vk">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/VK.com_logo.svg" alt="VK">
-        Войти через VK
-      </a>
+      <a href="login-google.html" class="btn btn-google">Войти через Google</a>
+      <a href="login-facebook.html" class="btn btn-facebook">Войти через Facebook</a>
+      <a href="login-vk.html" class="btn btn-vk">Войти через VK</a>
     </div>
 
-    <!-- Инструкция -->
-    <div class="instruction">
-      <h3>Как выиграть?</h3>
-      <p>Просто нажмите на кнопку «Крутить рулетку», и шанс на выигрыш предоставится вам! Чем больше вы играете, тем больше шансов на крупный выигрыш!</p>
-      <p>Алмазы можно использовать для покупки уникальных предметов в игре или обменять на другие бонусы.</p>
+    <!-- Длинный текст -->
+    <div class="long-text">
+      <p>Чтобы выиграть, просто крутите рулетку и получите шанс на невероятные призы! Вы можете выиграть до 10,000 алмазов, которые помогут вам достичь новых высот в игре. Следите за нашими новостями и не пропустите новые розыгрыши!</p>
     </div>
 
     <!-- Футер -->
@@ -266,20 +223,6 @@
   </div>
 
   <script>
-    // Слайд-шоу
-    const slides = document.querySelectorAll('.slideshow div');
-    let currentSlide = 0;
-
-    function showSlide() {
-      slides.forEach((slide, index) => {
-        slide.style.display = index === currentSlide ? 'block' : 'none';
-      });
-      currentSlide = (currentSlide + 1) % slides.length;
-    }
-
-    setInterval(showSlide, 3000);
-
-    // Рулетка
     const spinBtn = document.getElementById('spin-btn');
     const prizes = document.querySelector('.prizes');
     const winAnimation = document.getElementById('win-animation');
@@ -306,5 +249,6 @@
       }, 3000);
     });
   </script>
+
 </body>
 </html>
