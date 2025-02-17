@@ -37,22 +37,41 @@
       margin-top: 50px;
     }
 
-    /* Прямоугольная рулетка */
-    .roulette {
+    /* Горизонтальная рулетка */
+    .roulette-container {
       margin: 20px auto;
       width: 500px;
-      height: 150px;
-      background-color: #1a1a1a;
-      position: relative;
-      border-radius: 10px;
+      height: 100px;
       overflow: hidden;
+      position: relative;
+    }
+
+    .roulette {
+      display: flex;
+      width: 1500px; /* Должна быть больше, чем контейнер */
+      transition: transform 1s ease-out;
+    }
+
+    .prize {
+      width: 150px;
+      height: 100px;
+      background-color: #ffd700;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      border-radius: 10px;
+      margin: 0 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
-    /* Центральная кнопка "Крутить" */
-    .roulette .center-button {
+    .roulette .prize:hover {
+      background-color: #ffcc00;
+    }
+
+    .center-button {
       width: 100px;
       height: 50px;
       border-radius: 25px;
@@ -66,41 +85,16 @@
       cursor: pointer;
       position: absolute;
       z-index: 2;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
       transition: background-color 0.3s;
     }
 
-    .roulette .center-button:hover {
+    .center-button:hover {
       background-color: #ffcc00;
     }
 
-    /* Сектора рулетки */
-    .roulette .prizes {
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      height: 100%;
-    }
-
-    .roulette .prize {
-      width: 80px;
-      height: 80px;
-      background-color: #ffd700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-      border-radius: 10px;
-      position: relative;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .roulette .prize:hover {
-      background-color: #ffcc00;
-    }
-
-    /* Кнопка крутить */
     .win-animation {
       font-size: 28px;
       color: #ffd700;
@@ -190,8 +184,8 @@
   </video>
 
   <div class="main-content">
-    <div class="roulette">
-      <div class="prizes">
+    <div class="roulette-container">
+      <div class="roulette">
         <div class="prize">100 💎</div>
         <div class="prize">500 💎</div>
         <div class="prize">1000 💎</div>
@@ -199,8 +193,8 @@
         <div class="prize">5000 💎</div>
         <div class="prize">10000 💎</div>
       </div>
-      <div class="center-button" id="spin-btn">Крутить</div>
     </div>
+    <div class="center-button" id="spin-btn">Крутить</div>
 
     <div id="win-animation" class="win-animation" style="display: none;"></div>
 
@@ -228,28 +222,34 @@
     const spinBtn = document.getElementById('spin-btn');
     const winAnimation = document.getElementById('win-animation');
     const loginButtons = document.getElementById('login-buttons');
+    const roulette = document.querySelector('.roulette');
+    const prizeCount = document.querySelectorAll('.prize').length;
     let hasSpun = false;
 
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
 
-      const randomDegree = Math.floor(Math.random() * 360) + 1080;
-      const prizes = document.querySelector('.prizes');
-      prizes.style.transition = 'transform 3s ease-out';
-      prizes.style.transform = `rotate(${randomDegree}deg)`;
+      // Расчёт случайного сектора для выбора призов
+      const randomIndex = Math.floor(Math.random() * prizeCount);
+      const prizeWidth = 150; // ширина одного сектора
+      const prizeMargin = 20; // отступ между секторами
+      const totalWidth = prizeWidth + prizeMargin;
+      
+      // Сдвиг на случайную позицию
+      const distance = randomIndex * totalWidth * 2; // умножаем, чтобы рулетка "крутилась" дважды
+
+      roulette.style.transition = 'transform 1s ease-out';
+      roulette.style.transform = `translateX(-${distance}px)`;
 
       setTimeout(() => {
-        const prize = Math.floor((randomDegree % 360) / 60);
-        const prizeValues = [100, 500, 1000, 2000, 5000, 10000];
-        const winAmount = prizeValues[prize];
-
-        winAnimation.textContent = `Вы выиграли ${winAmount} алмазов! 💎`;
+        const prizeValues = ['100 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
+        winAnimation.textContent = `Вы выиграли ${prizeValues[randomIndex]}! 💎`;
         winAnimation.style.display = 'block';
         loginButtons.style.display = 'flex';
 
         hasSpun = true;
         spinBtn.disabled = true;
-      }, 3000);
+      }, 1000);
     });
   </script>
 
