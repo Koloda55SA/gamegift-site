@@ -5,18 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Рулетка</title>
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Material+Icons|Work+Sans:400,700,900');
-
     body {
-      overflow: hidden;
-      font-family: 'Work Sans', sans-serif;
-      background: #121212;
       margin: 0;
       padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #FFF;
+    }
+
+    /* Фон сайта */
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: brightness(0.6);
     }
 
     .roulette {
-      font-family: 'Work Sans', sans-serif;
+      font-family: 'Arial', sans-serif;
       display: block;
       position: absolute;
       width: 400px;
@@ -118,11 +128,6 @@
       letter-spacing: -0.05em;
     }
 
-    .button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-
     .modal {
       position: fixed;
       top: 0;
@@ -154,10 +159,11 @@
       font-size: 1.2em;
       cursor: pointer;
     }
-
   </style>
 </head>
 <body>
+  <div class="background"></div>
+
   <div class="roulette">
     <div class="spinner"></div>
     <div class="shadow"></div>
@@ -195,8 +201,10 @@
       { id: '', color: '#881f7e', text: 'PLAY AGAIN', ikon: 'replay' }
     ];
 
-    let lastSpin = localStorage.getItem('lastSpin') ? parseInt(localStorage.getItem('lastSpin')) : 0;
-    const spinCooldown = 24 * 60 * 60 * 1000; // 24 hours
+    // Проверяем, был ли спин в текущей сессии
+    if (!sessionStorage.getItem('hasSpun')) {
+      sessionStorage.setItem('hasSpun', 'true');
+    }
 
     class RouletteWheel {
       constructor(el, items) {
@@ -227,7 +235,6 @@
           complete: () => {
             this.$el.removeClass('busy');
             this.showWinModal();
-            localStorage.setItem('lastSpin', Date.now());
           }
         });
       }
@@ -264,19 +271,16 @@
       }
 
       showWinModal() {
-        const now = Date.now();
-        if (now - lastSpin >= spinCooldown) {
-          $('#winModal').fadeIn();
-        }
+        $('#winModal').fadeIn();
       }
 
       bindEvents() {
         this.$el.find('.button').on('click', () => {
-          const now = Date.now();
-          if (now - lastSpin >= spinCooldown) {
+          if (!sessionStorage.getItem('hasSpun')) {
+            sessionStorage.setItem('hasSpun', 'true');
             this.spin();
           } else {
-            alert("Вы можете крутануть рулетку только раз в 24 часа.");
+            alert("Вы уже крутили рулетку в этой сессии.");
           }
         });
       }
