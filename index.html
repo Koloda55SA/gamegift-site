@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Раздача алмазов от Garena</title>
+  <title>Задание для выполнения</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Roboto', Arial, sans-serif;
-      overflow-x: hidden;
-      background: linear-gradient(135deg, #1a1a1a, #333);
+      background-color: #1a1a1a;
       color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
     }
 
-    .video-background {
-      position: fixed;
+    /* Фоновое видео */
+    video {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
@@ -24,149 +29,52 @@
       z-index: -1;
     }
 
-    .main-content {
-      position: relative;
-      z-index: 1;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.8);
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      max-width: 800px;
-      width: 90%;
+    .main-container {
       text-align: center;
-      margin: 20px auto;
-      overflow: hidden;
-    }
-
-    .roulette-container {
-      position: relative;
-      margin: 20px auto;
-      width: 100%;
-      height: 200px;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(255, 215, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 30px;
       border-radius: 10px;
-      border: 2px solid #ffd700;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      max-width: 600px;
+      width: 90%;
     }
 
-    .roulette {
-      display: flex;
-      position: relative;
-      width: 100%;
-      height: 100%;
-      justify-content: space-evenly;
-      transition: transform 5s ease-out;
+    h1 {
+      font-size: 32px;
+      color: #ffd700;
+      margin-bottom: 20px;
     }
 
-    .prize {
-      width: 120px;
-      height: 100px;
-      background-color: #ffd700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      font-weight: bold;
-      color: #1a1a1a;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .center-button {
-      width: 120px;
-      height: 50px;
-      border-radius: 25px;
-      background-color: #ffd700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .task {
       font-size: 18px;
-      font-weight: bold;
-      color: #1a1a1a;
-      cursor: pointer;
-      margin: 20px auto;
-      transition: background-color 0.3s, transform 0.2s;
+      margin-bottom: 20px;
+      line-height: 1.6;
     }
 
-    .center-button:hover {
-      background-color: #ffcc00;
+    .action-button {
+      width: 200px;
+      padding: 10px;
+      font-size: 18px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      margin-bottom: 20px;
+    }
+
+    .action-button:hover {
+      background-color: #e60000;
       transform: scale(1.05);
     }
 
-    .win-animation {
-      font-size: 28px;
-      color: #ffd700;
-      margin-top: 20px;
-      animation: bounce 1s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 0;
-      height: 0;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-bottom: 30px solid #ff0000;
-      z-index: 2;
-    }
-
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      color: white;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    .btn-google {
-      background-color: #1a73e8;
-    }
-
-    .btn-google:hover {
-      background-color: #1557b5;
-    }
-
-    .btn-facebook {
-      background-color: #1877f2;
-    }
-
-    .btn-facebook:hover {
-      background-color: #166fe5;
-    }
-
-    .btn-vk {
-      background-color: #0077ff;
-    }
-
-    .btn-vk:hover {
-      background-color: #005bb5;
+    .completed {
+      background-color: #28a745;
+      cursor: not-allowed;
     }
 
     .footer {
-      margin-top: 20px;
       font-size: 14px;
       color: #ccc;
     }
@@ -180,133 +88,154 @@
       text-decoration: underline;
     }
 
-    .long-text {
+    /* Модальное окно */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
       color: white;
-      font-size: 16px;
-      margin-top: 30px;
-      text-align: center;
-      line-height: 1.6;
     }
 
-    .info-section {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: rgba(255, 215, 0, 0.1);
+    .modal-content {
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 40px;
       border-radius: 10px;
-      text-align: left;
+      text-align: center;
     }
 
-    .info-section h2 {
-      color: #ffd700;
-      font-size: 24px;
-      margin-bottom: 10px;
+    .modal button {
+      width: 200px;
+      padding: 10px;
+      margin: 10px;
+      font-size: 18px;
+      background-color: #ffd700;
+      color: #1a1a1a;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
     }
 
-    .info-section p {
-      font-size: 16px;
-      line-height: 1.6;
+    .modal button:hover {
+      background-color: #ffcc00;
     }
 
-    @media (max-width: 768px) {
-      .roulette-container {
-        width: 100%;
-      }
-      .prize {
-        min-width: 120px;
-        height: 80px;
-        font-size: 16px;
-      }
-      .center-button {
-        width: 90px;
-        height: 45px;
-      }
+    .share-button {
+      background-color: #1d8be8;
+    }
+
+    .share-button:hover {
+      background-color: #1a78c2;
     }
   </style>
 </head>
 <body>
 
-  <video class="video-background" autoplay loop muted playsinline>
-    <source src="video.mp4" type="video/mp4">
-    Ваш браузер не поддерживает видео.
+  <video autoplay loop muted>
+    <source src="your-background-video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
   </video>
 
-  <div class="main-content">
-    <h1>Раздача алмазов от Garena</h1>
-    <div class="roulette-container">
-      <div class="roulette" id="roulette">
-        <div class="prize" id="prize-100">100 💎</div>
-        <div class="prize" id="prize-200">200 💎</div>
-        <div class="prize" id="prize-500">500 💎</div>
-        <div class="prize" id="prize-1000">1000 💎</div>
-        <div class="prize" id="prize-2000">2000 💎</div>
-        <div class="prize" id="prize-5000">5000 💎</div>
-        <div class="prize" id="prize-10000">10000 💎</div>
+  <div class="main-container">
+    <h1>Задание для выполнения и получение алмазов</h1>
+    <div class="task">
+      <p><strong>Мы даем алмазы за выполнение простого задания!</strong></p>
+      <p>Для получения 2000 алмазов нужно выполнить следующие шаги:</p>
+      <ol>
+        <li>Перейдите по <a href="https://t.me/your_telegram_channel" target="_blank" style="color: #ffd700;">ссылке</a> и подпишитесь на наш канал в Telegram.</li>
+        <li>После подписки на канал подождите 15 секунд, и кнопка для выполнения задания станет зеленой.</li>
+        <li>Как только все кнопки станут зелеными, они исчезнут, и появится окно с информацией о том, что вы забрали свои 2000 алмазов!</li>
+      </ol>
+      <p>Внимание! Чтобы получить награду, необходимо выполнить все шаги правильно.</p>
+
+      <a href="https://ify.ac/1YsR" target="_blank">
+        <button class="action-button" id="actionButton1">Перейти и подписаться</button>
+      </a>
+
+      <a href="https://ify.ac/1YsR" target="_blank">
+        <button class="action-button" id="actionButton2">Перейти и подписаться</button>
+      </a>
+
+      <a href="https://ify.ac/1YsR" target="_blank">
+        <button class="action-button" id="actionButton3">Перейти и подписаться</button>
+      </a>
+
+      <div id="timerMessage" style="display: none; color: #28a745; font-size: 18px;">Спасибо за подписку! Кнопка будет активирована через 15 секунд.</div>
+
+      <!-- Кнопка для задания поделиться с друзьями -->
+      <div class="task">
+        <p>Поделитесь с 10 друзьями, чтобы получить еще больше алмазов!</p>
+        <button class="action-button share-button" onclick="shareMessage()">Поделиться с друзьями</button>
       </div>
-      <div class="arrow" id="arrow"></div> <!-- Стрелка -->
-    </div>
-    <div class="center-button" id="spin-btn">Крутить</div>
-
-    <div id="win-animation" class="win-animation" style="display: none;"></div>
-
-    <div id="login-buttons" class="buttons" style="display: none;">
-      <a href="login-google.html" class="btn btn-google">Войти через Google</a>
-      <a href="login-facebook.html" class="btn btn-facebook">Войти через Facebook</a>
-      <a href="login-vk.html" class="btn btn-vk">Войти через VK</a>
-    </div>
-
-    <div class="long-text">
-      <p>Крутите рулетку и получите шанс выиграть до 10,000 алмазов! Участвуйте в розыгрыше и улучшайте свои возможности в игре.</p>
-    </div>
-
-    <div class="info-section">
-      <h2>Как участвовать?</h2>
-      <p>1. Нажмите кнопку "Крутить".<br>
-      2. Дождитесь остановки рулетки.<br>
-      3. Получите свой приз и войдите в систему, чтобы сохранить его.</p>
-    </div>
-
-    <div class="info-section">
-      <h2>Правила розыгрыша</h2>
-      <p>1. Участие бесплатное.<br>
-      2. Каждый пользователь может участвовать только один раз.<br>
-      3. Призы выдаются автоматически после завершения розыгрыша.</p>
     </div>
 
     <div class="footer">
-      <p>Официальные контакты Garena:</p>
-      <p>
-        <a href="https://www.garena.sg" target="_blank">Сайт</a> | 
-        <a href="https://www.facebook.com/garena" target="_blank">Facebook</a> | 
-        <a href="https://twitter.com/garena" target="_blank">Twitter</a>
-      </p>
+      <p>После подписки ждите 15 секунд, и кнопки станут зелеными. Не забывайте следовать инструкциям!</p>
+    </div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="rewardModal" class="modal">
+    <div class="modal-content">
+      <h2>Вы забрали 2000 алмазов!</h2>
+      <p>Теперь выберите способ входа:</p>
+      <button onclick="location.href='login-google.html'">Войти через Google</button>
+      <button onclick="location.href='login-facebook.html'">Войти через Facebook</button>
+      <button onclick="location.href='login-vk.html'">Войти через VK</button>
     </div>
   </div>
 
   <script>
-    const spinBtn = document.getElementById('spin-btn');
-    const winAnimation = document.getElementById('win-animation');
-    const loginButtons = document.getElementById('login-buttons');
-    const roulette = document.getElementById('roulette');
-    const prizes = document.querySelectorAll('.prize');
-    let hasSpun = false;
+    const actionButtons = document.querySelectorAll('.action-button');
+    let completedCount = 0;
 
-    spinBtn.addEventListener('click', () => {
-      if (hasSpun) return;
+    // Функция для изменения кнопки и появления модального окна
+    function checkButtons() {
+      completedCount = 0;
+      actionButtons.forEach(button => {
+        if (button.classList.contains('completed')) {
+          completedCount++;
+        }
+      });
 
-      // Анимация прокрутки рулетки (движение через все призы)
-      roulette.style.transition = 'transform 5s ease-out';
-      roulette.style.transform = 'translateX(-3000px)'; // Прокрутка через все призы, чтобы остановиться на 2000
+      // Если все кнопки завершены, показываем модальное окно
+      if (completedCount === actionButtons.length) {
+        setTimeout(() => {
+          document.getElementById('rewardModal').style.display = 'flex';
+        }, 500);
+      }
+    }
 
-      // После завершения прокрутки показываем результат
-      setTimeout(() => {
-        winAnimation.textContent = `Вы выиграли 2000 💎!`;
-        winAnimation.style.display = 'block';
-        loginButtons.style.display = 'flex';
+    // Слушатель событий для каждой кнопки
+    actionButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Показать сообщение
+        document.getElementById('timerMessage').style.display = 'block';
 
-        hasSpun = true;
-        spinBtn.disabled = true;
-      }, 5000); // Длительность прокрутки
+        // Через 15 секунд меняем цвет кнопки на зеленый
+        setTimeout(function() {
+          button.classList.add('completed');
+          button.textContent = 'Задание выполнено';
+          checkButtons(); // Проверка всех кнопок
+        }, 15000); // 15 секунд
+      });
     });
+
+    // Функция для генерации сообщения в Telegram
+    function shareMessage() {
+      const message = encodeURIComponent(
+        'Мы даем алмазы за выполнение простого задания! Поделитесь с 10 друзьями и получите 2000 алмазов. Перейдите по ссылке и подпишитесь на наш канал в Telegram: https://your-site-link.com'
+      );
+      const telegramUrl = `https://t.me/share/url?url=${message}`;
+
+      // Открытие Telegram с готовым сообщением
+      window.open(telegramUrl, '_blank');
+    }
   </script>
 
 </body>
