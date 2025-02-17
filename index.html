@@ -37,7 +37,6 @@
       margin-top: 50px;
     }
 
-    /* Горизонтальная рулетка */
     .roulette-container {
       margin: 20px auto;
       width: 500px;
@@ -48,8 +47,8 @@
 
     .roulette {
       display: flex;
-      width: 1500px; /* Должна быть больше, чем контейнер */
-      transition: transform 3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Увеличил время анимации и сделал более динамичным */
+      width: 1500px;
+      transition: transform 7s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .prize {
@@ -226,30 +225,35 @@
     const prizeCount = document.querySelectorAll('.prize').length;
     let hasSpun = false;
 
+    const prizeValues = ['100 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
+
     spinBtn.addEventListener('click', () => {
       if (hasSpun) return;
 
-      // Расчёт случайного сектора для выбора призов
+      // Выбор случайного сектора
       const randomIndex = Math.floor(Math.random() * prizeCount);
-      const prizeWidth = 150; // ширина одного сектора
-      const prizeMargin = 20; // отступ между секторами
+
+      // Расчёт случайной прокрутки
+      const prizeWidth = 150; 
+      const prizeMargin = 20;
       const totalWidth = prizeWidth + prizeMargin;
       
-      // Сдвиг на случайную позицию, добавляем дополнительные прокрутки
-      const distance = randomIndex * totalWidth + (Math.floor(Math.random() * 3) * totalWidth); // Пару дополнительных вращений
-
-      roulette.style.transition = 'transform 3s cubic-bezier(0.25, 0.8, 0.25, 1)';
-      roulette.style.transform = `translateX(-${distance}px)`;
+      // Установим рулетку на начало
+      roulette.style.transition = 'transform 7s cubic-bezier(0.25, 0.8, 0.25, 1)';
+      roulette.style.transform = `translateX(-${Math.floor(Math.random() * 10) * totalWidth}px)`;
 
       setTimeout(() => {
-        const prizeValues = ['100 💎', '500 💎', '1000 💎', '2000 💎', '5000 💎', '10000 💎'];
+        // Вращаем на окончательную позицию
+        roulette.style.transition = 'transform 0s';
+        roulette.style.transform = `translateX(-${randomIndex * totalWidth}px)`;
+
         winAnimation.textContent = `Вы выиграли ${prizeValues[randomIndex]}! 💎`;
         winAnimation.style.display = 'block';
         loginButtons.style.display = 'flex';
 
         hasSpun = true;
         spinBtn.disabled = true;
-      }, 3000); // Задержка соответствует времени анимации
+      }, 7000); // Длительность прокрутки
     });
   </script>
 
