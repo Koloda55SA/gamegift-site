@@ -49,7 +49,7 @@
     .roulette {
       display: flex;
       width: 1500px; /* Должна быть больше, чем контейнер */
-      transition: transform 1s ease-out;
+      transition: transform 3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Увеличил время анимации и сделал более динамичным */
     }
 
     .prize {
@@ -198,7 +198,7 @@
 
     <div id="win-animation" class="win-animation" style="display: none;"></div>
 
-    <div class="buttons" id="login-buttons" style="display: none;">
+    <div id="login-buttons" class="buttons" style="display: none;">
       <a href="login-google.html" class="btn btn-google">Войти через Google</a>
       <a href="login-facebook.html" class="btn btn-facebook">Войти через Facebook</a>
       <a href="login-vk.html" class="btn btn-vk">Войти через VK</a>
@@ -235,10 +235,10 @@
       const prizeMargin = 20; // отступ между секторами
       const totalWidth = prizeWidth + prizeMargin;
       
-      // Сдвиг на случайную позицию
-      const distance = randomIndex * totalWidth * 2; // умножаем, чтобы рулетка "крутилась" дважды
+      // Сдвиг на случайную позицию, добавляем дополнительные прокрутки
+      const distance = randomIndex * totalWidth + (Math.floor(Math.random() * 3) * totalWidth); // Пару дополнительных вращений
 
-      roulette.style.transition = 'transform 1s ease-out';
+      roulette.style.transition = 'transform 3s cubic-bezier(0.25, 0.8, 0.25, 1)';
       roulette.style.transform = `translateX(-${distance}px)`;
 
       setTimeout(() => {
@@ -249,7 +249,7 @@
 
         hasSpun = true;
         spinBtn.disabled = true;
-      }, 1000);
+      }, 3000); // Задержка соответствует времени анимации
     });
   </script>
 
